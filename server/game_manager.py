@@ -2,10 +2,7 @@ import random
 import spotipy
 import uuid
 import json
-from spotify.track import Track
-from spotify.album import Album
-from spotify.user import User
-from spotify.artist import Artist
+from spotify import *
 
 def print_json(dump):
     print(json.dumps(dump, indent=4))
@@ -23,7 +20,7 @@ class Game(object):
 
     # Returns a track in the game given its id
     def get_track_by_id(self, track_id) -> Track:
-        return self.tracks[track_id]
+        return self.tracks[track_id] 
     
     # Returns an album in the game given its id
     def get_album_by_id(self, album_id) -> Album:
