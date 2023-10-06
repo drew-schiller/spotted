@@ -1,4 +1,4 @@
 # Spotify API Keys
 .env
 venv/*
-__pycache__/*
+.cache

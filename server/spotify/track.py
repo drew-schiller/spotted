@@ -1,3 +1,6 @@
+from typing import List
+from typing import Set
+
 class Track(object):
 
     def __init__(self, track_json):
@@ -12,6 +15,7 @@ class Track(object):
             self.artists.append(a['id'])
         self.duration = int(track_json['duration_ms']) / 1000
         self.user_listeners = set()
+        self.preview_url = str(track_json['preview_url'])
     
     # Returns this track's id
     def get_id(self) -> str:
@@ -22,7 +26,7 @@ class Track(object):
         return self.name
     
     # Returns this track's artists' ids
-    def get_artists(self):
+    def get_artists(self) -> List[str]:
         return self.artists
     
     # Returns this track's album id
@@ -30,7 +34,7 @@ class Track(object):
         return self.album
     
     # Returns this track's album artists' ids
-    def get_album_artists(self):
+    def get_album_artists(self) -> List[str]:
         return self.album_artists
 
     # Returns this track's duration in seconds
@@ -38,12 +42,16 @@ class Track(object):
         return self.duration
     
     # Returns the ids of users in the game that listen to this track
-    def get_user_listeners(self):
+    def get_user_listeners(self) -> Set[str]:
         return self.user_listeners
     
     # Adds a user that listens to this track, given their id
-    def add_listener(self, user_id):
+    def add_listener(self, user_id) -> None:
         self.user_listeners.add(user_id)
+
+    # Returns the track's 30 second audio preview URL
+    def get_preview_url(self) -> str:
+        return self.preview_url
     
     def __eq__(self, other):
         return self.id == other.id

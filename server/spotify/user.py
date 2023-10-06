@@ -11,7 +11,7 @@ class User(object):
     # Returns this user's display name
     def get_name(self) -> str:
         return self.name
-    
+
     def __eq__(self, other):
         return self.id == other.id
     
