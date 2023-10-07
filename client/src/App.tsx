@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import './App.css'
+import "./styles/App.sass"
+import LandingPage from './pages/LandingPage'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
     <>
-     <div> <h1>Hello World</h1></div>
+     <div className="app">
+      <LandingPage ></LandingPage>
+     </div>
     </>
   )
 }
