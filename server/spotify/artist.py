@@ -1,3 +1,5 @@
+from typing import Set
+
 class Artist(object):
 
     def __init__(self, artist_json):
@@ -15,11 +17,11 @@ class Artist(object):
         return self.name
     
     # Returns the ids of users in the game that listen to this artist
-    def get_user_listeners(self):
+    def get_user_listeners(self) -> Set[str]:
         return self.user_listeners
     
     # Adds a user that listens to this artist, given their id
-    def add_listener(self, user_id):
+    def add_listener(self, user_id) -> None:
         self.user_listeners.add(user_id)
 
     # Returns the number of songs this artist has in the game
@@ -27,7 +29,7 @@ class Artist(object):
         return self.song_count
 
     # Increases the number of songs the artist has in the game by 1
-    def increment_song_count(self):
+    def increment_song_count(self) -> None:
         self.song_count += 1
 
     def __eq__(self, other):

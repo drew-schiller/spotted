@@ -1,3 +1,5 @@
+from typing import List
+
 class Album(object):
 
     def __init__(self, album_json):
@@ -22,7 +24,7 @@ class Album(object):
         return self.song_count
     
     # Returns this album's artists' ids
-    def get_artists(self):
+    def get_artists(self) -> List[str]:
         return self.artists
     
     # Returns this album's cover images in different sizes
