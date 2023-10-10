@@ -1,16 +1,31 @@
-import React from 'react'
+import React from "react";
 
-type Props = {
-  header: string;
-};
-
-const InfoSection = ({ header }: Props) => {
+const InfoSections = () => {
   return (
-    <section className="info-section">
-      <div>InfoSection</div>
-      <h2>{header}</h2>
-    </section>
+    <div className="info-sections-container">
+      <section className="info-section">
+        <h2>ABOUT THE GAME:</h2>
+        <p className="description">
+          Spotted is a web game that involves your music taste and challenges
+          you to see how well you know your friends. The game is meant to be
+          played with your friends present, with each person joined on their
+          individual devices. In the default game mode, players submit links to
+          one of their Spotify playlists, and the game pools together all songs
+          from every playlist. Each round, a new song is chosen, and players
+          have to guess which one of their friends has this song in their
+          playlist. Players with the most number of right guesses after every
+          round win.
+        </p>
+      </section>
+      <section className="info-section">
+        <h2>HOW TO PLAY:</h2> <p className="description">TODO</p>
+      </section>
+      <section className="info-section">
+        <h2>HOW IT WORKS:</h2>
+        <p className="description">TODO</p>
+      </section>
+    </div>
   );
 };
 
-export default InfoSection;
+export default InfoSections;

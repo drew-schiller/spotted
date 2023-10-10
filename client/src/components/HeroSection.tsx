@@ -1,19 +1,24 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const HeroSection = (props: Props) => {
-
-  const description: string = "How well do you know your friend's music taste? "
-  
+  const description: string =
+    "How well do you know your friend's music taste?\n";
+  const description2: string = "Guess Groove and Grow with Spotted! ";
 
   return (
-    <section className='hero-section'>
-      <h1 className="app-title">Spotted</h1>
-      <p className="app-description">{description}</p>
-      <button className='play-btn btn'>PLAY</button>
-    </section>
-  )
-}
+    <div className="hero-section">
+      <div className="hero-container">
+        <h1 className="app-title">Spotted</h1>
+        <p className="app-description">{description}</p>
+        <p className="app-description">{description2}</p>
+        <div className="play-btn-container">
+          <button className="play-btn btn">PLAY</button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default HeroSection
+export default HeroSection;
