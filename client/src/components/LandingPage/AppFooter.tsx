@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import rcos_logo_red from "../assets/rcos_logo_red.png";
-import github_logo from "../assets/github_logo.png";
+import rcos_logo_red from "../../assets/rcos_logo_red.png";
+import github_logo from "../../assets/github_logo.png";
 
 type Props = {};
 

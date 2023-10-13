@@ -1,17 +1,17 @@
 import React from "react";
-import AppHeader from "../components/AppHeader";
-import HeroSection from "../components/HeroSection";
-import AppFooter from "../components/AppFooter";
-import InfoSections from "../components/InfoSection";
+import AppHeader from "../components/LandingPage/AppHeader";
+import HeroSection from "../components/LandingPage/HeroSection";
+import AppFooter from "../components/LandingPage/AppFooter";
+import InfoSections from "../components/LandingPage/InfoSection";
+
+import "../styles/LandingPage.sass";
 
 const LandingPage: React.FC = () => {
   return (
-    <>
-      <AppHeader />
+    <div className="page">
       <HeroSection />
       <InfoSections />
-      <AppFooter />
-    </>
+    </div>
   );
 };
 

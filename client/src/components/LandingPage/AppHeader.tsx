@@ -1,12 +1,13 @@
 import React from "react";
-// import "../styles/AppHeader.sass"
-import "../styles/LandingPage.sass";
+import { Link } from "react-router-dom";
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
   return (
     <div className="app-header">
       <div className="logo">
-        <a href="localhost">Logo</a>
+        <Link className="link" to="./">
+          logo
+        </Link>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
-const HeroSection = (props: Props) => {
+const HeroSection: React.FC = (props: Props) => {
   const description: string =
     "How well do you know your friend's music taste?\n";
   const description2: string = "Guess Groove and Grow with Spotted! ";
@@ -14,7 +15,9 @@ const HeroSection = (props: Props) => {
         <p className="app-description">{description}</p>
         <p className="app-description">{description2}</p>
         <div className="play-btn-container">
-          <button className="play-btn btn">PLAY</button>
+          <Link to="menu">
+            <button className="play-btn btn">PLAY</button>
+          </Link>
         </div>
       </div>
     </div>
