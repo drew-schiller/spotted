@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "../../styles/LandingPage.module.sass";
 
 type Props = {};
 
@@ -9,14 +10,16 @@ const HeroSection: React.FC = (props: Props) => {
   const description2: string = "Guess Groove and Grow with Spotted! ";
 
   return (
-    <div className="hero-section">
-      <div className="hero-container">
-        <h1 className="app-title">Spotted</h1>
-        <p className="app-description">{description}</p>
-        <p className="app-description">{description2}</p>
-        <div className="play-btn-container">
+    <div className={styles.heroSection}>
+      <div className={styles.heroContainer}>
+        <h1 className={styles.appTitle}>Spotted</h1>
+        <p className={styles.appDescription}>{description}</p>
+        <p className={styles.appDescription}>{description2}</p>
+        <div className={styles.playBtnContainer}>
           <Link to="menu">
-            <button className="play-btn btn">PLAY</button>
+            <button className={[styles.playBtnContainer, styles.btn].join(" ")}>
+              PLAY
+            </button>
           </Link>
         </div>
       </div>

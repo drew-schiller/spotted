@@ -8,7 +8,7 @@ import MenuPage from "./pages/MenuPage.tsx";
 import "../index.sass";
 type Props = {};
 
-const App = (props: Props) => {
+const App: React.FC = (props: Props) => {
   return (
     <div className="app">
       <BrowserRouter>
