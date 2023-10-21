@@ -53,6 +53,26 @@ class Track(object):
     def get_preview_url(self) -> str:
         return self.preview_url
     
+    # Returns the track as a JSON object
+    def serialize(self):
+        json = {
+            "id": self.get_id(),
+            "name": self.get_name(),
+            "artist_ids": [],
+            "album_id": self.get_album(),
+            "album_artist_ids": [],
+            "duration": self.get_duration(),
+            "listener_ids": [],
+            "preview_url": self.get_preview_url()
+        }
+        for a in self.get_artists():
+            json["artist_ids"].append(a)
+        for a in self.get_album_artists():
+            json["album_artist_ids"].append(a)
+        for l in self.get_user_listeners():
+            json["listener_ids"].append(l)
+        return json
+
     def __eq__(self, other):
         return self.id == other.id
     

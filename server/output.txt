@@ -1,0 +1,210 @@
+{
+    "href": "https://api.spotify.com/v1/users/mrkdogzoff/playlists?offset=1&limit=5",
+    "items": [
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/3QrohoQKKv3UVH67OwvdTi"
+            },
+            "href": "https://api.spotify.com/v1/playlists/3QrohoQKKv3UVH67OwvdTi",
+            "id": "3QrohoQKKv3UVH67OwvdTi",
+            "images": [
+                {
+                    "height": null,
+                    "url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbbd83b6b0059619b98bfd18e1",
+                    "width": null
+                }
+            ],
+            "name": "Acid Live",
+            "owner": {
+                "display_name": "d.schiller",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/mrkdogzoff"
+                },
+                "href": "https://api.spotify.com/v1/users/mrkdogzoff",
+                "id": "mrkdogzoff",
+                "type": "user",
+                "uri": "spotify:user:mrkdogzoff"
+            },
+            "primary_color": null,
+            "public": false,
+            "snapshot_id": "MTA4LGNiZTk1YmJkODM4MDAyY2ZmZGZiZDI2MzIzNGI4MTJkODc1ODIxZjQ=",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/3QrohoQKKv3UVH67OwvdTi/tracks",
+                "total": 84
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:3QrohoQKKv3UVH67OwvdTi"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/6D9bdcBFYZ2pfejUneDLF3"
+            },
+            "href": "https://api.spotify.com/v1/playlists/6D9bdcBFYZ2pfejUneDLF3",
+            "id": "6D9bdcBFYZ2pfejUneDLF3",
+            "images": [
+                {
+                    "height": null,
+                    "url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc3b71cabcf8f4242e913c724",
+                    "width": null
+                }
+            ],
+            "name": "Night Skrrrt",
+            "owner": {
+                "display_name": "d.schiller",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/mrkdogzoff"
+                },
+                "href": "https://api.spotify.com/v1/users/mrkdogzoff",
+                "id": "mrkdogzoff",
+                "type": "user",
+                "uri": "spotify:user:mrkdogzoff"
+            },
+            "primary_color": null,
+            "public": false,
+            "snapshot_id": "OTEsYTE5MDhjN2U2MzZkMjlhYzZiMzEyMjEwY2QzZjU5MjE5NmU2ZmU0NQ==",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/6D9bdcBFYZ2pfejUneDLF3/tracks",
+                "total": 84
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:6D9bdcBFYZ2pfejUneDLF3"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/4OegCvu1dkll0nCFKQ7Dfl"
+            },
+            "href": "https://api.spotify.com/v1/playlists/4OegCvu1dkll0nCFKQ7Dfl",
+            "id": "4OegCvu1dkll0nCFKQ7Dfl",
+            "images": [
+                {
+                    "height": null,
+                    "url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb15b2fb1f8a017d75b87a306",
+                    "width": null
+                }
+            ],
+            "name": "Cloud Vibes",
+            "owner": {
+                "display_name": "d.schiller",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/mrkdogzoff"
+                },
+                "href": "https://api.spotify.com/v1/users/mrkdogzoff",
+                "id": "mrkdogzoff",
+                "type": "user",
+                "uri": "spotify:user:mrkdogzoff"
+            },
+            "primary_color": null,
+            "public": false,
+            "snapshot_id": "NzAsNWI2OThjMGE1NTM0Yjc3Mzg3ODFlMWZlYTU4NDhmZDgyYWFjOTRhOA==",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/4OegCvu1dkll0nCFKQ7Dfl/tracks",
+                "total": 66
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:4OegCvu1dkll0nCFKQ7Dfl"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/129JpLlXJJL9252jY7XRwX"
+            },
+            "href": "https://api.spotify.com/v1/playlists/129JpLlXJJL9252jY7XRwX",
+            "id": "129JpLlXJJL9252jY7XRwX",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d0000b27333af8c29161f7b6607f94d82ab67616d0000b2735901aaa980d3e714bf01171cab67616d0000b2737aee5b36a3a60ca926bc429bab67616d0000b273942b4029fa54f0b44591a133",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d0000b27333af8c29161f7b6607f94d82ab67616d0000b2735901aaa980d3e714bf01171cab67616d0000b2737aee5b36a3a60ca926bc429bab67616d0000b273942b4029fa54f0b44591a133",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d0000b27333af8c29161f7b6607f94d82ab67616d0000b2735901aaa980d3e714bf01171cab67616d0000b2737aee5b36a3a60ca926bc429bab67616d0000b273942b4029fa54f0b44591a133",
+                    "width": 60
+                }
+            ],
+            "name": "Evil",
+            "owner": {
+                "display_name": "d.schiller",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/mrkdogzoff"
+                },
+                "href": "https://api.spotify.com/v1/users/mrkdogzoff",
+                "id": "mrkdogzoff",
+                "type": "user",
+                "uri": "spotify:user:mrkdogzoff"
+            },
+            "primary_color": null,
+            "public": false,
+            "snapshot_id": "NDEsMTAxZGQ4MzU5MzczZWI4M2QzNWU3YzgxY2NkNWRlMTZmMDdlYmE1OA==",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/129JpLlXJJL9252jY7XRwX/tracks",
+                "total": 36
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:129JpLlXJJL9252jY7XRwX"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/6u62Qe2ndCyqJ9QR0ndq7H"
+            },
+            "href": "https://api.spotify.com/v1/playlists/6u62Qe2ndCyqJ9QR0ndq7H",
+            "id": "6u62Qe2ndCyqJ9QR0ndq7H",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d0000b27361ea7774a12beccfd528fc21ab67616d0000b27395d8b812a418bfcac8047e7cab67616d0000b273bd5d935fe9b16f0ea983005fab67616d0000b273d2c5081a88e69dd5d21337bd",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d0000b27361ea7774a12beccfd528fc21ab67616d0000b27395d8b812a418bfcac8047e7cab67616d0000b273bd5d935fe9b16f0ea983005fab67616d0000b273d2c5081a88e69dd5d21337bd",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d0000b27361ea7774a12beccfd528fc21ab67616d0000b27395d8b812a418bfcac8047e7cab67616d0000b273bd5d935fe9b16f0ea983005fab67616d0000b273d2c5081a88e69dd5d21337bd",
+                    "width": 60
+                }
+            ],
+            "name": "Potential Samples",
+            "owner": {
+                "display_name": "d.schiller",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/mrkdogzoff"
+                },
+                "href": "https://api.spotify.com/v1/users/mrkdogzoff",
+                "id": "mrkdogzoff",
+                "type": "user",
+                "uri": "spotify:user:mrkdogzoff"
+            },
+            "primary_color": null,
+            "public": false,
+            "snapshot_id": "MTQsNjdhMDRjZWY3OGUxYjhlNjllMmExNjJjNmExMTI5MDJmMDVkZTNmZQ==",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/6u62Qe2ndCyqJ9QR0ndq7H/tracks",
+                "total": 13
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:6u62Qe2ndCyqJ9QR0ndq7H"
+        }
+    ],
+    "limit": 5,
+    "next": "https://api.spotify.com/v1/users/mrkdogzoff/playlists?offset=6&limit=5",
+    "offset": 1,
+    "previous": "https://api.spotify.com/v1/users/mrkdogzoff/playlists?offset=0&limit=5",
+    "total": 40
+}
