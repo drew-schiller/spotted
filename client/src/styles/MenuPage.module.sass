@@ -1,0 +1,396 @@
+// VARIABLES
+// COLOR VARIABLES
+$widgetBackground: #6247aa
+$containerBackground: #6247aa
+$darkPurple: #0d0221
+$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+$borderColor: #a4a4b33e
+$configPanelColor: #a06cd5
+$playersPanelColor: #a06cd5
+$panelHeaderColor: darken($configPanelColor, 10)
+$shadowColor: rgba(0, 0, 0, 0.7)
+$addPlayerBtnColor: #129278
+$textColor1: aliceblue
+$textColor2: #ffeafd
+
+$headerTextColor: #ffeafd
+
+$widgetBorderHoverColor: #807878
+$widgetBorderHover: 1.5px solid $widgetBorderHoverColor
+
+$interfaceCardColor: #baa8be
+$interfaceCardColorDark: darken($interfaceCardColor, 10)
+
+$panelHeaderBtnHoverBackground: darken($panelHeaderColor, 5)
+$panelHeaderBtnFocusBackground: darken($panelHeaderColor, 5)
+$panelHeaderBtnActiveBackground: darken($panelHeaderColor, 10)
+
+$playBtnColor: #16C172
+
+$scrollbarColor: $panelHeaderColor
+//SPACING VARIABLES
+$appContainerWidth: 1200px
+$appContainerHeight: 700px
+$appModuleMargin: 12% 7%
+$appModulePadding: 2vh
+
+$gameConfigPanelMargin: 0 0 0 auto
+
+$headerHeight: 35px
+$commonBorderRadius: 15px
+
+$playerConnectMargin: 0
+$playerConnectWidth: 36%
+$gameConfigPanelWidth: 61%
+
+$interfaceMargin: 2.5vh
+$interfaceCardBottomMargin: 2vh
+
+$btnCommmonMargin: 1.5vh
+$addPlayerBtnContainerMargin: auto $btnCommmonMargin $btnCommmonMargin 0
+
+$addPlayerBtnDiameter: 6vmin
+$playBtnHeight: $addPlayerBtnDiameter
+$playBtnWidth: 30%
+$playBtnBorderRadius: 5px
+
+$presetCardWidth: 30%
+
+$playlistStackPaddingBottom: 1vh
+// FONT VARIABLES
+$headerTextFontSize: 14pt
+
+// MIXINS ------------------------------------------------------------
+@mixin scrollbar
+  &::-webkit-scrollbar
+    width: 10px
+    margin-left: 10px
+
+  &::-webkit-scrollbar-thumb
+    background-color: $panelHeaderColor
+    border-radius: 5px
+
+  &::-webkit-scrollbar-track
+    background-color: #ecf0f100
+    border-radius: 5px
+
+  /* Firefox */
+  &
+    scrollbar-color: $scrollbarColor #ecf0f100
+
+@mixin widget-hover
+  &:hover
+    border: $widgetBorderHover
+    filter: brightness(0.8)
+
+@mixin widget-active
+  &:focus
+    border: 3px solid $panelHeaderColor
+    filter: brightness(1.1)
+
+@mixin centerFlex
+  display: flex
+  align-items: center
+  justify-content: center
+
+@mixin columnFlexEnd
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+
+@mixin playAndAddPlayerBtnEffects
+  &:hover
+    filter: hue-rotate(25deg)
+    filter: brightness(1.2)
+    transform: translateY(-2px)
+
+    &:active
+      transform: translateY(2px)
+
+//HELPER CLASSES --------------------------------------------------------
+.minimized
+  display: none
+
+.activeTab
+  background: $panelHeaderBtnFocusBackground
+
+// TYPOGRAPHY CLASSES
+.panel-header-text
+  color: $headerTextColor
+  font-size: $headerTextFontSize
+  font-weight: bold
+  text-transform: uppercase
+  // text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,0.025em 0.04em 0 #fffc00
+
+.play-btn-text,
+.add-player-btn-text
+  color: $textColor1
+  text-align: center
+.play-btn-text
+  font-weight: bolder
+  font-size: 20pt
+.add-player-btn-text
+
+//BY COMPONENT---------------------------------------------------------------
+// MENUPAGE COMPONENT STYLES
+.page
+  @include centerFlex
+  margin: 0
+  padding: 0
+  height: calc(100vh - 3em)
+  background: $pageBackground
+  border-bottom: 1px solid $borderColor
+
+// APP MODULE STYLES
+.app-module-main-container
+  display: flex
+  justify-content: space-evenly
+  margin: $appModuleMargin
+  padding: $appModulePadding
+  height: calc(100% - 3em) //subtracts header height
+  max-height: $appContainerHeight
+  width: 100vh
+  max-width: $appContainerWidth
+  min-height: 50vh
+  border-radius: $commonBorderRadius
+  background-color: $containerBackground
+  box-shadow: 0 4px 8px $shadowColor
+
+//PLAYER CONNECT PANEL STYLES
+.player-connect-panel
+  @include columnFlexEnd
+  float: left
+  margin: $playerConnectMargin
+  width: $playerConnectWidth
+  border-radius: $commonBorderRadius
+  background-color: $playersPanelColor
+
+  .player-connect-header
+    @include centerFlex
+    min-height: $headerHeight
+    border-radius: $commonBorderRadius $commonBorderRadius 0 0
+    background-color: $panelHeaderColor
+
+  .players-container
+    margin: $interfaceMargin
+    overflow-y: auto
+    @include scrollbar
+
+  .add-player-btn-container
+    margin: $addPlayerBtnContainerMargin
+    .add-player-btn
+      float: right
+      margin: 0
+      height: $addPlayerBtnDiameter
+      width: $addPlayerBtnDiameter
+      border-radius: 50%
+      background: $addPlayerBtnColor
+
+      transition: filter 0.2s
+      @include playAndAddPlayerBtnEffects
+
+  //PLAYER WIDGET COMPONENT STYLES
+.player-widget
+  margin-bottom: $interfaceCardBottomMargin
+  .player-widget-top
+    @include centerFlex
+    overflow: hidden
+    height: 75px
+    display: flex
+    border-radius: 10px
+    transition: filter 0.1s ease
+    @include widget-hover
+
+    .profile-picture-container
+      float: left
+      height: 100%
+      aspect-ratio: 1 / 1
+      background-color: red
+      .profilePictureImg
+        max-width: 100%
+        flex-shrink: 0
+
+    .username-container
+      @include centerFlex
+      float: right
+      width: 100%
+      height: 100%
+      background-color: $interfaceCardColor
+      .username
+        width: 75%
+        border-radius: $commonBorderRadius
+        background-color: darken($interfaceCardColor,10)
+        padding: 3%
+        padding-left: 10%
+        color: $textColor1
+        font-size: 12pt
+        font-weight: 600
+
+  .player-widget-bottom
+    z-index: 0
+    // display: none !important
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-content: center
+    width: 100%
+    // margin: 10%
+    margin-top: -5%
+    border-radius: 0 0 $commonBorderRadius $commonBorderRadius
+    background-color: #e0d7d3
+
+    .player-playlist-stack
+      display: flex
+      flex-direction: column
+      justify-content: flex-start
+      margin: 7% 5% 0 0
+      padding-bottom: $playlistStackPaddingBottom
+      // background-color: red
+      // width: 50%
+      // margin-top: 5%
+      overflow: hidden
+      .playlist-item
+        display: flex
+        justify-content: start
+        margin: 1%
+        // flex-direction: column
+
+        .playlist-item-left
+          align-self: center
+          width: 75px
+
+        .playlist-item-right
+          font-weight: 600
+          color: #0b132b
+          padding-left: 3%
+          margin: 0 0 .25vh
+
+    .display-stack-btn-container
+      display: flex
+      justify-content: flex-end
+      padding-right: 1%
+      margin-top: calc(-35px)
+      margin-bottom: 0
+      .display-stack-btn
+        transform: rotate(180deg)
+        overflow: hidden
+        color: #f08080
+        padding: 0
+        margin: 0
+        // background-color: green
+
+  // GAME CONFIG PANEL COMPONENT 
+.game-config-panel
+  @include columnFlexEnd
+  float: right
+  margin: $gameConfigPanelMargin
+  width: $gameConfigPanelWidth
+  background-color: $configPanelColor
+  border-radius: $commonBorderRadius
+
+  .tabbed-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin: 0
+    min-height: $headerHeight
+    border-radius: $commonBorderRadius $commonBorderRadius 0 0
+    background-color: $panelHeaderColor
+    overflow: hidden
+
+    .presets-btn, .settings-btn
+      height: 100%
+      width: 50%
+      text-align: center
+      &:hover
+        background: $panelHeaderBtnHoverBackground
+      &:focus
+        background: $panelHeaderBtnFocusBackground
+      &:active
+        background: $panelHeaderBtnActiveBackground
+
+    .settings-btn
+      margin-left: auto
+
+  .config-interface
+    margin: $interfaceMargin
+    overflow-y: auto
+    @include scrollbar
+
+  .play-btn-container
+    display: flex
+    justify-content: center
+    margin-top: auto
+    margin-bottom: $btnCommmonMargin
+    height: $playBtnHeight
+
+    .play-btn
+      width: $playBtnWidth
+      border-radius: $playBtnBorderRadius
+      background-color: $playBtnColor
+      @include playAndAddPlayerBtnEffects
+
+// PRESETS TAB COMPONENT
+.presets-tab
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-between
+  width: 100%
+
+// GAME SETTINGS TAB
+.settings-tab
+  @include columnFlexEnd
+  align-content: center
+  width: 100%
+  height: auto
+
+// PRESET CARD
+.game-preset-card
+  aspect-ratio: 1 / 1 !important
+  width: $presetCardWidth
+  margin-bottom: $interfaceCardBottomMargin
+  padding: 0
+  border-radius: $commonBorderRadius
+  background-color: $interfaceCardColor
+  transition: filter 0.1s ease
+  overflow: hidden
+  @include widget-hover
+  @include widget-active
+
+  .icon-container
+    height: 70%
+    width: 100%
+
+  .title-container
+    @include centerFlex
+    height: 30%
+    margin: 0
+    background-color: $interfaceCardColorDark
+
+    .title
+      text-transform: uppercase
+      font-weight: bold
+      color: $textColor1
+      font-size: 12pt
+
+// GAME SETTING CARD (INPUT and SWITCH)
+.game-setting
+  display: flex
+  padding-left: 2vh
+  margin-bottom: $interfaceCardBottomMargin
+  padding-top: 1vh
+  padding-bottom: 1vh
+  border-radius: $commonBorderRadius
+  border: 1.5px solid #ff000000
+  background-color: darken($interfaceCardColor,10)
+  background-color: #e3aaace6
+  transition: filter 0.1s ease
+  color: $textColor1
+  font-weight: 600
+  @include widget-active
+  @include widget-hover
+
+  &:focus
+    border: 3px solid $panelHeaderColor
+    filter: brightness(1.1)

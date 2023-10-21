@@ -1,17 +1,26 @@
-import { useState } from 'react'
-import "./styles/App.sass"
-import LandingPage from './pages/LandingPage'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage.tsx";
+import AppHeader from "./components/LandingPage/AppHeader.tsx";
+import AppFooter from "./components/LandingPage/AppFooter.tsx";
+import MenuPage from "./pages/MenuPage.tsx";
+import "../index.sass";
+type Props = {};
 
-function App() {
-  // const [count, setCount] = useState(0)
-
+const App: React.FC = (props: Props) => {
   return (
-    <>
-     <div className="app">
-      <LandingPage ></LandingPage>
-     </div>
-    </>
-  )
-}
+    <div className="app">
+      <BrowserRouter>
+        <AppHeader />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="menu" element={<MenuPage />} />
+        </Routes>
+        <AppFooter />
+      </BrowserRouter>
+    </div>
+  );
+};
 
-export default App
+export default App;

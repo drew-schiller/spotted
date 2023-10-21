@@ -1,5 +1,4 @@
 
-$darkPurple: #0d0221
 $springGreen: #2AFC98
 $emerald: #16C172
 $textColor1: aliceblue
@@ -7,13 +6,16 @@ $roseEbony: #503D3F
 
 $borderColor: #a4a4b33e
 
-.app
+$darkPurple: #0d0221
+$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+
+.page
   margin: 0
   padding: 0
   display: flex
   flex-direction: column
   color: $textColor1
-  background: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+  background: $pageBackground
   min-height: 100vh
   border-bottom: 1px solid $borderColor
 
@@ -21,8 +23,6 @@ $borderColor: #a4a4b33e
   background-color: $emerald
   width: 100%
   height: 3em
-  top: 0
-  left: 0
   box-sizing: border-box
   border-bottom: 1px solid $borderColor
 
@@ -77,9 +77,11 @@ $borderColor: #a4a4b33e
       background: #03d36b
 
 .info-sections-container
+  width: 75%
+  max-width: 1100px
   display: flex
   flex-direction: column
-  margin: 2rem 5rem
+  margin: 2rem auto
 
 .info-section
   color: $textColor1
@@ -95,6 +97,8 @@ $borderColor: #a4a4b33e
 .app-footer
   background-color: #3b0869
   margin-top: auto
+  color: $textColor1
+  min-height: 30px
   padding: 0.5rem 5rem 0.2rem 5rem
 
   .footer-credits

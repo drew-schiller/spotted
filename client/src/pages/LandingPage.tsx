@@ -1,17 +1,15 @@
 import React from "react";
-import AppHeader from "../components/AppHeader";
-import HeroSection from "../components/HeroSection";
-import AppFooter from "../components/AppFooter";
-import InfoSections from "../components/InfoSection";
+import HeroSection from "../components/LandingPage/HeroSection";
+import InfoSections from "../components/LandingPage/InfoSection";
+import { Form } from "react-router-dom";
+import styles from "../styles/LandingPage.module.sass";
 
 const LandingPage: React.FC = () => {
   return (
-    <>
-      <AppHeader />
+    <div className={styles.page}>
       <HeroSection />
       <InfoSections />
-      <AppFooter />
-    </>
+    </div>
   );
 };
 
