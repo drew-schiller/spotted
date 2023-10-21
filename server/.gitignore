@@ -2,3 +2,4 @@
 .env
 venv/*
 .cache
+flask_session/*
