@@ -1,6 +1,6 @@
 import React from "react";
 import GamePresetCard from "./GamePresetCard";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 
 type Props = {};
 

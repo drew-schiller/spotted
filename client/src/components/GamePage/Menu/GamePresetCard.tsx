@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 
 type Props = { title: string; presetIcon: null };
 

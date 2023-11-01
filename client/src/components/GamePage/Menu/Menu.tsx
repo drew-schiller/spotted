@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import ReactDOM from "react-dom/client";
-import GameConfigPanel from "../../components/MenuPage/GameConfigPanel";
-import PlayerConnectPanel from "../../components/MenuPage/PlayerConnectPanel";
-import PlayerWidget from "../../components/MenuPage/PlayerWidget";
+import GameConfigPanel from "./GameConfigPanel";
+import PlayerConnectPanel from "./PlayerConnectPanel";
 
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 type Props = {};
 
-const AppModuleMainContainer: React.FC = (props: Props) => {
+const Menu: React.FC = (props: Props) => {
   const [minimized, setMinimized] = useState(false);
 
   const handleResize = () => {
@@ -24,15 +23,11 @@ const AppModuleMainContainer: React.FC = (props: Props) => {
   }, []);
 
   return (
-    <div
-      className={` ${
-        minimized ? styles.minimized : styles.appModuleMainContainer
-      }`}
-    >
+    <div className={` ${minimized ? styles.minimized : styles.menuModule}`}>
       <PlayerConnectPanel />
       <GameConfigPanel />
     </div>
   );
 };
 
-export default AppModuleMainContainer;
+export default Menu;

@@ -1,8 +1,8 @@
 import React from "react";
-import HeroSection from "../components/LandingPage/HeroSection";
-import InfoSections from "../components/LandingPage/InfoSection";
+import HeroSection from "./HeroSection";
+import InfoSections from "./InfoSection";
 import { Form } from "react-router-dom";
-import styles from "../styles/LandingPage.module.sass";
+import styles from "./LandingPage.module.sass";
 
 const LandingPage: React.FC = () => {
   return (

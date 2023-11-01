@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 import Checkbox from "@mui/material/Checkbox";
 
 type Props = { playlistName: string };

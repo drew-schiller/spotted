@@ -1,18 +1,12 @@
-// VARIABLES
+@import "../../../_globals"
 // COLOR VARIABLES
 $widgetBackground: #6247aa
 $containerBackground: #6247aa
-$darkPurple: #0d0221
-$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
-$borderColor: #a4a4b33e
 $configPanelColor: #a06cd5
 $playersPanelColor: #a06cd5
 $panelHeaderColor: darken($configPanelColor, 10)
-$shadowColor: rgba(0, 0, 0, 0.7)
-$addPlayerBtnColor: #129278
-$textColor1: aliceblue
-$textColor2: #ffeafd
 
+$addPlayerBtnColor: #129278
 $headerTextColor: #ffeafd
 
 $widgetBorderHoverColor: #807878
@@ -88,16 +82,6 @@ $headerTextFontSize: 14pt
     border: 3px solid $panelHeaderColor
     filter: brightness(1.1)
 
-@mixin centerFlex
-  display: flex
-  align-items: center
-  justify-content: center
-
-@mixin columnFlexEnd
-  display: flex
-  flex-direction: column
-  justify-content: flex-end
-
 @mixin playAndAddPlayerBtnEffects
   &:hover
     filter: hue-rotate(25deg)
@@ -124,7 +108,7 @@ $headerTextFontSize: 14pt
 
 .play-btn-text,
 .add-player-btn-text
-  color: $textColor1
+  color: $commonTextColor
   text-align: center
 .play-btn-text
   font-weight: bolder
@@ -132,17 +116,8 @@ $headerTextFontSize: 14pt
 .add-player-btn-text
 
 //BY COMPONENT---------------------------------------------------------------
-// MENUPAGE COMPONENT STYLES
-.page
-  @include centerFlex
-  margin: 0
-  padding: 0
-  height: calc(100vh - 3.5em)
-  background: $pageBackground
-  border-bottom: 1px solid $borderColor
 
-// APP MODULE STYLES
-.app-module-main-container
+.menu-module
   display: flex
   justify-content: space-evenly
   margin: $appModuleMargin
@@ -222,7 +197,7 @@ $headerTextFontSize: 14pt
         background-color: darken($interfaceCardColor,10)
         padding: 3%
         padding-left: 10%
-        color: $textColor1
+        color: $commonTextColor
         font-size: 12pt
         font-weight: 600
 
@@ -371,7 +346,7 @@ $headerTextFontSize: 14pt
     .title
       text-transform: uppercase
       font-weight: bold
-      color: $textColor1
+      color: $commonTextColor
       font-size: 12pt
 
 // GAME SETTING CARD (INPUT and SWITCH)
@@ -386,7 +361,7 @@ $headerTextFontSize: 14pt
   background-color: darken($interfaceCardColor,10)
   background-color: #e3aaace6
   transition: filter 0.1s ease
-  color: $textColor1
+  color: $commonTextColor
   font-weight: 600
   @include widget-active
   @include widget-hover

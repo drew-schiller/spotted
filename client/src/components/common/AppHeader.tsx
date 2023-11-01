@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "../../styles/LandingPage.module.sass";
+import styles from "./common.module.sass";
 import monkeyTextLogo2 from "../../assets/monkeyText2.png";
 import monkeyLogo2 from "../../assets/monkey2.png";
 
