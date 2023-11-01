@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import rcos_logo_red from "../../assets/rcos_logo_red.png";
 import github_logo from "../../assets/github_logo.png";
-import styles from "../../styles/LandingPage.module.sass";
+import rcos_logo_red from "../../assets/rcos_logo_red.png";
+import styles from "./common.module.sass";
 type Props = {};
 
 const AppFooter = (props: Props) => {

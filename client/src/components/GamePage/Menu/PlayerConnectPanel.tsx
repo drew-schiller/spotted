@@ -1,7 +1,7 @@
 import React from "react";
 import GameConfigPanel from "./GameConfigPanel";
 import PlayerWidget from "./PlayerWidget";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 type Props = {};

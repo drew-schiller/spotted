@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 // import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 
 type Props = { name: string };

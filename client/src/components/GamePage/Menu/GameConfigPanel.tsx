@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 import PresetsTab from "./PresetsTab";
 import SettingsTab from "./SettingsTab";
 

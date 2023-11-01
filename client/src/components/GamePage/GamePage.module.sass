@@ -1,0 +1,11 @@
+@import "../../_globals"
+
+$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+
+.page
+  @include centerFlex
+  margin: 0
+  padding: 0
+  height: calc(100vh - 3.5em)
+  background: $pageBackground
+  border-bottom: 1px solid $commonBorderColor

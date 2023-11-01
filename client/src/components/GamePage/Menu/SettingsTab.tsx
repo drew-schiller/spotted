@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 import GameSettingSwitch from "./GameSettingSwitch";
 import GameSettingInput from "./GameSettingInput";
 

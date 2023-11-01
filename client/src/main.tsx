@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LandingPage from "./pages/LandingPage.tsx";
-import MenuPage from "./pages/MenuPage.tsx";
+import LandingPage from "./components/LandingPage/LandingPage.tsx";
+import MenuPage from "./components/GamePage/GamePage.tsx";
 import App from "./App.tsx";
 
 const router = createBrowserRouter([

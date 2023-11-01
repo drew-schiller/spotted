@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import PlaylistItem from "./PlaylistItem";
 
