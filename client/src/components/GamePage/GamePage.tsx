@@ -1,3 +1,4 @@
+import Game from "./Game/Game";
 import styles from "./GamePage.module.sass";
 import Menu from "./Menu/Menu";
 type Props = {};

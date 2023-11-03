@@ -1,6 +1,5 @@
 import React from "react";
-import GameConfigPanel from "./GameConfigPanel";
-import PlayerWidget from "./PlayerWidget";
+import ConnPlayerWidget from "./ConnPlayerWidget";
 import styles from "./Menu.module.sass";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
@@ -11,17 +10,15 @@ const testImg =
 
 const testUser = "d.schiller";
 
-const PlayerConnectPanel = (props: Props) => {
+const MenuConnPanel = (props: Props) => {
   return (
-    <div className={styles.playerConnectPanel}>
-      <div
-        className={`${styles.playerConnectHeader} ${styles.panelHeaderText}`}
-      >
+    <div className={styles.menuConnPanel}>
+      <div className={`${styles.connPanelHeader} ${styles.panelHeaderText}`}>
         Players {`${1}/${8}`}
       </div>
       <div className={styles.playersContainer}>
-        <PlayerWidget username={testUser} profilePictureURL={testImg} />
-        <PlayerWidget username={testUser} profilePictureURL={testImg} />
+        <ConnPlayerWidget username={testUser} profilePictureURL={testImg} />
+        <ConnPlayerWidget username={testUser} profilePictureURL={testImg} />
       </div>
       <div className={styles.addPlayerBtnContainer}>
         <button className={`${styles.addPlayerBtn} ${styles.addPlayerBtnText}`}>
@@ -32,4 +29,4 @@ const PlayerConnectPanel = (props: Props) => {
   );
 };
 
-export default PlayerConnectPanel;
+export default MenuConnPanel;

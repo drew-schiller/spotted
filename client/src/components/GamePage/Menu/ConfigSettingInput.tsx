@@ -4,17 +4,17 @@ import styles from "./Menu.module.sass";
 
 type Props = { name: string };
 
-const GameSettingInput = (props: Props) => {
+const ConfigSettingInput = (props: Props) => {
   return (
-    <button className={styles.gameSetting}>
+    <button className={styles.configSetting}>
       {/* <NumberInput min={0} step={2} /> */}
       <NumberInput aria-label="Quantity Input" min={1} max={99} />
-      GameSettingInput
+      ConfigSettingInput
     </button>
   );
 };
 
-export default GameSettingInput;
+export default ConfigSettingInput;
 
 import {
   Unstable_NumberInput as BaseNumberInput,
