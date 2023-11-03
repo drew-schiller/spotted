@@ -6,7 +6,7 @@ type Props = { name: string };
 
 const GameSettingSwitch = (props: Props) => {
   return (
-    <button className={styles.gameSetting}>
+    <button className={styles.configSetting}>
       <Switch />
       GameSetting
     </button>

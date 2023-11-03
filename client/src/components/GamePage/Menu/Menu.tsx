@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import ReactDOM from "react-dom/client";
-import GameConfigPanel from "./GameConfigPanel";
-import PlayerConnectPanel from "./PlayerConnectPanel";
+import MenuConfigPanel from "./MenuConfigPanel";
+import MenuConnPanel from "./MenuConnPanel";
 
 import styles from "./Menu.module.sass";
 type Props = {};
@@ -24,8 +24,8 @@ const Menu: React.FC = (props: Props) => {
 
   return (
     <div className={` ${minimized ? styles.minimized : styles.menuModule}`}>
-      <PlayerConnectPanel />
-      <GameConfigPanel />
+      <MenuConnPanel />
+      <MenuConfigPanel />
     </div>
   );
 };

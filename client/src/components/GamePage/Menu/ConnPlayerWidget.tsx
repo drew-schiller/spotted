@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Menu.module.sass";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
-import PlaylistItem from "./PlaylistItem";
+import PlayerPlaylistItem from "./PlayerPlaylistItem";
 
-type PlayerWidgetProps = { profilePictureURL: string; username: string };
+type WidgetProps = { profilePictureURL: string; username: string };
 
-const PlayerWidget: React.FC<PlayerWidgetProps> = (props) => {
+const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
   return (
-    <div className={styles.playerWidget}>
-      <div className={styles.playerWidgetTop}>
+    <div className={styles.connPlayerWidget}>
+      <div className={styles.connPlayerWidgetTop}>
         <div className={styles.profilePictureContainer}>
           <Link
             to={`https://open.spotify.com/user/${props.username}`}
@@ -34,10 +34,10 @@ const PlayerWidget: React.FC<PlayerWidgetProps> = (props) => {
           </Link>
         </div>
       </div>
-      <div className={styles.playerWidgetBottom}>
+      <div className={styles.connPlayerWidgetBottom}>
         <div className={styles.playerPlaylistStack}>
-          <PlaylistItem playlistName="playlistName" />
-          <PlaylistItem playlistName="playlist2" />
+          <PlayerPlaylistItem playlistName="playlistName" />
+          <PlayerPlaylistItem playlistName="playlist2" />
         </div>
         <div className={styles.displayStackBtnContainer}>
           <button className={styles.displayStackBtn}>
@@ -57,4 +57,4 @@ const PlayerWidget: React.FC<PlayerWidgetProps> = (props) => {
   //
 };
 
-export default PlayerWidget;
+export default ConnPlayerWidget;
