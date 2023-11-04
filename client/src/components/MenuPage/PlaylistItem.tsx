@@ -2,13 +2,13 @@ import React from "react";
 import styles from "../../styles/MenuPage.module.sass";
 import Checkbox from "@mui/material/Checkbox";
 
-type Props = { playlistName: string };
+type PlaylistItemProps = { id: string; name: string; };
 
-const PlaylistItem = (props: Props) => {
+const PlaylistItem = (props: PlaylistItemProps) => {
   return (
     <div className={styles.playlistItem}>
       <Checkbox className={styles.playlistItemLeft} style={{ padding: 0 }} />
-      <p className={styles.playlistItemRight}> {props.playlistName}</p>
+      <p className={styles.playlistItemRight}> {props.name}</p>
     </div>
   );
 };

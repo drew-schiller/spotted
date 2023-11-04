@@ -4,16 +4,28 @@ import styles from "../../styles/MenuPage.module.sass";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import PlaylistItem from "./PlaylistItem";
 
-type PlayerWidgetProps = { profilePictureURL: string; username: string };
+type PlayerWidgetProps = { id: string; name: string; profilePictureURL: string; };
 
 const PlayerWidget: React.FC<PlayerWidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
+  const playlistLimit = 5;
+
+  const createPlaylist = (id: string, name: string) => {
+    return (
+    <PlaylistItem id={id} name={name} />
+    );
+  };
+
+  const addAllPlaylists = () => {
+    
+  };
+
   return (
     <div className={styles.playerWidget}>
       <div className={styles.playerWidgetTop}>
         <div className={styles.profilePictureContainer}>
           <Link
-            to={`https://open.spotify.com/user/${props.username}`}
+            to={`https://open.spotify.com/user/${props.id}`}
             target="_blank"
           >
             <img
@@ -25,19 +37,12 @@ const PlayerWidget: React.FC<PlayerWidgetProps> = (props) => {
         </div>
 
         <div className={styles.usernameContainer}>
-          <Link
-            className={styles.username}
-            to={`https://open.spotify.com/user/${props.username}`}
-            target="_blank"
-          >
-            {props.username}
-          </Link>
+            {props.name}
         </div>
       </div>
       <div className={styles.playerWidgetBottom}>
         <div className={styles.playerPlaylistStack}>
-          <PlaylistItem playlistName="playlistName" />
-          <PlaylistItem playlistName="playlist2" />
+          {addAllPlaylists()}
         </div>
         <div className={styles.displayStackBtnContainer}>
           <button className={styles.displayStackBtn}>
