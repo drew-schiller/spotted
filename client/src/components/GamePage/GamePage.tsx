@@ -6,7 +6,7 @@ type Props = {};
 const MenuPage: React.FC = (props: Props) => {
   return (
     <div className={styles.page}>
-      <Menu />
+      <Game />
     </div>
   );
 };

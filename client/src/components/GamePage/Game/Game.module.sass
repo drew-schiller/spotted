@@ -1,5 +1,97 @@
 @import "../../../_globals"
 @import "../GamePage.module"
 
+// $songContainerWidth: 50%
+$gameTitleContainerWidth: 60%
+$gameMidSectHeight: 55%
+$songContainerWidth: $gameMidSectHeight
+
 .minimized
   display: none
+
+.game-top-sect
+  display: flex
+  height: 15%
+  // min-height: 15%
+  // max-height: 15%
+  background-color: #ff0000
+  padding: 1%
+
+  .left-logo-container
+    width: calc((100% - $gameTitleContainerWidth)/2)
+    background-color: #ff7979
+
+  .game-title-container
+    @include centerFlex
+    width: $gameTitleContainerWidth
+    background-color: #ffee7f
+
+  .right-btns-container
+    width: calc((100% - $gameTitleContainerWidth)/2)
+    background-color: #85fa78
+
+.game-mid-sect
+  display: flex
+  justify-content: center
+  height: $gameMidSectHeight
+  // min-height: $gameMidSectHeight
+  // max-height: $gameMidSectHeight
+  background-color: #00ff37
+  padding: 1%
+
+  .nav-btn
+
+  .left-body
+    display: flex
+    width: calc((100% - $songContainerWidth)/2)
+    background-color: #79f99b
+
+  .song-container
+    display: flex
+    justify-content: center
+    width: $songContainerWidth
+    background-color: #68eff7
+
+  .right-body
+    display: flex
+    // flex-direction: row
+    justify-content: flex-end
+    width: calc((100% - $songContainerWidth)/2)
+    background-color: #7d78f5
+
+.game-bottom-sect
+  display: flex
+  flex-direction: column
+  height: 30%
+  // min-height: 30%
+  // max-height: 30%
+  background-color: #1804f8
+  padding: 1%
+
+  .game-bar-container
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    height: 40%
+
+    background-color: #f46ef4
+
+  .voting-container
+    display: flex
+    flex-flow: row wrap
+    overflow: hidden
+    justify-content: center
+    align-items: center
+    gap: 2.5%
+    height: 60%
+    padding: 1.5%
+
+    background-color: #f96b6b
+
+    .bottom-vote-btn
+      // margin: auto 0 auto 0
+      background-color: white
+      width: 150px
+      height: 40px
+      border-radius: 20px
