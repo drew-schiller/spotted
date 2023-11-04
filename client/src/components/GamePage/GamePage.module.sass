@@ -18,9 +18,8 @@ $appModuleBackgroundColor: #6247aa
   border-bottom: 1px solid $globalBorderColor
 
 // Main App Module Styling
+
 .menu-module, .game-module
-  display: flex
-  justify-content: space-evenly
   margin: $appModuleMargin
   padding: $appModulePadding
   height: calc(100% - 3em) //subtracts header height
@@ -31,3 +30,11 @@ $appModuleBackgroundColor: #6247aa
   border-radius: $appModuleBorderRadius
   background-color: $appModuleBackgroundColor
   box-shadow: 0 4px 8px $globalShadowColor
+
+.menu-module
+  display: flex
+  justify-content: space-evenly
+
+.game-module
+  display: flex
+  flex-direction: column
