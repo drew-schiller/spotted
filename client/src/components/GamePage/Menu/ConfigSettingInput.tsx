@@ -1,20 +1,20 @@
 import React from "react";
-import styles from "../../styles/MenuPage.module.sass";
+import styles from "./Menu.module.sass";
 // import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 
 type Props = { name: string };
 
-const GameSettingInput = (props: Props) => {
+const ConfigSettingInput = (props: Props) => {
   return (
-    <button className={styles.gameSetting}>
+    <button className={styles.configSetting}>
       {/* <NumberInput min={0} step={2} /> */}
       <NumberInput aria-label="Quantity Input" min={1} max={99} />
-      GameSettingInput
+      ConfigSettingInput
     </button>
   );
 };
 
-export default GameSettingInput;
+export default ConfigSettingInput;
 
 import {
   Unstable_NumberInput as BaseNumberInput,

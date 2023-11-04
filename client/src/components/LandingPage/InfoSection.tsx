@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/LandingPage.module.sass";
+import styles from "./LandingPage.module.sass";
 
 const InfoSections = () => {
   return (

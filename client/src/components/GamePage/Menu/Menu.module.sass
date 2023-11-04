@@ -1,18 +1,12 @@
-// VARIABLES
+@import "../../../_globals"
+@import "../GamePage.module"
 // COLOR VARIABLES
 $widgetBackground: #6247aa
-$containerBackground: #6247aa
-$darkPurple: #0d0221
-$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
-$borderColor: #a4a4b33e
 $configPanelColor: #a06cd5
 $playersPanelColor: #a06cd5
 $panelHeaderColor: darken($configPanelColor, 10)
-$shadowColor: rgba(0, 0, 0, 0.7)
-$addPlayerBtnColor: #129278
-$textColor1: aliceblue
-$textColor2: #ffeafd
 
+$addPlayerBtnColor: #129278
 $headerTextColor: #ffeafd
 
 $widgetBorderHoverColor: #807878
@@ -29,19 +23,15 @@ $playBtnColor: #16C172
 
 $scrollbarColor: $panelHeaderColor
 //SPACING VARIABLES
-$appContainerWidth: 1200px
-$appContainerHeight: 700px
-$appModuleMargin: 12% 7%
-$appModulePadding: 2vh
 
-$gameConfigPanelMargin: 0 0 0 auto
+$menuConfigPanelMargin: 0 0 0 auto
 
 $headerHeight: 35px
 $commonBorderRadius: 15px
 
-$playerConnectMargin: 0
-$playerConnectWidth: 36%
-$gameConfigPanelWidth: 61%
+$menuConnPanelMargin: 0
+$menuConnPanelWidth: 36%
+$menuConfigPanelWidth: 61%
 
 $interfaceMargin: 2.5vh
 $interfaceCardBottomMargin: 2vh
@@ -88,16 +78,6 @@ $headerTextFontSize: 14pt
     border: 3px solid $panelHeaderColor
     filter: brightness(1.1)
 
-@mixin centerFlex
-  display: flex
-  align-items: center
-  justify-content: center
-
-@mixin columnFlexEnd
-  display: flex
-  flex-direction: column
-  justify-content: flex-end
-
 @mixin playAndAddPlayerBtnEffects
   &:hover
     filter: hue-rotate(25deg)
@@ -124,7 +104,7 @@ $headerTextFontSize: 14pt
 
 .play-btn-text,
 .add-player-btn-text
-  color: $textColor1
+  color: $globalTextColor
   text-align: center
 .play-btn-text
   font-weight: bolder
@@ -132,40 +112,17 @@ $headerTextFontSize: 14pt
 .add-player-btn-text
 
 //BY COMPONENT---------------------------------------------------------------
-// MENUPAGE COMPONENT STYLES
-.page
-  @include centerFlex
-  margin: 0
-  padding: 0
-  height: calc(100vh - 3em)
-  background: $pageBackground
-  border-bottom: 1px solid $borderColor
-
-// APP MODULE STYLES
-.app-module-main-container
-  display: flex
-  justify-content: space-evenly
-  margin: $appModuleMargin
-  padding: $appModulePadding
-  height: calc(100% - 3em) //subtracts header height
-  max-height: $appContainerHeight
-  width: 100vh
-  max-width: $appContainerWidth
-  min-height: 50vh
-  border-radius: $commonBorderRadius
-  background-color: $containerBackground
-  box-shadow: 0 4px 8px $shadowColor
 
 //PLAYER CONNECT PANEL STYLES
-.player-connect-panel
+.menu-conn-panel
   @include columnFlexEnd
   float: left
-  margin: $playerConnectMargin
-  width: $playerConnectWidth
+  margin: $menuConnPanelMargin
+  width: $menuConnPanelWidth
   border-radius: $commonBorderRadius
   background-color: $playersPanelColor
 
-  .player-connect-header
+  .conn-panel-header
     @include centerFlex
     min-height: $headerHeight
     border-radius: $commonBorderRadius $commonBorderRadius 0 0
@@ -190,9 +147,9 @@ $headerTextFontSize: 14pt
       @include playAndAddPlayerBtnEffects
 
   //PLAYER WIDGET COMPONENT STYLES
-.player-widget
+.conn-player-widget
   margin-bottom: $interfaceCardBottomMargin
-  .player-widget-top
+  .conn-player-widget-top
     @include centerFlex
     overflow: hidden
     height: 75px
@@ -222,11 +179,11 @@ $headerTextFontSize: 14pt
         background-color: darken($interfaceCardColor,10)
         padding: 3%
         padding-left: 10%
-        color: $textColor1
+        color: $globalTextColor
         font-size: 12pt
         font-weight: 600
 
-  .player-widget-bottom
+  .conn-player-widget-bottom
     z-index: 0
     // display: none !important
     display: flex
@@ -249,17 +206,17 @@ $headerTextFontSize: 14pt
       // width: 50%
       // margin-top: 5%
       overflow: hidden
-      .playlist-item
+      .player-playlist-item
         display: flex
         justify-content: start
         margin: 1%
         // flex-direction: column
 
-        .playlist-item-left
+        .player-playlist-item-left
           align-self: center
           width: 75px
 
-        .playlist-item-right
+        .player-playlist-item-right
           font-weight: 600
           color: #0b132b
           padding-left: 3%
@@ -277,14 +234,13 @@ $headerTextFontSize: 14pt
         color: #f08080
         padding: 0
         margin: 0
-        // background-color: green
 
   // GAME CONFIG PANEL COMPONENT 
-.game-config-panel
+.menu-config-panel
   @include columnFlexEnd
   float: right
-  margin: $gameConfigPanelMargin
-  width: $gameConfigPanelWidth
+  margin: $menuConfigPanelMargin
+  width: $menuConfigPanelWidth
   background-color: $configPanelColor
   border-radius: $commonBorderRadius
 
@@ -331,7 +287,7 @@ $headerTextFontSize: 14pt
       @include playAndAddPlayerBtnEffects
 
 // PRESETS TAB COMPONENT
-.presets-tab
+.config-presets-tab
   display: flex
   flex-direction: row
   flex-wrap: wrap
@@ -339,14 +295,14 @@ $headerTextFontSize: 14pt
   width: 100%
 
 // GAME SETTINGS TAB
-.settings-tab
+.config-settings-tab
   @include columnFlexEnd
   align-content: center
   width: 100%
   height: auto
 
 // PRESET CARD
-.game-preset-card
+.config-preset-card
   aspect-ratio: 1 / 1 !important
   width: $presetCardWidth
   margin-bottom: $interfaceCardBottomMargin
@@ -371,11 +327,11 @@ $headerTextFontSize: 14pt
     .title
       text-transform: uppercase
       font-weight: bold
-      color: $textColor1
+      color: $globalTextColor
       font-size: 12pt
 
 // GAME SETTING CARD (INPUT and SWITCH)
-.game-setting
+.config-setting
   display: flex
   padding-left: 2vh
   margin-bottom: $interfaceCardBottomMargin
@@ -386,7 +342,7 @@ $headerTextFontSize: 14pt
   background-color: darken($interfaceCardColor,10)
   background-color: #e3aaace6
   transition: filter 0.1s ease
-  color: $textColor1
+  color: $globalTextColor
   font-weight: 600
   @include widget-active
   @include widget-hover

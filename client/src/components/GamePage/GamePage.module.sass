@@ -1,0 +1,33 @@
+@import "../../_globals"
+
+$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+
+$appContainerWidth: 1200px
+$appContainerHeight: 700px
+$appModuleMargin: 12% 7%
+$appModulePadding: 2vh
+$appModuleBorderRadius: 15px
+$appModuleBackgroundColor: #6247aa
+
+.page
+  @include centerFlex
+  margin: 0
+  padding: 0
+  height: calc(100vh - 3.5em)
+  background: $pageBackground
+  border-bottom: 1px solid $globalBorderColor
+
+// Main App Module Styling
+.menu-module, .game-module
+  display: flex
+  justify-content: space-evenly
+  margin: $appModuleMargin
+  padding: $appModulePadding
+  height: calc(100% - 3em) //subtracts header height
+  max-height: $appContainerHeight
+  width: 100vh
+  max-width: $appContainerWidth
+  min-height: 50vh
+  border-radius: $appModuleBorderRadius
+  background-color: $appModuleBackgroundColor
+  box-shadow: 0 4px 8px $globalShadowColor

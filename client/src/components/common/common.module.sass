@@ -1,0 +1,58 @@
+@import "../../_globals"
+
+$springGreen: #2AFC98
+$emerald: #16C172
+$globalTextColor: aliceblue
+$roseEbony: #503D3F
+$globalBorderColor: #a4a4b33e
+
+.app-header
+  background-color: $emerald
+  width: 100%
+  height: 3.5em
+  box-sizing: border-box
+  border-bottom: 1px solid $globalBorderColor
+
+  .header-logo-link
+    display: flex
+    height: 100%
+    width: 75px
+    margin-left: 5%
+    background-color: darken($emerald, 5)
+    &:hover
+      background-color: darken($emerald, 8)
+    .header-logo
+      height: 95%
+      margin: auto
+
+.app-footer
+  background-color: #3b0869
+  margin-top: auto
+  color: $globalTextColor
+  min-height: 30px
+  padding: 0.5rem 5rem 0.2rem 5rem
+
+  .footer-credits
+    float: left
+    font-size: 14px
+  .footer-social
+    margin: 0
+    float: right
+
+    ul
+      margin: 0
+      list-style: none
+      display: flex
+      gap: 20px
+
+      li
+        margin: 0
+
+      a.footer-logo-link
+        display: block
+
+        img.footer-logo-img
+          width: auto
+          height: 25px
+          margin-left: 10px
+          border: 0

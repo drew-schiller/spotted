@@ -1,40 +1,44 @@
 import React, { useState } from "react";
 
-import styles from "../../styles/MenuPage.module.sass";
-import PresetsTab from "./PresetsTab";
-import SettingsTab from "./SettingsTab";
+import styles from "./Menu.module.sass";
+import ConfigPresetsTab from "./ConfigPresetsTab";
+import ConfigSettingsTab from "./ConfigSettingsTab";
 
 type Props = {};
 
-const GameConfigPanel: React.FC = (props: Props) => {
-  const [activeTab, setActiveTab] = useState("presetsTab");
+const menuConfigPanel: React.FC = (props: Props) => {
+  const [activeTab, setActiveTab] = useState("configPresetsTab");
 
   const switchTab = (tabState: string) => {
     setActiveTab(tabState);
   };
 
   return (
-    <div className={styles.gameConfigPanel}>
+    <div className={styles.menuConfigPanel}>
       <div className={styles.tabbedHeader}>
         <button
           className={`${styles.presetsBtn} ${styles.panelHeaderText} ${
-            activeTab === "presetsTab" ? styles.activeTab : ""
+            activeTab === "configPresetsTab" ? styles.activeTab : ""
           }`}
-          onClick={() => switchTab("presetsTab")}
+          onClick={() => switchTab("configPresetsTab")}
         >
           presets
         </button>
         <button
           className={`${styles.settingsBtn} ${styles.panelHeaderText} ${
-            activeTab === "settingsTab" ? styles.activeTab : ""
+            activeTab === "configSettingsTab" ? styles.activeTab : ""
           }`}
-          onClick={() => switchTab("settingsTab")}
+          onClick={() => switchTab("configSettingsTab")}
         >
           settings
         </button>
       </div>
       <div className={styles.configInterface}>
-        {activeTab === "settingsTab" ? <SettingsTab /> : <PresetsTab />}
+        {activeTab === "configSettingsTab" ? (
+          <ConfigSettingsTab />
+        ) : (
+          <ConfigPresetsTab />
+        )}
       </div>
       <div className={`${styles.playBtnContainer}`}>
         <button className={`${styles.playBtn} ${styles.playBtnText}`}>
@@ -45,4 +49,4 @@ const GameConfigPanel: React.FC = (props: Props) => {
   );
 };
 
-export default GameConfigPanel;
+export default menuConfigPanel;
