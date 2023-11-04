@@ -5,15 +5,11 @@ from typing import Dict
 from spotify.track import Track
 from spotify.album import Album
 from spotify.artist import Artist
-from spotify.user import User
-from spotipy import Spotify
-from spotify_manager import SpotifyManager
 
 class Game(object):
 
     def __init__(self, rounds=10, allow_explicit=True):
         self.game_id: uuid.UUID = uuid.uuid4()
-        self.spotify_manager = SpotifyManager()
         
         # Game rules
         self.rounds: int = rounds
@@ -27,28 +23,44 @@ class Game(object):
         self.artists: Dict[Artist] = {}
         self.album_artist_ids: List[str] = []
 
-    # Returns the game's spotify manager
-    def get_manager(self) -> SpotifyManager:
-        return self.spotify_manager
-    
-    # Returns the game's Spotify object
-    def get_spotify(self) -> Spotify:
-        return self.spotify_manager.spotify
-
-    # Returns the number of rounds in the game
     def get_rounds(self) -> int:
+        """
+        Gets the number of rounds in the game.
+
+        Returns:
+            int: Number of rounds in the game.
+        """
+
         return self.rounds
 
-    # Returns the current round (0 means game has not started yet, -1 means game ended)
     def get_current_round(self) -> int:
+        """
+        Gets the current round of the game.
+
+        Returns:
+            int: The current round number of the game (0 if the game hasn't yet started, or -1 if the game has ended).
+        """
+
         return self.current_round
     
-    # Returns the track from the current round
     def get_current_track(self) -> Track:
+        """
+        Gets the track for the current round of the game.
+
+        Returns:
+            Track: The current track.
+        """
+
         return self.get_track_by_id(self.round_tracks[self.get_current_round() - 1])
 
-    # Returns whether the game allows explicit tracks
     def allow_explicit_tracks(self) -> bool:
+        """
+        Whether or not the game allows explicit tracks.
+
+        Returns:
+            bool: True if explicit tracks are allowed, false otherwise.
+        """
+
         return self.allow_explicit
 
     # Returns a track in the game given its id
@@ -58,10 +70,6 @@ class Game(object):
     # Returns an album in the game given its id
     def get_album_by_id(self, album_id) -> Album:
         return self.albums.get(album_id, None)
-    
-    # Returns a user in the game given their id
-    def get_user_by_id(self, user_id) -> User:
-        return self.get_manager().get_user_by_id(user_id)
     
     # Returns an artist in the game given their id
     def get_artist_by_id(self, artist_id) -> Artist:
@@ -105,20 +113,24 @@ class Game(object):
         self.artists[artist_id].add_listener(user_id)
 
     # Adds tracks to this game from a given playlist
-    def add_playlist_tracks(self, id):
-        playlist = self.get_spotify().playlist(id, fields='owner.display_name,owner.id,tracks.total')
+    def add_playlist_tracks(self, spotify, id):
+        playlist = spotify.playlist(id, fields='owner.display_name,owner.id,tracks.total')
         
         user_id = str(playlist['owner']['id'])
         track_count = int(playlist['tracks']['total'])
         offset = 0
         while track_count > 0:
             limit = min(100, track_count)
-            tracks = self.get_spotify().playlist_tracks(id, fields='items.is_local,items.track.album.artists,items.track.album.album_type,items.track.album.id,items.track.album.images,items.track.album.name,items.track.album.total_tracks,items.track.artists,items.track.duration_ms,items.track.id,items.track.name,items.track.preview_url', limit=limit, offset=offset, additional_types=['track'])
+            tracks = spotify.playlist_tracks(id, fields='items.is_local,items.track.album.artists,items.track.album.album_type,items.track.album.id,items.track.album.images,items.track.album.name,items.track.album.total_tracks,items.track.artists,items.track.duration_ms,items.track.id,items.track.name,items.track.preview_url', limit=limit, offset=offset, additional_types=['track'])
             
             for t in tracks['items']:
                 self.add_track(t, user_id)
             track_count -= limit
             offset += 100
+    
+    # Adds the liked tracks for the currently authenticated user to this game
+    def add_saved_tracks(self, spotify):
+        info = spotify.current_user_saved_tracks(100, 0)
 
     # Returns a random track from this game's track pool
     def get_random_track(self) -> Track:
@@ -144,10 +156,6 @@ class Game(object):
 
     def __start_game(self):
         self.reset_round_tracks()
-
-    # Returns whether the game can start or not
-    def can_start(self) -> bool:
-        return self.get_manager().get_user_count() > 0
 
     # Returns whether the game has started yet
     def game_started(self) -> bool:

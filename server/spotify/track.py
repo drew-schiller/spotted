@@ -1,11 +1,11 @@
 from typing import List
 from typing import Set
+from spotify.spotify_unit import SpotifyUnit
 
-class Track(object):
+class Track(SpotifyUnit):
 
     def __init__(self, track_json):
-        self.id = str(track_json['id'])
-        self.name = str(track_json['name'])
+        super().__init__(str(track_json['id']), str(track_json['name']))
         self.artists = []
         for a in track_json['artists']:
             self.artists.append(a['id'])
@@ -16,14 +16,6 @@ class Track(object):
         self.duration = int(track_json['duration_ms']) / 1000
         self.user_listeners = set()
         self.preview_url = str(track_json['preview_url'])
-    
-    # Returns this track's id
-    def get_id(self) -> str:
-        return self.id
-    
-    # Returns this track's name
-    def get_name(self) -> str:
-        return self.name
     
     # Returns this track's artists' ids
     def get_artists(self) -> List[str]:
@@ -53,7 +45,6 @@ class Track(object):
     def get_preview_url(self) -> str:
         return self.preview_url
     
-    # Returns the track as a JSON object
     def serialize(self):
         json = {
             "id": self.get_id(),
@@ -72,12 +63,3 @@ class Track(object):
         for l in self.get_user_listeners():
             json["listener_ids"].append(l)
         return json
-
-    def __eq__(self, other):
-        return self.id == other.id
-    
-    def __str__(self):
-        return self.name
-
-    def __hash__(self):
-        return hash(self.get_id())

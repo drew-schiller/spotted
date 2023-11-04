@@ -13,7 +13,7 @@ class SpotifyManager(spotipy.CacheHandler):
         oauth = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI, scope=SCOPE, cache_handler=self, show_dialog=True, open_browser=True)
         self.spotify = spotipy.Spotify(auth=auth_token, oauth_manager=oauth)
 
-        # Store users
+        # Store users and game
         self.current_user_id: str = ""
         self.users: Dict[User] = {}
 
@@ -29,6 +29,10 @@ class SpotifyManager(spotipy.CacheHandler):
         if self.current_user_id in self.users:
             self.get_user_by_id(self.current_user_id).set_auth_token(token_info)
         return None
+    
+    # Returns this manager's Spotify object
+    def get_spotify(self) -> spotipy.Spotify:
+        return self.spotify
     
     # Returns a user given their id
     def get_user_by_id(self, user_id) -> User:
@@ -52,7 +56,7 @@ class SpotifyManager(spotipy.CacheHandler):
         self.set_current_user("")
         return self.spotify.oauth_manager.get_authorize_url()
     
-    # Adds the currently authenticated user to this manager
+    # Adds the currently authenticated user to this manager, returning the added user
     def add_user(self, response_code):
         auth_token = self.spotify.oauth_manager.get_access_token(response_code, False, False)
         self.spotify.set_auth(auth_token)
@@ -60,15 +64,19 @@ class SpotifyManager(spotipy.CacheHandler):
         self.current_user_id = user_id = str(user_json['id'])
         if not user_id in self.users:
             self.users[user_id] = User(user_json, auth_token)
+            self.users[user_id].set_playlists(self.get_playlists(5))
+        return self.users[user_id]
 
     # Removes a user from this manager given their id
     def remove_user(self, user_id):
         self.users.pop(user_id, None)
+        if self.current_user_id == user_id:
+            self.set_current_user("")
 
     # Returns the playlists for the current authenticated user
-    def get_playlists(self):
-        json = self.spotify.current_user_playlists()['items']
-        # Ensures playlists are owned by player
+    def get_playlists(self, limit=50):
+        json = self.spotify.current_user_playlists(limit=limit)['items']
+        # Only allow playlists owned by current player
         playlists = []
         for p in json:
             if p['owner']['id'] == self.current_user_id and not p['collaborative']:

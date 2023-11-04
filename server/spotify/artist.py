@@ -1,10 +1,10 @@
 from typing import Set
+from spotify.spotify_unit import SpotifyUnit
 
-class Artist(object):
+class Artist(SpotifyUnit):
 
     def __init__(self, artist_json):
-        self.id = str(artist_json['id'])
-        self.name = str(artist_json['name'])
+        super().__init__(str(artist_json['id']), str(artist_json['name']))
         self.user_listeners = set()
         self.track_count = 0
 
@@ -32,7 +32,6 @@ class Artist(object):
     def increment_track_count(self) -> None:
         self.track_count += 1
 
-    # Returns the artist as a JSON object
     def serialize(self):
         json = {
             "id": self.get_id(),
@@ -43,12 +42,3 @@ class Artist(object):
         for l in self.get_user_listeners():
             json["listener_ids"].append(l)
         return json
-
-    def __eq__(self, other):
-        return self.id == other.id
-    
-    def __str__(self):
-        return self.name
-
-    def __hash__(self):
-        return hash(self.get_id())

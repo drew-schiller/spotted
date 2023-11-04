@@ -1,23 +1,15 @@
 from typing import List
+from spotify.spotify_unit import SpotifyUnit
 
-class Album(object):
+class Album(SpotifyUnit):
 
     def __init__(self, album_json):
-        self.id = str(album_json['id'])
-        self.name = str(album_json['name'])
+        super().__init__(str(album_json['id']), str(album_json['name']))
         self.track_count = int(album_json['total_tracks'])
         self.artists = []
         for a in album_json['artists']:
             self.artists.append(a['id'])
         self.images = album_json['images']
-
-    # Returns this album's id
-    def get_id(self) -> str:
-        return self.id
-    
-    # Returns this album's name
-    def get_name(self) -> str:
-        return self.name
     
     # Returns this album's track count
     def get_track_count(self) -> int:
@@ -31,7 +23,6 @@ class Album(object):
     def get_images(self):
         return self.images
     
-    # Returns the album as a JSON object
     def serialize(self):
         json = {
             "id": self.get_id(),
@@ -43,12 +34,3 @@ class Album(object):
         for a in self.get_artists():
             json["artist_ids"].append(a)
         return json
-    
-    def __eq__(self, other):
-        return self.id == other.id
-    
-    def __str__(self):
-        return self.name
-
-    def __hash__(self):
-        return hash(self.get_id())
