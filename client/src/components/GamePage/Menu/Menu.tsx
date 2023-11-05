@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import ReactDOM from "react-dom/client";
 import MenuConfigPanel from "./MenuConfigPanel";
 import MenuConnPanel from "./MenuConnPanel";
-
 import styles from "./Menu.module.sass";
+
 type Props = {};
 
 const Menu: React.FC = (props: Props) => {
@@ -24,7 +23,7 @@ const Menu: React.FC = (props: Props) => {
 
   return (
     <div className={` ${minimized ? styles.minimized : styles.menuModule}`}>
-      <MenuConnPanel />
+      <MenuConnPanel maxPlayers={8}/>
       <MenuConfigPanel />
     </div>
   );

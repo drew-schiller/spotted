@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Menu.module.sass";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
+import ClearIcon from "@mui/icons-material/Clear";
 import PlayerPlaylistItem from "./PlayerPlaylistItem";
 
-type WidgetProps = { profilePictureURL: string; username: string };
+type Playlist = { id: string, name: string };
+type WidgetProps = { removePlayer: (id: string) => void, id: string, name: string, profilePictureURL: string, playlists: Array<Playlist> };
 
 const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
+  const [playlistItems, setPlaylistItems]= useState<Array<JSX.Element>>(() => {
+    return props.playlists.map(playlist => <PlayerPlaylistItem key={playlist['id']} playlistId={playlist['id']} playlistName={playlist['name']}/>)
+  });
+  const removePlayer = () => props.removePlayer(props.id);
+
   return (
     <div className={styles.connPlayerWidget}>
       <div className={styles.connPlayerWidgetTop}>
         <div className={styles.profilePictureContainer}>
           <Link
-            to={`https://open.spotify.com/user/${props.username}`}
+            to={`https://open.spotify.com/user/${props.id}`}
             target="_blank"
           >
             <img
@@ -25,19 +32,23 @@ const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
         </div>
 
         <div className={styles.usernameContainer}>
-          <Link
-            className={styles.username}
-            to={`https://open.spotify.com/user/${props.username}`}
-            target="_blank"
-          >
-            {props.username}
-          </Link>
+          <button className={styles.username}>
+            {props.name}
+          </button>
+          <div className={styles.removePlayerBtnContainer}>
+            <button className={styles.removePlayerBtn} onClick={removePlayer}>
+              <ClearIcon
+                fontSize="large"
+                color="inherit"
+                style={{ margin: 0 }}
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div className={styles.connPlayerWidgetBottom}>
         <div className={styles.playerPlaylistStack}>
-          <PlayerPlaylistItem playlistName="playlistName" />
-          <PlayerPlaylistItem playlistName="playlist2" />
+          {playlistItems}
         </div>
         <div className={styles.displayStackBtnContainer}>
           <button className={styles.displayStackBtn}>
