@@ -64,7 +64,7 @@ class SpotifyManager(spotipy.CacheHandler):
         self.current_user_id = user_id = str(user_json['id'])
         if not user_id in self.users:
             self.users[user_id] = User(user_json, auth_token)
-            self.users[user_id].set_playlists(self.get_playlists(5))
+            self.users[user_id].set_playlists(self.get_playlists())
         return self.users[user_id]
 
     # Removes a user from this manager given their id
