@@ -14,17 +14,27 @@ const MenuConnPanel = (props: Props) => {
   const [update, setUpdate] = useState(true);
 
   const removePlayer = async (id: string) => {
-    await fetch(`http://127.0.0.1:5000/api/remove_user?id=${id}`, {credentials: "include", method: "POST"});
+    try {
+      await fetch(`http://127.0.0.1:5000/api/remove_user?id=${id}`, {credentials: "include", method: "POST"});
+    } catch {
+      console.error("ERROR: Unable to remove player from session.");
+      return;
+    }
+    
     setUpdate(true);
   };
 
   useEffect(() => {
     if (!update) return;
     const getPlayers = async () => {
-      const response = await fetch('http://127.0.0.1:5000/api/users', {credentials: "include", method: "GET"});
-      const responseJson = await response.json();
-      setPlayers(responseJson["users"]);
       console.log("Retrieving players...");
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/users', {credentials: "include", method: "GET"});
+        const responseJson = await response.json();
+        setPlayers(responseJson["users"]);
+      } catch {
+        console.error("ERROR: Unable to read players from session.");
+      }
     };
 
     getPlayers();
