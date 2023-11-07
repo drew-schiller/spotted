@@ -11,9 +11,7 @@ $songContainerWidth: $gameMidSectHeight
 
 .game-top-sect
   display: flex
-  height: 15%
-  // min-height: 15%
-  // max-height: 15%
+  height: 10%
   background-color: #ff0000
   padding: 1%
 
@@ -30,12 +28,12 @@ $songContainerWidth: $gameMidSectHeight
     width: calc((100% - $gameTitleContainerWidth)/2)
     background-color: #85fa78
 
+//
+
 .game-mid-sect
   display: flex
   justify-content: center
   height: $gameMidSectHeight
-  // min-height: $gameMidSectHeight
-  // max-height: $gameMidSectHeight
   background-color: #00ff37
   padding: 1%
 
@@ -54,17 +52,16 @@ $songContainerWidth: $gameMidSectHeight
 
   .right-body
     display: flex
-    // flex-direction: row
     justify-content: flex-end
     width: calc((100% - $songContainerWidth)/2)
     background-color: #7d78f5
+
+//
 
 .game-bottom-sect
   display: flex
   flex-direction: column
   height: 30%
-  // min-height: 30%
-  // max-height: 30%
   background-color: #1804f8
   padding: 1%
 
@@ -74,7 +71,6 @@ $songContainerWidth: $gameMidSectHeight
     justify-content: center
     align-items: center
     height: 40%
-
     background-color: #f46ef4
 
   .voting-container
@@ -83,15 +79,16 @@ $songContainerWidth: $gameMidSectHeight
     overflow: hidden
     justify-content: center
     align-items: center
-    gap: 2.5%
+    gap: 3%
     height: 60%
     padding: 1.5%
 
     background-color: #f96b6b
 
     .bottom-vote-btn
-      // margin: auto 0 auto 0
       background-color: white
-      width: 150px
-      height: 40px
-      border-radius: 20px
+      width: 12.5%
+      min-width: 150px
+      height: 40%
+      min-height: 40px
+      border-radius: 1000px

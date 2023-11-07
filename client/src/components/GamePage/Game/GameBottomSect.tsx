@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Game.module.sass";
-import BottomVoteBtn from "./bottomVoteBtn";
+import BottomVoteBtn from "./BottomVoteBtn";
 
 type Props = {};
 

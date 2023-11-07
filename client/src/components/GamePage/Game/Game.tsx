@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Game.module.sass";
-import GameTopSect from "./gameTopSect";
-import GameMidSect from "./gameMidSect";
+import GameTopSect from "./GameTopSect";
+import GameMidSect from "./GameMidSect";
 import GameBottomSect from "./GameBottomSect";
 
 type Props = {};
