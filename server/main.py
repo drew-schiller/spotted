@@ -193,7 +193,7 @@ def create_game():
             Response: Redirect response object to the game.
     """
 
-    session["game"] = Game(int(request.args["rounds"]), bool(request.args["allow_explicit"]))
+    session["game"] = Game(request.args.get("rounds"), request.args.get("allow_explicit"))
     return redirect(url_for('index'))
 
 @app.route('/api/current_track')
@@ -215,7 +215,7 @@ def current_track():
 
     return jsonify(session["game"].get_current_track().serialize())
 
-@app.route('/api/end_game')
+@app.route('/api/end_game', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def end_game():
     """

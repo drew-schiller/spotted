@@ -20,14 +20,13 @@ const MenuConnPanel = (props: Props) => {
       console.error("ERROR: Unable to remove player from session.");
       return;
     }
-    
     setUpdate(true);
   };
 
   useEffect(() => {
     if (!update) return;
     const getPlayers = async () => {
-      console.log("Retrieving players...");
+      console.log("Fetching players...");
       try {
         const response = await fetch('http://127.0.0.1:5000/api/users', {credentials: "include", method: "GET"});
         const responseJson = await response.json();
