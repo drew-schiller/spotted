@@ -1,11 +1,13 @@
+@use "sass:math"
 @import "../../_globals"
 
 $pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
 
-$appContainerWidth: 1000px
-$appContainerHeight: 750px
+// $appContainerWidth: 1000px
+// $appContainerHeight: 750px
+$appModuleAspectRatio: math.div(4,3) !important
 $appModuleMargin: 12% 7%
-$appModulePadding: 2vh
+$appModulePadding: 2vmin
 $appModuleBorderRadius: 15px
 $appModuleBackgroundColor: #6247aa
 
@@ -20,13 +22,12 @@ $appModuleBackgroundColor: #6247aa
 // Main App Module Styling
 
 .menu-module, .game-module
-  aspect-ratio: 4 / 3 !important
+  aspect-ratio: $appModuleAspectRatio
   margin: $appModuleMargin
   padding: $appModulePadding
-  height: 85%
-  max-height: $appContainerHeight
+  max-height: 80%
+  height: auto
   width: auto
-  max-width: $appContainerWidth
   border-radius: $appModuleBorderRadius
   background-color: $appModuleBackgroundColor
   box-shadow: 0 4px 8px $globalShadowColor
@@ -38,3 +39,4 @@ $appModuleBackgroundColor: #6247aa
 .game-module
   display: flex
   flex-direction: column
+  padding: 0

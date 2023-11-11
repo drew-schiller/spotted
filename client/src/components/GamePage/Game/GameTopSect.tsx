@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Game.module.sass";
+import TopMiscButton from "./TopMiscButton";
 
 type Props = {};
 
@@ -8,10 +9,14 @@ const GameTopSect = (props: Props) => {
     <div className={styles.gameTopSect}>
       <div className={styles.leftLogoContainer}>leftLogoContainer</div>
       <div className={styles.gameTitleContainer}>
-        gameTitleContainer
-        {/* <div className={styles.gameTitle}>SPOTTED!</div> */}
+        <div className={styles.gameTitle}>SPOTTED!</div>
+        <div className={styles.roundNumber}>ROUND 1/10</div>
       </div>
-      <div className={styles.rightBtnsContainer}>rightContainer</div>
+      <div className={styles.rightBtnsContainer}>
+        <TopMiscButton />
+        <TopMiscButton />
+        <TopMiscButton />
+      </div>
     </div>
   );
 };

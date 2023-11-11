@@ -1,76 +1,110 @@
 @import "../../../_globals"
 @import "../GamePage.module"
 
-// $songContainerWidth: 50%
-$gameTitleContainerWidth: 60%
-$gameMidSectHeight: 55%
-$songContainerWidth: $gameMidSectHeight
+$gameTopSectHeight: 12.5%
+$gameBottomSectHeight: 32.5%
+$gameTitleContainerWidth: 50%
+
+$gameMidSectHeight: calc(100% - $gameBottomSectHeight - $gameTopSectHeight)
 
 .minimized
   display: none
 
 .game-top-sect
   display: flex
-  height: 10%
-  background-color: #ff0000
-  padding: 1%
+  height: $gameTopSectHeight
 
   .left-logo-container
     width: calc((100% - $gameTitleContainerWidth)/2)
+    border-top-left-radius: $appModuleBorderRadius
     background-color: #ff7979
 
   .game-title-container
-    @include centerFlex
     width: $gameTitleContainerWidth
     background-color: #ffee7f
 
+    .game-title
+      @include centerFlex
+      height: 70%
+      background-color: #ffffff8b000
+    .round-number
+      @include centerFlex
+      height: 30%
+      background-color: #0000ff72
+
   .right-btns-container
-    width: calc((100% - $gameTitleContainerWidth)/2)
+    display: flex
+    justify-content: flex-start
+    gap: 5%
+    align-items: center
+    // width: calc((100% - $gameTitleContainerWidth)/2)
+    border-top-right-radius: $appModuleBorderRadius
+    padding-left: 2%
+    // margin-left: -10%
+    flex-grow: 1
     background-color: #85fa78
 
-//
+    .top-misc-button
+      @include centerFlex
+      aspect-ratio: 1 /1
+      height: 60%
+      width: auto
+      border-radius: 1000px
+      background-color: #fff
 
 .game-mid-sect
   display: flex
   justify-content: center
   height: $gameMidSectHeight
   background-color: #00ff37
-  padding: 1%
 
   .nav-btn
 
   .left-body
     display: flex
-    width: calc((100% - $songContainerWidth)/2)
+    width: calc((100% - $gameMidSectHeight)/2)
     background-color: #79f99b
 
   .song-container
-    display: flex
-    justify-content: center
-    width: $songContainerWidth
+    @include centerFlex
+    flex-direction: column
+    width: $gameMidSectHeight
     background-color: #68eff7
+
+    .album-cover
+      @include centerFlex
+      aspect-ratio: 1 / 1
+      height: 80%
+      width: auto
+      border-radius: 15px
+      background-color: #fff
+
+    .track-details-box
+      // align-self: flex-end
+      // justify-self: center
+      // margin-top:-10%?
+      background-color: #635e5e
 
   .right-body
     display: flex
     justify-content: flex-end
-    width: calc((100% - $songContainerWidth)/2)
+    width: calc((100% - $gameMidSectHeight)/2)
     background-color: #7d78f5
-
-//
 
 .game-bottom-sect
   display: flex
   flex-direction: column
-  height: 30%
+  height: 40%
+  border-bottom-left-radius: $appModuleBorderRadius
+  border-bottom-right-radius: $appModuleBorderRadius
   background-color: #1804f8
-  padding: 1%
 
   .game-bar-container
     display: flex
     flex-direction: column
     justify-content: center
     align-items: center
-    height: 40%
+    height: 45%
     background-color: #f46ef4
 
   .voting-container
@@ -80,15 +114,28 @@ $songContainerWidth: $gameMidSectHeight
     justify-content: center
     align-items: center
     gap: 3%
-    height: 60%
+    height: 55%
     padding: 1.5%
-
-    background-color: #f96b6b
+    // background-color: #f96b6b
 
     .bottom-vote-btn
+      display: flex
       background-color: white
       width: 12.5%
       min-width: 150px
       height: 40%
       min-height: 40px
       border-radius: 1000px
+
+      .profile-picture
+        aspect-ratio: 1 / 1
+        height: 100%
+        width: auto
+        border-radius: 1000px
+        background-color: #9e1d1d
+
+      .username
+        align-self: center
+        margin: auto
+        background-color: #8178788d
+        border-radius: 1000px
