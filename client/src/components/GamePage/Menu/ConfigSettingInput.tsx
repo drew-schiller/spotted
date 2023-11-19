@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Menu.module.sass";
 // import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 
-type Props = { name: string };
+type Props = { settings: React.MutableRefObject<Map<string, string>>, name: string, id: string, defaultValue: number };
 
 const ConfigSettingInput = (props: Props) => {
+  const [ value, setValue ] = useState(props.defaultValue);
+
+  const setSetting = (setting: number) => {
+    setValue(setting);
+    props.settings.current.set(props.id, setting.toString());
+  }
+
   return (
     <button className={styles.configSetting}>
       {/* <NumberInput min={0} step={2} /> */}
-      <NumberInput aria-label="Quantity Input" min={1} max={99} />
-      ConfigSettingInput
+      <NumberInput aria-label={props.name} min={1} max={99} value={value} onChange={(e, v) => { if (v) setSetting(v); }} />
     </button>
   );
 };

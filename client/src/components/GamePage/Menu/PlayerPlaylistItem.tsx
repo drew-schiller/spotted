@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Menu.module.sass";
 import Checkbox from "@mui/material/Checkbox";
 
-type Props = { playlistName: string };
+type Props = { playlistId: string, playlistName: string };
 
 const playerPlaylistItem = (props: Props) => {
   return (
