@@ -10,7 +10,7 @@ const Game: React.FC = (_props: Props) => {
   const [minimized, setMinimized] = useState(false);
 
   const handleResize = () => {
-    setMinimized(window.innerWidth < 750 || window.innerHeight < 600);
+    setMinimized(window.innerWidth < 810 || window.innerHeight < 700);
   };
 
   useEffect(() => {
