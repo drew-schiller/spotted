@@ -1,13 +1,24 @@
 import React from "react";
+import styles from "./Game.module.sass";
+import BottomVoteBtn from "./BottomVoteBtn";
+import BottomPlaybackBar from "./BottomPlaybackBar";
 
 type Props = {};
 
 const GameBottomSect = (props: Props) => {
   return (
-    <div className="gameBottomSection">
-      gameBottomSection
-      <div className="gameBar">gameBar</div>
-      <div className="votingContainer">votingContainer</div>
+    <div className={styles.gameBottomSect}>
+      <BottomPlaybackBar />
+      <div className={styles.votingContainer}>
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+        <BottomVoteBtn />
+      </div>
     </div>
   );
 };
