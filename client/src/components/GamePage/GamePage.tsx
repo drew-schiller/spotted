@@ -35,14 +35,9 @@ const MenuPage: React.FC = (props: Props) => {
 
   return (
     <div className={styles.page}>
-
-      <Game />
-      {/* <Menu /> */}
-
       <GamePageUpdateContext.Provider value={context}>
         {page}
       </GamePageUpdateContext.Provider>
-
     </div>
   );
 };
