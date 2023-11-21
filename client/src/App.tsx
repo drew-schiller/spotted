@@ -6,6 +6,7 @@ import AppHeader from "./components/common/AppHeader.tsx";
 import AppFooter from "./components/common/AppFooter.tsx";
 import MenuPage from "./components/GamePage/GamePage.tsx";
 import "../index.sass";
+
 type Props = {};
 
 const App: React.FC = (props: Props) => {
