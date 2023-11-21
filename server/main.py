@@ -173,9 +173,13 @@ def start_game():
     if session["game"].game_started():
         return "The game has already been started"
     
+    # TEST CODE
     for u in session["manager"].users.values():
+        limit = 10
         for p in u.get_playlists():
+            if limit == 0: break
             session["game"].add_playlist_tracks(session["manager"].get_spotify(), p['id'])
+            limit -= 1
     session["game"].next_round()
 
 @app.route('/api/create_game', methods=['POST'])
@@ -184,16 +188,23 @@ def create_game():
     """
     Creates a new game in this session.
     
-    Parameters:
+    JSON Body:
+        allow_explicit (bool): Whether to allow explicit tracks in the game.
         rounds (int): Number of rounds in the game.
-        allow_explicit (bool): Allow explicit tracks in the game.
+        sources (list): List of list of track sources by user ID to include in the game
 
     Returns:
         POST:
             Response: Redirect response object to the game.
     """
 
-    session["game"] = Game(request.args.get("rounds"), request.args.get("allow_explicit"))
+    body = request.json
+    session["game"] = Game(body['rounds'], body['allow_explicit'])
+    # ADD BACK IN ONCE PLAYLISTS WORK
+    #for user in body['sources']:
+    #    session["manager"].set_current_user(user['id'])
+    #    for p in user['playlists']:
+    #        session["game"].add_playlist_tracks(session["manager"].get_spotify(), p)
     return redirect(url_for('index'))
 
 @app.route('/api/current_track')
