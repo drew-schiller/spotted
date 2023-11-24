@@ -10,7 +10,7 @@ $addPlayerBtnColor: #129278
 $headerTextColor: #ffeafd
 
 $widgetBorderHoverColor: #807878
-$widgetBorderHover: 1.5px solid $widgetBorderHoverColor
+$widgetBorderHover: 2px solid $widgetBorderHoverColor
 
 $interfaceCardColor: #baa8be
 $interfaceCardColorDark: darken($interfaceCardColor, 10)
@@ -48,7 +48,7 @@ $presetCardWidth: 30%
 
 $playlistStackPaddingBottom: 1vh
 // FONT VARIABLES
-$headerTextFontSize: 14pt
+$headerTextFontSize: 15pt
 
 // MIXINS ------------------------------------------------------------
 @mixin scrollbar
@@ -98,7 +98,7 @@ $headerTextFontSize: 14pt
 .panel-header-text
   color: $headerTextColor
   font-size: $headerTextFontSize
-  font-weight: bold
+  font-weight: 600
   text-transform: uppercase
 
 .play-btn-text,
@@ -209,7 +209,7 @@ $headerTextFontSize: 14pt
               width: 75px
 
             .player-playlist-item-right
-              font-weight: 600
+              font-weight: 500
               color: #0b132b
               padding-left: 3%
               margin: 0 0 .25vh
@@ -308,9 +308,9 @@ $headerTextFontSize: 14pt
 
           .title
             text-transform: uppercase
-            font-weight: bold
+            font-weight: 500
             color: $globalTextColor
-            font-size: 12pt
+            font-size: 14pt
 
     .config-settings-tab
       @include columnFlexEnd

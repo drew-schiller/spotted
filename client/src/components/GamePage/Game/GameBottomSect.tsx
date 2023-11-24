@@ -14,12 +14,12 @@ const GameBottomSect = (props: Props) => {
         <BottomVoteBtn name="jesse" />
         <BottomVoteBtn name="jesse" />
         <BottomVoteBtn name="jesse" />
-        {/* <BottomVoteBtn />
         <BottomVoteBtn />
         <BottomVoteBtn />
         <BottomVoteBtn />
         <BottomVoteBtn />
-        <BottomVoteBtn /> */}
+        <BottomVoteBtn />
+        <BottomVoteBtn />
       </div>
     </div>
   );
