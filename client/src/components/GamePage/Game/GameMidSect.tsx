@@ -13,7 +13,7 @@ const GameMidSect = (props: Props) => {
         <div className={styles.albumCover}>albumCover</div>
         <div className={styles.trackDetailsBox}>
           <div className={styles.songTitleArea}>SONG</div>
-          <div className={styles.artistTitleArea}>ARTIST</div>
+          <div className={styles.artistTitleArea}>Loading</div>
         </div>
       </div>
 

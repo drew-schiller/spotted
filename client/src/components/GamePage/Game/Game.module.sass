@@ -2,19 +2,20 @@
 @import "../GamePage.module"
 
 $gameTopSectHeight: 12.5%
-$gameBottomSectHeight: 32.5%
+$gameBottomSectHeight: 27.5%
 $gameTitleContainerWidth: 50%
 
 $gameMidSectHeight: calc(100% - $gameBottomSectHeight - $gameTopSectHeight)
 
-$trackDetailsBoxHeight: 6vh
+$trackDetailsBoxHeight: 7.5vh
 .minimized
   display: none
 
 .game-top-sect
   display: flex
   height: $gameTopSectHeight
-  background-color: #ff7979
+  background-color: #5029dc
+  // background-color: #160553
 
   .left-logo-container
     width: calc((100% - $gameTitleContainerWidth)/2)
@@ -58,7 +59,7 @@ $trackDetailsBoxHeight: 6vh
   display: flex
   justify-content: center
   height: $gameMidSectHeight
-  // background-color: #00ff37
+  background-color: #160553
 
   .nav-btn
 
@@ -79,7 +80,8 @@ $trackDetailsBoxHeight: 6vh
       height: 80%
       width: auto
       border-radius: 15px
-      background-color: #fff
+      background-color: #f2e9e4
+      box-shadow: 7.5px 7.5px 10px #000000a2
 
     .track-details-box
       display: flex
@@ -95,9 +97,15 @@ $trackDetailsBoxHeight: 6vh
         @include centerFlex
         height: 50%
         width: 100%
-        background-color: orange
+        background-color: #d14081
+
+        color: $globalTextColor
+        // color: transparent
+        // text-shadow: 0 0 10px $globalTextColor
+        font-weight: bold
+
       .artist-title-area
-        background-color: yellow
+        background-color: #ef798a
 
   .right-body
     display: flex
@@ -111,60 +119,69 @@ $trackDetailsBoxHeight: 6vh
   height: 40%
   border-bottom-left-radius: $appModuleBorderRadius
   border-bottom-right-radius: $appModuleBorderRadius
-  background-color: #1804f8
+  background-color: #160553
 
   .game-bar-container
     display: flex
     justify-content: center
-    height: 45%
-    // background-color: #f46ef4
+    height: 27%
+    margin: .5%
+    border-radius: 15px
+    background-color: #370031ba
 
     .playback-side-button
       @include centerFlex
       aspect-ratio: 1 / 1
-      height: 42.5%
+      height: 50%
       width: auto
       margin: auto
       border-radius: 1000px
-      background-color: white
+      background-color: #f2e9e4
 
     .playback-progress-bar
       @include centerFlex
       position: relative
       z-index: 1
-      width: 80%
+      width: 82.5%
       max-height: 40px
-      height: 45%
+      height: 40%
       margin: auto 0
       border-radius: 1000px
-      border: 5px solid black
-      background-color: red
+      border: 2px solid #463f3a
+      background-color: #16c172
 
       .playback-actions-button
         @include centerFlex
         position: relative
         aspect-ratio: 1 / 1
-        height: 8vmin
+        height: 7.5vmin
         width: auto
         border-radius: 1000px
-        border: 3px solid green
-        background-color: #fff
+        border: 3px solid #16c172
+        font-size: 2.5rem
+        color: #f2e9e4
+        background-color: #2afc98
 
   .voting-container
     display: flex
     flex-flow: row wrap
-    overflow: hidden
     justify-content: center
     align-items: center
     gap: 2%
+
     height: 55%
     padding: 1.5%
+    margin: 0 .5%
+    border-radius: 15px
+    overflow: hidden
+    background-color: darken(#160553,5)
 
     .bottom-vote-btn
       display: flex
-      background-color: white
+      background-color: #d1bce3
       width: 12vmax
       min-width: 150px
+      max-width: 185px
       height: 40%
       min-height: 40px
       border-radius: 1000px
@@ -181,5 +198,5 @@ $trackDetailsBoxHeight: 6vh
         text-align: center
         width: 50%
         margin: auto
-        background-color: #8178788d
+        // background-color: #f2e9e4
         border-radius: 1000px

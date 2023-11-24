@@ -29,7 +29,7 @@ const MenuPage: React.FC = (props: Props) => {
       } catch {
         console.error("ERROR: Unable to determine session state.");
       }
-      setPage(<Menu />);
+      setPage(<Game />);
     };
 
     checkState();
