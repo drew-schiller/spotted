@@ -2,32 +2,27 @@
 @import "../../_globals"
 
 $pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
-
-// $appContainerWidth: 1000px
-// $appContainerHeight: 750px
-$appModuleAspectRatio: math.div(4,3) !important
-$appModuleMargin: 12% 7%
+$pageHeight: calc(100vh - 3.5em)
+// Enforces a 4:3 aspect ratio
+$appModuleHeight: min(calc(0.85 * (100vh - 3.5em)), 70vw)
+$appModuleWidth: calc(1.33 * $appModuleHeight)
+$appModuleMargin: auto 2%
 $appModulePadding: 2vmin
 $appModuleBorderRadius: 15px
 $appModuleBackgroundColor: #6247aa
 
 .page
   @include centerFlex
-  margin: 0
-  padding: 0
-  height: calc(100vh - 3.5em)
+  height: $pageHeight
   background: $pageBackground
   border-bottom: 1px solid $globalBorderColor
 
-// Main App Module Styling
-
-.menu-module, .game-module
-  aspect-ratio: $appModuleAspectRatio
+.menu-module,
+.game-module
   margin: $appModuleMargin
   padding: $appModulePadding
-  max-height: 80%
-  height: auto
-  width: auto
+  height: $appModuleHeight
+  width: $appModuleWidth
   border-radius: $appModuleBorderRadius
   background-color: $appModuleBackgroundColor
   box-shadow: 0 4px 8px $globalShadowColor
