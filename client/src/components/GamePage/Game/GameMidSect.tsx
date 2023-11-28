@@ -16,13 +16,13 @@ const GameMidSect = (props: Props) => {
         <div className={styles.albumCover}>
           <img
               className={styles.albumCoverImg}
-              src={props.gameData.current.round_tracks[round-1]['album']['images'][0]['url']}
+              src={props.gameData.current.round_tracks[round-1].album.images[0].url}
               alt="album cover"
             />
         </div>
         <div className={styles.trackDetailsBox}>
           <div className={styles.songTitleArea}>{props.gameData.current.round_tracks[round-1].name}</div>
-          <div className={styles.artistTitleArea}>{props.gameData.current.round_tracks[round-1]['album']['artists'][0]['name']}</div>
+          <div className={styles.artistTitleArea}>{props.gameData.current.round_tracks[round-1].album.artists[0].name}</div>
         </div>
       </div>
 

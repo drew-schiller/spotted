@@ -9,7 +9,7 @@ export const GamePageUpdateContext = createContext({
   setGamePageUpdate: (update: boolean) => { update }
 });
 
-const MenuPage: React.FC = (props: Props) => {
+const GamePage: React.FC = (props: Props) => {
   const [page, setPage] = useState(<></>);
   const [gamePageUpdate, setGamePageUpdate] = useState(true);
   const contextValue = { gamePageUpdate, setGamePageUpdate };
@@ -29,7 +29,7 @@ const MenuPage: React.FC = (props: Props) => {
       } catch {
         console.error("ERROR: Unable to determine session state.");
       }
-      setPage(<Game />);
+      setPage(<Menu />);
     };
 
     checkState();
@@ -45,4 +45,4 @@ const MenuPage: React.FC = (props: Props) => {
   );
 };
 
-export default MenuPage;
+export default GamePage;

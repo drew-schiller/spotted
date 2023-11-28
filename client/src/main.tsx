@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage.tsx";
-import MenuPage from "./components/GamePage/GamePage.tsx";
+import GamePage from "./components/GamePage/GamePage.tsx";
 import App from "./App.tsx";
 
 const router = createBrowserRouter([
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "menu",
-    element: <MenuPage />,
+    element: <GamePage />,
   },
 ]);
 
