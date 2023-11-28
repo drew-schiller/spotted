@@ -17,7 +17,7 @@ class Game(object):
 
         # Storage variables
         self.current_round: int = 0
-        self.round_tracks: List[Track] = [None] * self.rounds
+        self.round_tracks: List[str] = [None] * self.rounds
         self.track_pool: Dict[Track] = {}
         self.albums: Dict[Album] = {}
         self.artists: Dict[Artist] = {}
@@ -189,7 +189,7 @@ class Game(object):
         offset = 0
         while track_count > 0:
             limit = min(100, track_count)
-            tracks = spotify.playlist_tracks(playlist_id, fields='items.is_local,items.track.album.artists,items.track.album.album_type,items.track.album.id,items.track.album.images,items.track.album.name,items.track.album.total_tracks,items.track.artists,items.track.duration_ms,items.track.id,items.track.name,items.track.preview_url,items.track.explicit', limit=limit, offset=offset, additional_types=['track'])
+            tracks = spotify.playlist_tracks(playlist_id, fields='items.is_local,items.track.album.artists,items.track.album.album_type,items.track.album.id,items.track.album.images,items.track.album.name,items.track.album.total_tracks,items.track.artists.id,items.track.artists.name,items.track.duration_ms,items.track.id,items.track.name,items.track.preview_url,items.track.explicit', limit=limit, offset=offset, additional_types=['track'])
             
             for t in tracks['items']:
                 self.add_track(t, user_id)

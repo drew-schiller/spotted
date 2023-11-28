@@ -153,7 +153,7 @@ def game_data():
         "rounds": session["game"].get_rounds()
     }
     for t in session["game"].round_tracks:
-        json["round_tracks"].append(t.serialize())
+        json["round_tracks"].append(session["game"].get_track_by_id(t).serialize())
     return jsonify(json)
 
 @app.route('/api/start_game', methods=['POST'])
@@ -174,12 +174,12 @@ def start_game():
         return "The game has already been started"
     
     # TEST CODE
-    for u in session["manager"].users.values():
-        limit = 10
-        for p in u.get_playlists():
-            if limit == 0: break
-            session["game"].add_playlist_tracks(session["manager"].get_spotify(), p['id'])
-            limit -= 1
+    # for u in session["manager"].users.values():
+    #     limit = 10
+    #     for p in u.get_playlists():
+    #         if limit == 0: break
+    #         session["game"].add_playlist_tracks(session["manager"].get_spotify(), p['id'])
+    #         limit -= 1
     session["game"].next_round()
 
 @app.route('/api/create_game', methods=['POST'])
@@ -189,9 +189,11 @@ def create_game():
     Creates a new game in this session.
     
     JSON Body:
-        allow_explicit (bool): Whether to allow explicit tracks in the game.
-        rounds (int): Number of rounds in the game.
-        sources (list): List of list of track sources by user ID to include in the game
+        settings:
+            allow_explicit (bool): Whether to allow explicit tracks in the game.
+            rounds (int): Number of rounds in the game.
+        users:
+            sources (list): List of playlists IDs by user ID to include in the game.
 
     Returns:
         POST:
@@ -199,12 +201,12 @@ def create_game():
     """
 
     body = request.json
-    session["game"] = Game(body['rounds'], body['allow_explicit'])
-    # ADD BACK IN ONCE PLAYLISTS WORK
-    #for user in body['sources']:
-    #    session["manager"].set_current_user(user['id'])
-    #    for p in user['playlists']:
-    #        session["game"].add_playlist_tracks(session["manager"].get_spotify(), p)
+    session["game"] = Game(body['settings']['rounds'], body['settings']['allow_explicit'])
+    for user in body['users']:
+        session["manager"].set_current_user(user)
+        for p in body['users'][user]:
+            session["game"].add_playlist_tracks(session["manager"].get_spotify(), p)
+    session["game"].reset_round_tracks()
     return redirect(url_for('index'))
 
 @app.route('/api/current_track')

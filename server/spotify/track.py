@@ -9,10 +9,7 @@ class Track(SpotifyUnit):
         self.artists = []
         for a in track_json['artists']:
             self.artists.append(a['id'])
-        self.album = str(track_json['album']['id'])
-        self.album_artists = []
-        for a in track_json['album']['artists']:
-            self.artists.append(a['id'])
+        self.album = track_json['album']
         self.duration = int(track_json['duration_ms']) / 1000
         self.user_listeners = set()
         self.preview_url = str(track_json['preview_url'])
@@ -21,13 +18,9 @@ class Track(SpotifyUnit):
     def get_artists(self) -> List[str]:
         return self.artists
     
-    # Returns this track's album id
-    def get_album(self) -> str:
+    # Returns this track's album JSON
+    def get_album(self):
         return self.album
-    
-    # Returns this track's album artists' ids
-    def get_album_artists(self) -> List[str]:
-        return self.album_artists
 
     # Returns this track's duration in seconds
     def get_duration(self) -> int:
@@ -44,22 +37,19 @@ class Track(SpotifyUnit):
     # Returns the track's 30 second audio preview URL
     def get_preview_url(self) -> str:
         return self.preview_url
-    
+
     def serialize(self):
         json = {
             "id": self.get_id(),
             "name": self.get_name(),
             "artist_ids": [],
-            "album_id": self.get_album(),
-            "album_artist_ids": [],
+            "album": self.get_album(),
             "duration": self.get_duration(),
             "listener_ids": [],
             "preview_url": self.get_preview_url()
         }
         for a in self.get_artists():
             json["artist_ids"].append(a)
-        for a in self.get_album_artists():
-            json["album_artist_ids"].append(a)
         for l in self.get_user_listeners():
             json["listener_ids"].append(l)
         return json
