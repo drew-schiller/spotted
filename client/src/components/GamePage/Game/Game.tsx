@@ -3,7 +3,7 @@ import styles from "./Game.module.sass";
 import GameTopSect from "./GameTopSect";
 import GameMidSect from "./GameMidSect";
 import GameBottomSect from "./GameBottomSect";
-import { GamePageUpdateContext } from '../GamePage';
+import { GamePageUpdateContext } from "../GamePage";
 
 type Props = {};
 export type Image = { url: string, height: number, width: number };
@@ -50,7 +50,11 @@ const Game: React.FC = (_props: Props) => {
 
   const endGame = async () => {
     try {
-      await fetch('http://127.0.0.1:5000/api/end_game', {credentials: "include", method: "POST", mode: "cors"});
+      await fetch("http://127.0.0.1:5000/api/end_game", {
+        credentials: "include",
+        method: "POST",
+        mode: "cors",
+      });
       setGamePageUpdate(true);
     } catch {
       console.error("ERROR: Unable to end game in session.");

@@ -1,5 +1,5 @@
 import Game from "./Game/Game";
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from "react";
 import styles from "./GamePage.module.sass";
 import Menu from "./Menu/Menu";
 
@@ -10,14 +10,17 @@ export const GamePageUpdateContext = createContext({
 });
 
 const MenuPage: React.FC = (props: Props) => {
-  const [page, setPage] = useState(<></>)
+  const [page, setPage] = useState(<></>);
   const [gamePageUpdate, setGamePageUpdate] = useState(true);
   const contextValue = { gamePageUpdate, setGamePageUpdate };
 
   useEffect(() => {
     const checkState = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/game_exists', {credentials: "include", method: "GET"});
+        const response = await fetch("http://127.0.0.1:5000/api/game_exists", {
+          credentials: "include",
+          method: "GET",
+        });
         const responseJson = await response.json();
         if (responseJson["flag"] == true) {
           setPage(<Game />);
@@ -26,7 +29,7 @@ const MenuPage: React.FC = (props: Props) => {
       } catch {
         console.error("ERROR: Unable to determine session state.");
       }
-      setPage(<Menu />)
+      setPage(<Game />);
     };
 
     checkState();

@@ -10,7 +10,7 @@ $addPlayerBtnColor: #129278
 $headerTextColor: #ffeafd
 
 $widgetBorderHoverColor: #807878
-$widgetBorderHover: 1.5px solid $widgetBorderHoverColor
+$widgetBorderHover: 2px solid $widgetBorderHoverColor
 
 $interfaceCardColor: #baa8be
 $interfaceCardColorDark: darken($interfaceCardColor, 10)
@@ -48,7 +48,7 @@ $presetCardWidth: 30%
 
 $playlistStackPaddingBottom: 1vh
 // FONT VARIABLES
-$headerTextFontSize: 14pt
+$headerTextFontSize: 15pt
 
 // MIXINS ------------------------------------------------------------
 @mixin scrollbar
@@ -87,7 +87,7 @@ $headerTextFontSize: 14pt
     &:active
       transform: translateY(2px)
 
-//HELPER CLASSES --------------------------------------------------------
+//HELPER CLASSES
 .minimized
   display: none
 
@@ -98,9 +98,8 @@ $headerTextFontSize: 14pt
 .panel-header-text
   color: $headerTextColor
   font-size: $headerTextFontSize
-  font-weight: bold
+  font-weight: 600
   text-transform: uppercase
-  // text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,0.025em 0.04em 0 #fffc00
 
 .play-btn-text,
 .add-player-btn-text
@@ -111,9 +110,7 @@ $headerTextFontSize: 14pt
   font-size: 20pt
 .add-player-btn-text
 
-//BY COMPONENT---------------------------------------------------------------
-
-//PLAYER CONNECT PANEL STYLES
+// MAIN CLASSES
 .menu-conn-panel
   @include columnFlexEnd
   float: left
@@ -133,8 +130,106 @@ $headerTextFontSize: 14pt
     overflow-y: auto
     @include scrollbar
 
+    .conn-player-widget
+      margin-bottom: $interfaceCardBottomMargin
+
+      .conn-player-widget-top
+        @include centerFlex
+        overflow: hidden
+        height: 75px
+        display: flex
+        border-radius: 10px
+        transition: filter 0.1s ease
+        @include widget-hover
+
+        .profile-picture-container
+          float: left
+          height: 100%
+          aspect-ratio: 1 / 1
+          background-color: red
+          .profilePictureImg
+            max-width: 100%
+            flex-shrink: 0
+
+        .username-container
+          @include centerFlex
+          float: right
+          width: 100%
+          height: 100%
+          background-color: $interfaceCardColor
+          .username
+            width: 75%
+            border-radius: $commonBorderRadius
+            background-color: darken($interfaceCardColor,10)
+            padding: 3%
+            padding-left: 10%
+            color: $globalTextColor
+            font-size: 12pt
+            font-weight: 600
+
+          .remove-player-btn-container
+            display: flex
+            justify-content: flex-end
+            padding-right: 1%
+            margin-top: calc(4px)
+            margin-bottom: 0
+
+          .remove-player-btn
+            overflow: hidden
+            color: #656565
+            padding: 0
+            margin: 0
+
+      .conn-player-widget-bottom
+        z-index: 0
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-content: center
+        width: 100%
+        margin-top: -5%
+        border-radius: 0 0 $commonBorderRadius $commonBorderRadius
+        background-color: #e0d7d3
+
+        .player-playlist-stack
+          display: flex
+          flex-direction: column
+          justify-content: flex-start
+          margin: 7% 5% 0 0
+          padding-bottom: $playlistStackPaddingBottom
+          overflow: hidden
+
+          .player-playlist-item
+            display: flex
+            justify-content: start
+            margin: 1%
+
+            .player-playlist-item-left
+              align-self: center
+              width: 75px
+
+            .player-playlist-item-right
+              font-weight: 500
+              color: #0b132b
+              padding-left: 3%
+              margin: 0 0 .25vh
+
+        .display-stack-btn-container
+          display: flex
+          justify-content: flex-end
+          padding-right: 1%
+          margin-top: calc(-35px)
+          margin-bottom: 0
+          .display-stack-btn
+            transform: rotate(180deg)
+            overflow: hidden
+            color: #f08080
+            padding: 0
+            margin: 0
+
   .add-player-btn-container
     margin: $addPlayerBtnContainerMargin
+
     .add-player-btn
       float: right
       margin: 0
@@ -142,115 +237,9 @@ $headerTextFontSize: 14pt
       width: $addPlayerBtnDiameter
       border-radius: 50%
       background: $addPlayerBtnColor
-
       transition: filter 0.2s
       @include playAndAddPlayerBtnEffects
 
-  //PLAYER WIDGET COMPONENT STYLES
-.conn-player-widget
-  margin-bottom: $interfaceCardBottomMargin
-  .conn-player-widget-top
-    @include centerFlex
-    overflow: hidden
-    height: 75px
-    display: flex
-    border-radius: 10px
-    transition: filter 0.1s ease
-    @include widget-hover
-
-    .profile-picture-container
-      float: left
-      height: 100%
-      aspect-ratio: 1 / 1
-      background-color: red
-      .profilePictureImg
-        max-width: 100%
-        flex-shrink: 0
-
-    .username-container
-      @include centerFlex
-      float: right
-      width: 100%
-      height: 100%
-      background-color: $interfaceCardColor
-      .username
-        width: 75%
-        border-radius: $commonBorderRadius
-        background-color: darken($interfaceCardColor,10)
-        padding: 3%
-        padding-left: 10%
-        color: $globalTextColor
-        font-size: 12pt
-        font-weight: 600
-    
-      .remove-player-btn-container
-        display: flex
-        justify-content: flex-end
-        padding-right: 1%
-        margin-top: calc(4px)
-        margin-bottom: 0
-
-      .remove-player-btn
-        overflow: hidden
-        color: #656565
-        padding: 0
-        margin: 0
-
-
-
-  .conn-player-widget-bottom
-    z-index: 0
-    // display: none !important
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-content: center
-    width: 100%
-    // margin: 10%
-    margin-top: -5%
-    border-radius: 0 0 $commonBorderRadius $commonBorderRadius
-    background-color: #e0d7d3
-
-    .player-playlist-stack
-      display: flex
-      flex-direction: column
-      justify-content: flex-start
-      margin: 7% 5% 0 0
-      padding-bottom: $playlistStackPaddingBottom
-      // background-color: red
-      // width: 50%
-      // margin-top: 5%
-      overflow: hidden
-      .player-playlist-item
-        display: flex
-        justify-content: start
-        margin: 1%
-        // flex-direction: column
-
-        .player-playlist-item-left
-          align-self: center
-          width: 75px
-
-        .player-playlist-item-right
-          font-weight: 600
-          color: #0b132b
-          padding-left: 3%
-          margin: 0 0 .25vh
-
-    .display-stack-btn-container
-      display: flex
-      justify-content: flex-end
-      padding-right: 1%
-      margin-top: calc(-35px)
-      margin-bottom: 0
-      .display-stack-btn
-        transform: rotate(180deg)
-        overflow: hidden
-        color: #f08080
-        padding: 0
-        margin: 0
-
-  // GAME CONFIG PANEL COMPONENT 
 .menu-config-panel
   @include columnFlexEnd
   float: right
@@ -288,6 +277,68 @@ $headerTextFontSize: 14pt
     overflow-y: auto
     @include scrollbar
 
+    .config-presets-tab
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      justify-content: space-between
+      width: 100%
+
+      .config-preset-card
+        aspect-ratio: 1 / 1 !important
+        width: $presetCardWidth
+        margin-bottom: $interfaceCardBottomMargin
+        padding: 0
+        border-radius: $commonBorderRadius
+        background-color: $interfaceCardColor
+        transition: filter 0.1s ease
+        overflow: hidden
+        @include widget-hover
+        @include widget-active
+
+        .icon-container
+          height: 70%
+          width: 100%
+
+        .title-container
+          @include centerFlex
+          height: 30%
+          margin: 0
+          background-color: $interfaceCardColorDark
+
+          .title
+            text-transform: uppercase
+            font-weight: 500
+            color: $globalTextColor
+            font-size: 14pt
+
+    .config-settings-tab
+      @include columnFlexEnd
+      align-content: center
+      width: 100%
+      height: auto
+
+      // GAME SETTING CARD (INPUT and SWITCH)
+      .config-setting
+        display: flex
+        padding-left: 2vh
+        margin-bottom: $interfaceCardBottomMargin
+        padding-top: 1vh
+        padding-bottom: 1vh
+        border-radius: $commonBorderRadius
+        border: 1.5px solid #ff000000
+        background-color: darken($interfaceCardColor,10)
+        background-color: #e3aaace6
+        transition: filter 0.1s ease
+        color: $globalTextColor
+        font-weight: 600
+        @include widget-active
+        @include widget-hover
+
+        &:focus
+          border: 3px solid $panelHeaderColor
+          filter: brightness(1.1)
+
   .play-btn-container
     display: flex
     justify-content: center
@@ -300,68 +351,3 @@ $headerTextFontSize: 14pt
       border-radius: $playBtnBorderRadius
       background-color: $playBtnColor
       @include playAndAddPlayerBtnEffects
-
-// PRESETS TAB COMPONENT
-.config-presets-tab
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: space-between
-  width: 100%
-
-// GAME SETTINGS TAB
-.config-settings-tab
-  @include columnFlexEnd
-  align-content: center
-  width: 100%
-  height: auto
-
-// PRESET CARD
-.config-preset-card
-  aspect-ratio: 1 / 1 !important
-  width: $presetCardWidth
-  margin-bottom: $interfaceCardBottomMargin
-  padding: 0
-  border-radius: $commonBorderRadius
-  background-color: $interfaceCardColor
-  transition: filter 0.1s ease
-  overflow: hidden
-  @include widget-hover
-  @include widget-active
-
-  .icon-container
-    height: 70%
-    width: 100%
-
-  .title-container
-    @include centerFlex
-    height: 30%
-    margin: 0
-    background-color: $interfaceCardColorDark
-
-    .title
-      text-transform: uppercase
-      font-weight: bold
-      color: $globalTextColor
-      font-size: 12pt
-
-// GAME SETTING CARD (INPUT and SWITCH)
-.config-setting
-  display: flex
-  padding-left: 2vh
-  margin-bottom: $interfaceCardBottomMargin
-  padding-top: 1vh
-  padding-bottom: 1vh
-  border-radius: $commonBorderRadius
-  border: 1.5px solid #ff000000
-  background-color: darken($interfaceCardColor,10)
-  background-color: #e3aaace6
-  transition: filter 0.1s ease
-  color: $globalTextColor
-  font-weight: 600
-  @include widget-active
-  @include widget-hover
-
-  &:focus
-    border: 3px solid $panelHeaderColor
-    filter: brightness(1.1)
