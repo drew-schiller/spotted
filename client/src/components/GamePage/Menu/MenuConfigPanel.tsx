@@ -1,30 +1,39 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./Menu.module.sass";
 import ConfigPresetsTab from "./ConfigPresetsTab";
 import ConfigSettingsTab from "./ConfigSettingsTab";
 import { GamePageUpdateContext } from '../GamePage';
+import { Config } from './Menu';
 
-type Props = {};
+type Props = { config: React.MutableRefObject<Config> };
 
-const MenuConfigPanel: React.FC = (props: Props) => {
+const MenuConfigPanel: React.FC<Props> = (props: Props) => {
   const [ activeTab, setActiveTab ] = useState("configPresetsTab");
-  const gameSettings = useRef(new Map<string, string>());
-  const [ configSettingsTab ] = useState(<ConfigSettingsTab settings={gameSettings}/>);
-  const [ configPresetsTab ] = useState(<ConfigPresetsTab />);
-  const { gamePageUpdate, setGamePageUpdate } = useContext(GamePageUpdateContext);
+  const { setGamePageUpdate } = useContext(GamePageUpdateContext);
 
   const switchTab = (tabState: string) => {
     setActiveTab(tabState);
   };
 
   const createGame = async () => {
-    let createUrl = 'http://127.0.0.1:5000/api/create_game?';
-    for (const [key, value] of gameSettings.current) {
-      createUrl += `${key}=${value}&`;
-    }
-    if (createUrl.slice(-1) === "&") createUrl = createUrl.slice(0, -1);
+    const users = new Map<string, Array<string>>(); // fromEntries doesn't like Sets
+    props.config.current.users.forEach((v, k) => users.set(k, Array.from(v)));
+    const bodyJson = {
+      settings: Object.fromEntries(props.config.current.settings),
+      users: Object.fromEntries(users)
+    };
+    
     try {
-      await fetch(createUrl, {credentials: "include", method: "POST", mode: "cors"});
+      await fetch('http://127.0.0.1:5000/api/create_game', {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        mode: "cors",
+        body: JSON.stringify(bodyJson)
+      });
       setGamePageUpdate(true);
     } catch {
       console.error("ERROR: Unable to create game in session.");
@@ -52,7 +61,7 @@ const MenuConfigPanel: React.FC = (props: Props) => {
         </button>
       </div>
       <div className={styles.configInterface}>
-        {activeTab === "configSettingsTab" ? configSettingsTab : configPresetsTab }
+        {activeTab === "configSettingsTab" ? <ConfigSettingsTab config={props.config} /> : <ConfigPresetsTab/> }
       </div>
       <div className={`${styles.playBtnContainer}`}>
         <button className={`${styles.playBtn} ${styles.playBtnText}`} onClick={createGame}>

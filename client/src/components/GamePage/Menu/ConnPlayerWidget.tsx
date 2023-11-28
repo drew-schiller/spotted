@@ -4,16 +4,28 @@ import styles from "./Menu.module.sass";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import ClearIcon from "@mui/icons-material/Clear";
 import PlayerPlaylistItem from "./PlayerPlaylistItem";
+import { Config } from './Menu';
 
 type Playlist = { id: string, name: string };
-type WidgetProps = { removePlayer: (id: string) => void, id: string, name: string, profilePictureURL: string, playlists: Array<Playlist> };
+type WidgetProps = { config: React.MutableRefObject<Config>, removePlayer: (id: string) => void, id: string, name: string, profilePictureURL: string, playlists: Array<Playlist> };
 
 const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
-  const [playlistItems, setPlaylistItems]= useState<Array<JSX.Element>>(() => {
-    return props.playlists.map(playlist => <PlayerPlaylistItem key={playlist['id']} playlistId={playlist['id']} playlistName={playlist['name']}/>)
+
+  const handlePlaylistCheck = (playlistId: string, checked: boolean) => {
+    if (!props.config.current.users.has(props.id)) {
+      props.config.current.users.set(props.id, new Set<string>());
+    }
+    if (checked) {
+      props.config.current.users.get(props.id)!.add(playlistId);
+    } else {
+      props.config.current.users.get(props.id)!.delete(playlistId);
+    }
+  };
+
+  const [playlistItems] = useState<Array<JSX.Element>>(() => {
+    return props.playlists.map(playlist => <PlayerPlaylistItem key={playlist['id']} handleCheck={handlePlaylistCheck} playlistId={playlist['id']} playlistName={playlist['name']}/>);
   });
-  const removePlayer = () => props.removePlayer(props.id);
 
   return (
     <div className={styles.connPlayerWidget}>
@@ -36,7 +48,7 @@ const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
             {props.name}
           </button>
           <div className={styles.removePlayerBtnContainer}>
-            <button className={styles.removePlayerBtn} onClick={removePlayer}>
+            <button className={styles.removePlayerBtn} onClick={() => props.removePlayer(props.id)}>
               <ClearIcon
                 fontSize="large"
                 color="inherit"

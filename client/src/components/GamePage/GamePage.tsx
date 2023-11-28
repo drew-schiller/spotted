@@ -6,13 +6,13 @@ import Menu from "./Menu/Menu";
 type Props = {};
 export const GamePageUpdateContext = createContext({
   gamePageUpdate: true,
-  setGamePageUpdate: (update: boolean) => {}
+  setGamePageUpdate: (update: boolean) => { update }
 });
 
 const MenuPage: React.FC = (props: Props) => {
   const [page, setPage] = useState(<></>)
   const [gamePageUpdate, setGamePageUpdate] = useState(true);
-  const context = { gamePageUpdate, setGamePageUpdate };
+  const contextValue = { gamePageUpdate, setGamePageUpdate };
 
   useEffect(() => {
     const checkState = async () => {
@@ -35,7 +35,7 @@ const MenuPage: React.FC = (props: Props) => {
 
   return (
     <div className={styles.page}>
-      <GamePageUpdateContext.Provider value={context}>
+      <GamePageUpdateContext.Provider value={contextValue}>
         {page}
       </GamePageUpdateContext.Provider>
     </div>

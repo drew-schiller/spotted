@@ -1,166 +1,30 @@
 import React, { useState } from "react";
 import styles from "./Menu.module.sass";
-// import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
+import { Config } from './Menu';
 
-type Props = { settings: React.MutableRefObject<Map<string, string>>, name: string, id: string, defaultValue: number };
+type Props = { config: React.MutableRefObject<Config>, id: string, name: string, defaultValue: number };
 
 const ConfigSettingInput = (props: Props) => {
-  const [ value, setValue ] = useState(props.defaultValue);
+  const [ value, setValue ] = useState(() => {
+    if (!props.config.current.settings.has(props.id)) {
+      props.config.current.settings.set(props.id, props.defaultValue);
+    }
+    return Number(props.config.current.settings.get(props.id));
+  });
 
-  const setSetting = (setting: number) => {
-    setValue(setting);
-    props.settings.current.set(props.id, setting.toString());
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event) return;
+    const n = Number(event.target.value);
+    setValue(n);
+    props.config.current.settings.set(props.id, n);
+  };
 
   return (
     <button className={styles.configSetting}>
-      {/* <NumberInput min={0} step={2} /> */}
-      <NumberInput aria-label={props.name} min={1} max={99} value={value} onChange={(e, v) => { if (v) setSetting(v); }} />
+      <input name={props.name} type="number" min={1} max={99} value={value} onChange={handleChange} />
+      {props.name}
     </button>
   );
 };
 
 export default ConfigSettingInput;
-
-import {
-  Unstable_NumberInput as BaseNumberInput,
-  NumberInputProps,
-} from "@mui/base/Unstable_NumberInput";
-import { styled } from "@mui/system";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-
-const NumberInput = React.forwardRef(function CustomNumberInput(
-  props: NumberInputProps,
-  ref: React.ForwardedRef<HTMLDivElement>
-) {
-  return (
-    <BaseNumberInput
-      slots={{
-        root: StyledInputRoot,
-        input: StyledInput,
-        incrementButton: StyledButton,
-        decrementButton: StyledButton,
-      }}
-      slotProps={{
-        incrementButton: {
-          children: <AddIcon />,
-          className: "increment",
-        },
-        decrementButton: {
-          children: <RemoveIcon />,
-        },
-      }}
-      {...props}
-      ref={ref}
-    />
-  );
-});
-
-export function QuantityInput() {
-  return <NumberInput aria-label="Quantity Input" min={1} max={99} />;
-}
-
-const blue = {
-  100: "#daecff",
-  200: "#b6daff",
-  300: "#66b2ff",
-  400: "#3399ff",
-  500: "#007fff",
-  600: "#0072e5",
-  800: "#004c99",
-};
-
-const grey = {
-  50: "#f6f8fa",
-  100: "#eaeef2",
-  200: "#d0d7de",
-  300: "#afb8c1",
-  400: "#8c959f",
-  500: "#6e7781",
-  600: "#57606a",
-  700: "#424a53",
-  800: "#32383f",
-  900: "#24292f",
-};
-
-const StyledInputRoot = styled("div")(
-  ({ theme }) => `
-  font-family: IBM Plex Sans, sans-serif;
-  font-weight: 400;
-  color: ${theme.palette.mode === "dark" ? grey[300] : grey[500]};
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-`
-);
-
-const StyledInput = styled("input")(
-  ({ theme }) => `
-  font-size: 0.875rem;
-  font-family: inherit;
-  font-weight: 400;
-  line-height: 1.375;
-  color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-  background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-  border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
-  border-radius: 4px;
-  margin: 0 4px;
-  padding: 10px 12px;
-  outline: 0;
-  min-width: 0;
-  width: 4rem;
-  text-align: center;
-
-  &:hover {
-    border-color: ${blue[400]};
-  }
-
-  &:focus {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${
-      theme.palette.mode === "dark" ? blue[500] : blue[200]
-    };
-  }
-
-  &:focus-visible {
-    outline: 0;
-  }
-`
-);
-
-const StyledButton = styled("button")(
-  ({ theme }) => `
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-  line-height: 1.5;
-  border: 0;
-  border-radius: 999px;
-  color: ${theme.palette.mode === "dark" ? blue[300] : blue[600]};
-  background: transparent;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 120ms;
-
-  &:hover {
-    background: ${theme.palette.mode === "dark" ? blue[800] : blue[100]};
-    cursor: pointer;
-  }
-
-  &:focus-visible {
-    outline: 0;
-  }
-
-  &.increment {
-    order: 1;
-  }
-`
-);

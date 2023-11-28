@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import ConnPlayerWidget from "./ConnPlayerWidget";
 import styles from "./Menu.module.sass";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { Config } from './Menu';
+import { Image } from '../Game/Game'
 
-type Props = { maxPlayers: number };
-type Image = { url: string, height: number, width: number };
+type Props = { config: React.MutableRefObject<Config>, maxPlayers: number };
 type Playlist = { id: string, name: string };
 type Player = { id: string, name: string, profile_pictures: Array<Image>, playlists: Array<Playlist> };
 
@@ -98,7 +99,15 @@ const MenuConnPanel = (props: Props) => {
       </div>
       <div className={styles.playersContainer}>
         {players.map(player => (
-          <ConnPlayerWidget removePlayer={removePlayer} key={player['id']} id={player['id']} name={player['name']} profilePictureURL={player['profile_pictures'][1]['url']} playlists={player['playlists']}/>
+          <ConnPlayerWidget
+            config={props.config}
+            removePlayer={removePlayer}
+            key={player['id']}
+            id={player['id']}
+            name={player['name']}
+            profilePictureURL={player['profile_pictures'][1]['url']}
+            playlists={player['playlists']}
+          />
         ))
       }
       </div>

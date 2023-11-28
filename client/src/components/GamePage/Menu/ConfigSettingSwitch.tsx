@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import styles from "./Menu.module.sass";
-import Switch, { SwitchProps } from "@mui/material/Switch";
+import Switch from "@mui/material/Switch";
+import { Config } from './Menu';
 
-type Props = { settings: React.MutableRefObject<Map<string, string>>, name: string, id: string, defaultValue: string };
+type Props = { config: React.MutableRefObject<Config>, id: string, name: string, defaultValue: boolean };
 
-const GameSettingSwitch = (props: Props) => {
-  const [ value, setValue ] = useState(props.defaultValue);
-  
-  const setSetting = (setting: string) => {
-    setValue(setting);
-    if (setting == "on") setting = "True";
-    else setting = "False";
-    props.settings.current.set(props.id, setting);
+const ConfigSettingSwitch = (props: Props) => {
+  const [ value, setValue ] = useState(() => {
+    if (!props.config.current.settings.has(props.id)) {
+      props.config.current.settings.set(props.id, props.defaultValue);
+    }
+    return Boolean(props.config.current.settings.get(props.id));
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event) return;
+    const b = Boolean(event.target.checked);
+    setValue(b);
+    props.config.current.settings.set(props.id, b);
   };
 
   return (
     <button className={styles.configSetting}>
-      <Switch name={props.name} value={value} onChange={(e) => setSetting(e.target.value)} />
+      <Switch name={props.name} checked={value} onChange={handleChange} />
+      {props.name}
     </button>
   );
 };
 
-export default GameSettingSwitch;
+export default ConfigSettingSwitch;

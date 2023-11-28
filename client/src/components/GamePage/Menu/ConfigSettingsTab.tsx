@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
 import styles from "./Menu.module.sass";
-import GameSettingSwitch from "./ConfigSettingSwitch";
+import ConfigSettingSwitch from "./ConfigSettingSwitch";
 import ConfigSettingInput from "./ConfigSettingInput";
+import { Config } from './Menu';
 
-type Props = { settings: React.MutableRefObject<Map<string, string>> };
+type Props = { config: React.MutableRefObject<Config> };
 
 const ConfigSettingsTab = (props: Props) => {
 
   return (
     <div className={styles.configSettingsTab}>
-      <ConfigSettingInput settings={props.settings} name="Rounds" id="rounds" defaultValue={10} />
-      <GameSettingSwitch settings={props.settings} name="Allow Explicit Tracks" id="allow_explicit" defaultValue={"on"} />
+      <ConfigSettingInput config={props.config} id="rounds" name="Rounds" defaultValue={10} />
+      <ConfigSettingSwitch config={props.config} id="allow_explicit" name="Allow Explicit Tracks" defaultValue={true} />
     </div>
   );
 };

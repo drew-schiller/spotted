@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom/client";
+import React, { useState, useEffect, useRef } from "react";
 import MenuConfigPanel from "./MenuConfigPanel";
 import MenuConnPanel from "./MenuConnPanel";
 import styles from "./Menu.module.sass";
 
 type Props = {};
+export type Config = { settings: Map<string, number | boolean>, users: Map<string, Set<string>> };
 
 const Menu: React.FC = (props: Props) => {
-  const [minimized, setMinimized] = useState(false);
+  const config: React.MutableRefObject<Config> = useRef({
+    settings: new Map<string, number | boolean>(),
+    users: new Map<string, Set<string>>()
+  });
+  const [ minimized, setMinimized ] = useState(false);
 
   const handleResize = () => {
-    setMinimized(window.innerWidth < 750 || window.innerHeight < 600);
+    setMinimized(window.innerWidth < 810 || window.innerHeight < 700);
   };
 
   useEffect(() => {
@@ -23,8 +27,8 @@ const Menu: React.FC = (props: Props) => {
 
   return (
     <div className={` ${minimized ? styles.minimized : styles.menuModule}`}>
-      <MenuConnPanel maxPlayers={8}/>
-      <MenuConfigPanel />
+      <MenuConnPanel config={config} maxPlayers={8}/>
+      <MenuConfigPanel config={config} />
     </div>
   );
 };
