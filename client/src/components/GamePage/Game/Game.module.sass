@@ -59,6 +59,7 @@ $trackDetailsBoxHeight: 7.5vh
   display: flex
   justify-content: center
   height: $gameMidSectHeight
+  width: auto
   background-color: #160553
 
   .nav-btn
@@ -87,13 +88,13 @@ $trackDetailsBoxHeight: 7.5vh
       .album-cover-img
         aspect-ratio: 1 / 1
         height: 100%
-        width: auto
+        width: 100%
 
     .track-details-box
       display: flex
       flex-direction: column
       align-items: center
-      width: calc(.75 * $gameMidSectHeight)
+      width: 27vh
       height: $trackDetailsBoxHeight
       margin-top: calc( -0.5 * $trackDetailsBoxHeight )
       border-radius: 12.5px
@@ -103,13 +104,40 @@ $trackDetailsBoxHeight: 7.5vh
         @include centerFlex
         height: 50%
         width: 100%
-        background-color: #d14081
-
-        color: $globalTextColor
         // color: transparent
         // text-shadow: 0 0 10px $globalTextColor
-        font-size: 14pt
-        font-weight: 700
+
+        .title-area-text
+          color: $globalTextColor
+          font-size: 14pt
+          font-weight: 700
+          white-space: nowrap
+          padding-left: 5%
+          padding-right: 5%
+
+          $translateDistance: max(0%, calc((100% - 27vh)/2))
+          @keyframes slide
+            from
+              transform: translateX($translateDistance)
+            20%
+              transform: translateX($translateDistance)
+            50%
+              transform: translateX(calc(-1 * $translateDistance))
+            70%
+              transform: translateX(calc(-1 * $translateDistance))
+            to
+              transform: translateX($translateDistance)
+          animation-name: slide
+          animation-duration: calc(1s * 8)
+          animation-timing-function: linear
+          animation-iteration-count: infinite
+          -webkit-animation-name: slide
+          -webkit-animation-duration: calc(1s * 8)
+          -webkit-animation-timing-function: linear
+          -webkit-animation-iteration-count: infinite
+
+      .song-title-area
+        background-color: #d14081
 
       .artist-title-area
         background-color: #ef798a

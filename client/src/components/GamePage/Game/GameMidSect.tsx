@@ -21,8 +21,16 @@ const GameMidSect = (props: Props) => {
             />
         </div>
         <div className={styles.trackDetailsBox}>
-          <div className={styles.songTitleArea}>{props.gameData.current.round_tracks[round-1].name}</div>
-          <div className={styles.artistTitleArea}>{props.gameData.current.round_tracks[round-1].album.artists[0].name}</div>
+          <div className={styles.songTitleArea}>
+            <div className={styles.titleAreaText}>
+              {props.gameData.current.round_tracks[round-1].name}
+            </div>
+          </div>
+          <div className={styles.artistTitleArea}>
+            <div className={styles.titleAreaText}>
+              {props.gameData.current.round_tracks[round-1].album.artists[0].name}
+            </div>
+          </div>
         </div>
       </div>
 
