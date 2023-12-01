@@ -6,6 +6,7 @@ import { GamePageUpdateContext } from '../GamePage';
 import { Config } from './Menu';
 
 type Props = { config: React.MutableRefObject<Config> };
+type UserConfigArray = { playlists: Array<string>, saved_tracks: boolean }
 
 const MenuConfigPanel: React.FC<Props> = (props: Props) => {
   const [ activeTab, setActiveTab ] = useState("configPresetsTab");
@@ -16,8 +17,8 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
   };
 
   const createGame = async () => {
-    const users = new Map<string, Array<string>>(); // fromEntries doesn't like Sets
-    props.config.current.users.forEach((v, k) => users.set(k, Array.from(v)));
+    const users = new Map<string, UserConfigArray>(); // fromEntries doesn't like Sets
+    props.config.current.users.forEach((v, k) => users.set(k, { playlists: Array.from(v.playlists), saved_tracks: v.saved_tracks}));
     const bodyJson = {
       settings: Object.fromEntries(props.config.current.settings),
       users: Object.fromEntries(users)

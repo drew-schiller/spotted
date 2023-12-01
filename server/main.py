@@ -173,13 +173,6 @@ def start_game():
     if session["game"].game_started():
         return "The game has already been started"
     
-    # TEST CODE
-    # for u in session["manager"].users.values():
-    #     limit = 10
-    #     for p in u.get_playlists():
-    #         if limit == 0: break
-    #         session["game"].add_playlist_tracks(session["manager"].get_spotify(), p['id'])
-    #         limit -= 1
     session["game"].next_round()
 
 @app.route('/api/create_game', methods=['POST'])
@@ -204,9 +197,12 @@ def create_game():
     session["game"] = Game(body['settings']['rounds'], body['settings']['allow_explicit'])
     for user in body['users']:
         session["manager"].set_current_user(user)
-        for p in body['users'][user]:
+        if (body['users'][user]['saved_tracks']):
+            session["game"].add_saved_tracks(session["manager"].get_spotify())
+        for p in body['users'][user]['playlists']:
             session["game"].add_playlist_tracks(session["manager"].get_spotify(), p)
-    session["game"].reset_round_tracks()
+        
+    session["game"].reset_round_tracks() # temporary to preset the round tracks
     return redirect(url_for('index'))
 
 @app.route('/api/current_track')

@@ -4,12 +4,13 @@ import MenuConnPanel from "./MenuConnPanel";
 import styles from "./Menu.module.sass";
 
 type Props = {};
-export type Config = { settings: Map<string, number | boolean>, users: Map<string, Set<string>> };
+export type UserConfig = { playlists: Set<string>, saved_tracks: boolean }
+export type Config = { settings: Map<string, number | boolean>, users: Map<string, UserConfig> };
 
 const Menu: React.FC = (props: Props) => {
   const config: React.MutableRefObject<Config> = useRef({
     settings: new Map<string, number | boolean>(),
-    users: new Map<string, Set<string>>()
+    users: new Map<string, UserConfig>()
   });
   const [ minimized, setMinimized ] = useState(false);
 

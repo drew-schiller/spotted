@@ -116,7 +116,7 @@ class Game(object):
 
         return artist_id in self.album_artist_ids
     
-    def add_track(self, track_item_json, user_id):
+    def add_track(self, track_json, user_id):
         """
         Adds a track to the game, given its item JSON and the user whose adding it's ID.
         Not every track is available to be added due to Spotify API behavior, or game rules.
@@ -127,9 +127,8 @@ class Game(object):
             string: The ID of the user who is adding this track.
         """
 
-        if track_item_json['is_local'] or track_item_json['track']['preview_url'] is None: return
-        if track_item_json['track']['explicit'] and not self.allow_explicit: return
-        track_json = track_item_json['track']
+        if track_json['preview_url'] is None: return
+        if track_json['explicit'] and not self.allow_explicit: return
         track_id = str(track_json['id'])
         if not track_id in self.track_pool:
             for a in track_json['artists']:
@@ -192,22 +191,27 @@ class Game(object):
             tracks = spotify.playlist_tracks(playlist_id, fields='items.is_local,items.track.album.artists,items.track.album.album_type,items.track.album.id,items.track.album.images,items.track.album.name,items.track.album.total_tracks,items.track.artists.id,items.track.artists.name,items.track.duration_ms,items.track.id,items.track.name,items.track.preview_url,items.track.explicit', limit=limit, offset=offset, additional_types=['track'])
             
             for t in tracks['items']:
-                self.add_track(t, user_id)
+                if t['is_local']: continue
+                self.add_track(t['track'], user_id)
             track_count -= limit
             offset += 100
     
     def add_saved_tracks(self, spotify):
         """
-        Adds the Spotify object's authenticated user's saved tracks to this game, limited to 100 tracks.
+        Adds the Spotify object's authenticated user's saved tracks to this game, limited to 20 tracks.
 
         Parameters:
             Spotify: The Spotify object with the authenticated user.
         """
 
-        user_id = str(spotify.current_user())
-        tracks = spotify.current_user_saved_tracks(100, 0)
-        for t in tracks['items']:
-            self.add_track(t, user_id)
+        user_id = str(spotify.current_user()['id'])
+        offset = 0
+        while offset < 100:
+            tracks = spotify.current_user_saved_tracks(20, offset)
+            for t in tracks['items']:
+                if t['track']['is_local']: continue
+                self.add_track(t['track'], user_id)
+            offset += 20
 
     def get_random_track(self) -> Track:
         """

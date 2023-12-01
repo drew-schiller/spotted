@@ -12,14 +12,21 @@ type WidgetProps = { config: React.MutableRefObject<Config>, removePlayer: (id: 
 const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
 
+  const handleSavedTracksCheck = (id: string, checked: boolean) => {
+    if (!props.config.current.users.has(props.id)) {
+      props.config.current.users.set(props.id, { playlists: new Set<string>(), saved_tracks: false });
+    }
+    props.config.current.users.get(props.id)!.saved_tracks = checked;
+  };
+
   const handlePlaylistCheck = (playlistId: string, checked: boolean) => {
     if (!props.config.current.users.has(props.id)) {
-      props.config.current.users.set(props.id, new Set<string>());
+      props.config.current.users.set(props.id, { playlists: new Set<string>(), saved_tracks: false });
     }
     if (checked) {
-      props.config.current.users.get(props.id)!.add(playlistId);
+      props.config.current.users.get(props.id)!.playlists.add(playlistId);
     } else {
-      props.config.current.users.get(props.id)!.delete(playlistId);
+      props.config.current.users.get(props.id)!.playlists.delete(playlistId);
     }
   };
 
@@ -60,6 +67,7 @@ const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
       </div>
       <div className={styles.connPlayerWidgetBottom}>
         <div className={styles.playerPlaylistStack}>
+          <PlayerPlaylistItem handleCheck={handleSavedTracksCheck} playlistId="saved_tracks" playlistName="Saved Tracks"/>
           {playlistItems}
         </div>
         <div className={styles.displayStackBtnContainer}>
