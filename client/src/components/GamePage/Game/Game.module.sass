@@ -6,8 +6,10 @@ $gameBottomSectHeight: 27.5%
 $gameTitleContainerWidth: 50%
 
 $gameMidSectHeight: calc(100% - $gameBottomSectHeight - $gameTopSectHeight)
-
 $trackDetailsBoxHeight: 7.5vh
+
+$playbackProgressPercentage: 0%
+
 .minimized
   display: none
 
@@ -174,6 +176,7 @@ $trackDetailsBoxHeight: 7.5vh
       background-color: #f2e9e4
 
     .playback-progress-bar
+      --progress: 0
       @include centerFlex
       position: relative
       z-index: 1
@@ -182,8 +185,9 @@ $trackDetailsBoxHeight: 7.5vh
       height: 40%
       margin: auto 1.25%
       border-radius: 1000px
-      border: 2px solid #463f3a
-      background-color: #16c172
+      // border: 2px solid #463f3a
+      border: 2px solid #16c172
+      background: linear-gradient(to right, #16c172, #0000 var(--progress))
 
       .playback-actions-button
         @include centerFlex
