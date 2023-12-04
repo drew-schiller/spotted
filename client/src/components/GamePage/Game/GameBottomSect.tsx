@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Game.module.sass";
 import BottomVoteBtn from "./BottomVoteBtn";
 import BottomPlaybackBar from "./BottomPlaybackBar";
+import { PlaybackProvider } from "./BottomPlaybackBar"; // change later
 import { GameData, RoundContext, Player } from "./Game";
 
 type GameBottomSectProps = { gameData: React.MutableRefObject<GameData>, players: Array<Player> };

@@ -95,20 +95,31 @@ const AudioPlayer = (props: AudioPlayerProps) => {
 type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData> };
 
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
+  const { elapsedTime } = usePlayback();
   const { round, setRound } = useContext(RoundContext);
   const audioFileUrl =
     props.gameData.current.round_tracks[round - 1].preview_url;
+
+  const progressBarRef = useRef<HTMLDivElement>(null);
+
+  // Show progress
+  useEffect(() => {
+    const progressBar = progressBarRef.current;
+
+    if (progressBar) {
+      const percentage = (elapsedTime / 30000) * 100;
+      progressBar.style.setProperty("--progress", `${percentage}%`);
+    }
+  }, [elapsedTime]);
   return (
-    <PlaybackProvider>
-      <div className={styles.gameBarContainer}>
-        <PlaybackSideButton />
-        <div className={styles.playbackProgressBar}>
-          <AudioPlayer audioFileUrl={audioFileUrl} />
-          <PlaybackActionsButton />
-        </div>
-        <PlaybackSideButton />
+    <div className={styles.gameBarContainer}>
+      <PlaybackSideButton />
+      <div className={styles.playbackProgressBar} ref={progressBarRef}>
+        <AudioPlayer audioFileUrl={audioFileUrl} />
+        <PlaybackActionsButton />
       </div>
-    </PlaybackProvider>
+      <PlaybackSideButton />
+    </div>
   );
 };
 
