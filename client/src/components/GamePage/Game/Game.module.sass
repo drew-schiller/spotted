@@ -24,6 +24,10 @@ $playbackProgressPercentage: 0%
     border-top-left-radius: $appModuleBorderRadius
     // background-color: #ff7979
 
+    .left-logo-img
+      padding: 2.5% 2.5%
+      height: 90%
+
   .game-title-container
     width: $gameTitleContainerWidth
     // background-color: #ffee7f
@@ -55,7 +59,8 @@ $playbackProgressPercentage: 0%
     height: 60%
     width: auto
     border-radius: 1000px
-    background-color: #fff
+    font-size: 1.8rem
+    background-color: #c6ccff
 
 .game-mid-sect
   display: flex
@@ -189,19 +194,27 @@ $playbackProgressPercentage: 0%
       border-radius: 1000px
       // border: 2px solid #463f3a
       border: 2px solid #16c172
-      background: linear-gradient(to right, #16c172, #0000 var(--progress))
+      overflow: hidden
 
-      .playback-actions-button
-        @include centerFlex
-        position: relative
-        aspect-ratio: 1 / 1
-        height: 7.5vmin
-        width: auto
-        border-radius: 1000px
-        border: 3px solid #16c172
-        font-size: 2.5rem
-        color: #f2e9e4
-        background-color: #2afc98
+      .progress
+        position: absolute
+        height: 100%
+        width: var(--progress)
+        background: #16c172 //linear-gradient(to right, #16c172, #0000 var(--progress))
+
+    .playback-actions-button
+      @include centerFlex
+      align-self: center
+      position: absolute
+      z-index: 2
+      aspect-ratio: 1 / 1
+      height: 7.5vmin
+      width: auto
+      border-radius: 1000px
+      border: 3px solid #16c172
+      font-size: 2.5rem
+      color: #f2e9e4
+      background-color: #2afc98
 
   .voting-container
     display: flex

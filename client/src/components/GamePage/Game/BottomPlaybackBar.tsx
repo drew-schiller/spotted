@@ -22,6 +22,8 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
   const togglePlayback = () => {
     setIsPlaying((isPlaying) => !isPlaying);
+    const percentage = Math.min((elapsedTime / 275.0), 100);
+    if (percentage == 100.0 && !isPlaying) setElapsedTime(0);
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
     if (isPlaying) {
       intervalId = setInterval(() => {
-        setElapsedTime((elapsedTime) => elapsedTime + 100);
+        setElapsedTime(elapsedTime => elapsedTime + 100);
       }, 100);
     } else {
       clearInterval(intervalId);
@@ -95,7 +97,7 @@ const AudioPlayer = (props: AudioPlayerProps) => {
 type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData> };
 
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
-  const { elapsedTime } = usePlayback();
+  const { elapsedTime, setElapsedTime, isPlaying, togglePlayback } = usePlayback();
   const { round, setRound } = useContext(RoundContext);
   const audioFileUrl =
     props.gameData.current.round_tracks[round - 1].preview_url;
@@ -107,17 +109,26 @@ const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
     const progressBar = progressBarRef.current;
 
     if (progressBar) {
-      const percentage = (elapsedTime / 30000) * 100;
+      const percentage = Math.min((elapsedTime / 275.0), 100);
       progressBar.style.setProperty("--progress", `${percentage}%`);
+      if (percentage == 100.0) togglePlayback();
     }
   }, [elapsedTime]);
+
+  // Reset progress on round change
+  useEffect(() => {
+    if (isPlaying) togglePlayback();
+    setElapsedTime(0);
+  }, [round]);
+
   return (
     <div className={styles.gameBarContainer}>
       <PlaybackSideButton />
       <div className={styles.playbackProgressBar} ref={progressBarRef}>
+        <div className={styles.progress}/>
         <AudioPlayer audioFileUrl={audioFileUrl} />
-        <PlaybackActionsButton />
       </div>
+      <PlaybackActionsButton />
       <PlaybackSideButton />
     </div>
   );
