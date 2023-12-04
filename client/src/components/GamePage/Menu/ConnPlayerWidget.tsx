@@ -5,8 +5,8 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import ClearIcon from "@mui/icons-material/Clear";
 import PlayerPlaylistItem from "./PlayerPlaylistItem";
 import { Config } from './Menu';
+import { Playlist } from '../Game/Game';
 
-type Playlist = { id: string, name: string };
 type WidgetProps = { config: React.MutableRefObject<Config>, removePlayer: (id: string) => void, id: string, name: string, profilePictureURL: string, playlists: Array<Playlist> };
 
 const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {

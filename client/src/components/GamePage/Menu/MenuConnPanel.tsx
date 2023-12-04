@@ -3,11 +3,9 @@ import ConnPlayerWidget from "./ConnPlayerWidget";
 import styles from "./Menu.module.sass";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { Config } from './Menu';
-import { Image } from '../Game/Game'
+import { Player } from '../Game/Game';
 
 type Props = { config: React.MutableRefObject<Config>, maxPlayers: number };
-type Playlist = { id: string, name: string };
-type Player = { id: string, name: string, profile_pictures: Array<Image>, playlists: Array<Playlist> };
 
 const MenuConnPanel = (props: Props) => {
   const [externalPopup, setExternalPopup] = useState<Window | null>(null);
@@ -98,18 +96,17 @@ const MenuConnPanel = (props: Props) => {
         Players {`${players.length}/${props.maxPlayers}`}
       </div>
       <div className={styles.playersContainer}>
-        {players.map(player => (
+        {players.map(player =>
           <ConnPlayerWidget
+            key={player.id}
             config={props.config}
             removePlayer={removePlayer}
-            key={player['id']}
-            id={player['id']}
-            name={player['name']}
-            profilePictureURL={player['profile_pictures'][1]['url']}
-            playlists={player['playlists']}
+            id={player.id}
+            name={player.name}
+            profilePictureURL={player.profile_pictures[1].url}
+            playlists={player.playlists}
           />
-        ))
-      }
+        )}
       </div>
       <div className={styles.addPlayerBtnContainer}>
         <button className={`${styles.addPlayerBtn} ${styles.addPlayerBtnText}`} onClick={openAuth}>

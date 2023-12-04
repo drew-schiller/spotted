@@ -14,24 +14,14 @@ import { GamePageUpdateContext } from "../GamePage";
 type Props = {};
 export type Image = { url: string; height: number; width: number };
 export type Artist = { id: string; name: string };
-export type Album = {
-  name: string;
-  id: string;
-  images: Array<Image>;
-  artists: Array<Artist>;
-};
-export type Track = {
-  name: string;
-  id: string;
-  album: Album;
-  preview_url: string;
-};
+export type Album = { name: string; id: string; images: Array<Image>; artists: Array<Artist>; };
+export type Track = { name: string; id: string; album: Album; preview_url: string; };
+export type Playlist = { id: string, name: string };
+export type Player = { id: string, name: string, profile_pictures: Array<Image>, playlists: Array<Playlist> };
 export type GameData = { round_tracks: Array<Track>; rounds: number };
 export const RoundContext = createContext({
   round: 0,
-  setRound: (r: number) => {
-    r;
-  },
+  setRound: (r: number) => { r }
 });
 
 const Game: React.FC = (_props: Props) => {
@@ -39,6 +29,7 @@ const Game: React.FC = (_props: Props) => {
   const { setGamePageUpdate } = useContext(GamePageUpdateContext);
   const [round, setRound] = useState(0);
   const contextValue = { round, setRound };
+  const [ players, setPlayers ] = useState([]);
   const gameData = useRef<GameData>({ round_tracks: [], rounds: 0 });
 
   useEffect(() => {
@@ -56,7 +47,18 @@ const Game: React.FC = (_props: Props) => {
         console.error("ERROR: Unable to read game data from session.");
       }
     };
+    const getPlayers = async () => {
+      console.log("Fetching players...");
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/users', {credentials: "include", method: "GET"});
+        const responseJson = await response.json();
+        setPlayers(responseJson["users"]);
+      } catch {
+        console.error("ERROR: Unable to read players from session.");
+      }
+    };
 
+    getPlayers();
     getGameData();
   }, []);
 
@@ -91,7 +93,7 @@ const Game: React.FC = (_props: Props) => {
       <RoundContext.Provider value={contextValue}>
         <GameTopSect gameData={gameData} endGame={endGame} />
         <GameMidSect gameData={gameData} />
-        <GameBottomSect gameData={gameData} />
+        <GameBottomSect gameData={gameData} players={players} />
       </RoundContext.Provider>
     );
   };
