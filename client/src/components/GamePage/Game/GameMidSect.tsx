@@ -1,16 +1,35 @@
 import React, { useContext } from "react";
 import styles from "./Game.module.sass";
 import { GameData, RoundContext } from './Game';
+import { FaCaretLeft, FaCaretRight} from 'react-icons/fa';
 
 type Props = { gameData: React.MutableRefObject<GameData> };
 
 const GameMidSect = (props: Props) => {
   const { round, setRound } = useContext(RoundContext);
 
+  const getLeftButton = () => {
+    if (round <= 1) return;
+    return (
+      <button className={styles.navBtn} onClick={() => setRound(Math.max(1, round-1))}>
+        <FaCaretLeft/>
+      </button>
+    )
+  }
+
+  const getRightButton = () => {
+    if (round >= props.gameData.current.rounds) return;
+    return (
+      <button className={styles.navBtn} onClick={() => setRound(Math.min(props.gameData.current.rounds, round+1))}>
+        <FaCaretRight/>
+      </button>
+    )
+  }
+
   return (
     <div className={styles.gameMidSect}>
       <div className={styles.leftBody}>
-        <button className={styles.navBtn} onClick={() => setRound(Math.max(1, round-1))}>PREV</button>
+        {getLeftButton()}
       </div>
       <div className={styles.songContainer}>
         <div className={styles.albumCover}>
@@ -35,7 +54,7 @@ const GameMidSect = (props: Props) => {
       </div>
 
       <div className={styles.rightBody}>
-        <button className={styles.navBtn} onClick={() => setRound(Math.min(props.gameData.current.rounds, round+1))}>NEXT</button>
+        {getRightButton()}
       </div>
     </div>
   );
