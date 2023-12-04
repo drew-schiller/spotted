@@ -22,8 +22,6 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
   const togglePlayback = () => {
     setIsPlaying((isPlaying) => !isPlaying);
-    const percentage = Math.min((elapsedTime / 275.0), 100);
-    if (percentage == 100.0 && !isPlaying) setElapsedTime(0);
   };
 
   useEffect(() => {
@@ -65,22 +63,20 @@ export const usePlayback = () => {
 };
 
 // Consumes the playback state using the usePlayback hook to control the audio playback based on the state.
-type AudioPlayerProps = { audioFileUrl: string };
+type AudioPlayerProps = { audioFileUrl: string, audioRef: React.RefObject<HTMLAudioElement> };
 
 const AudioPlayer = (props: AudioPlayerProps) => {
-  const [timeProgress, setTimeProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const { isPlaying, elapsedTime, setElapsedTime } = usePlayback();
-
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const progressRef = useRef<HTMLAudioElement>(null);
+  const { isPlaying } = usePlayback();
 
   useEffect(() => {
-    const audio = audioRef.current;
-    let intervalId: number;
+    const playAndWait = async (audio: HTMLAudioElement) => {
+      await audio.play();
+    };
+
+    const audio = props.audioRef.current;
     if (audio) {
       if (isPlaying) {
-        audio.play();
+        playAndWait(audio);
       } else {
         audio.pause();
       }
@@ -89,27 +85,27 @@ const AudioPlayer = (props: AudioPlayerProps) => {
 
   return (
     <>
-      <audio src={props.audioFileUrl} ref={audioRef}></audio>
+      <audio src={props.audioFileUrl} ref={props.audioRef}></audio>
     </>
   );
 };
 
-type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData> };
+type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData>};
 
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
   const { elapsedTime, setElapsedTime, isPlaying, togglePlayback } = usePlayback();
   const { round, setRound } = useContext(RoundContext);
-  const audioFileUrl =
-    props.gameData.current.round_tracks[round - 1].preview_url;
+  const audioFileUrl = props.gameData.current.round_tracks[round - 1].preview_url;
 
+  const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Show progress
   useEffect(() => {
+    const audio = audioRef.current
     const progressBar = progressBarRef.current;
-
-    if (progressBar) {
-      const percentage = Math.min((elapsedTime / 275.0), 100);
+    if (audio && progressBar) {
+      const percentage = Math.min((audio.currentTime / audio.duration * 100), 100);
       progressBar.style.setProperty("--progress", `${percentage}%`);
       if (percentage == 100.0) togglePlayback();
     }
@@ -126,7 +122,7 @@ const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
       <PlaybackSideButton />
       <div className={styles.playbackProgressBar} ref={progressBarRef}>
         <div className={styles.progress}/>
-        <AudioPlayer audioFileUrl={audioFileUrl} />
+        <AudioPlayer audioFileUrl={audioFileUrl} audioRef={audioRef}/>
       </div>
       <PlaybackActionsButton />
       <PlaybackSideButton />
