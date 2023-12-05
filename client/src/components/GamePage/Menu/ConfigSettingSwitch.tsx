@@ -3,12 +3,12 @@ import styles from "./Menu.module.sass";
 import Switch from "@mui/material/Switch";
 import { Config } from './Menu';
 
-type Props = { config: React.MutableRefObject<Config>, id: string, name: string, defaultValue: boolean };
+type Props = { config: React.MutableRefObject<Config>, id: string, name: string };
 
 const ConfigSettingSwitch = (props: Props) => {
   const [ value, setValue ] = useState(() => {
     if (!props.config.current.settings.has(props.id)) {
-      props.config.current.settings.set(props.id, props.defaultValue);
+      props.config.current.settings.set(props.id, false);
     }
     return Boolean(props.config.current.settings.get(props.id));
   });
