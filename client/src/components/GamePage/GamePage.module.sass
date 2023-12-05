@@ -17,6 +17,32 @@ $appModuleBackgroundColor: #6247aa
   background: $pageBackground
   border-bottom: 1px solid $globalBorderColor
 
+  .loading
+    @include centerFlex
+    width: calc($appModuleWidth / 2)
+    height: calc($appModuleHeight / 2)
+    color: $globalTextColor
+    font-size: xx-large
+    font-weight: 700
+
+    .loading-circle
+      margin: 2% 2%
+      @include centerFlex
+      @keyframes rotate
+        from
+          transform: rotate(0)
+        to
+          transform: rotate(360deg)
+        
+      animation-name: rotate
+      animation-duration: 2s
+      animation-timing-function: linear
+      animation-iteration-count: infinite
+      -webkit-animation-name: rotate
+      -webkit-animation-duration: 2s
+      -webkit-animation-timing-function: linear
+      -webkit-animation-iteration-count: infinite
+
 .menu-module,
 .game-module
   margin: $appModuleMargin

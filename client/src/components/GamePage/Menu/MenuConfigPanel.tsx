@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import styles from "./Menu.module.sass";
 import ConfigPresetsTab from "./ConfigPresetsTab";
 import ConfigSettingsTab from "./ConfigSettingsTab";
-import { GamePageUpdateContext } from '../GamePage';
+import { GamePageStateContext } from '../GamePage';
 import { Config } from './Menu';
 
 type Props = { config: React.MutableRefObject<Config> };
@@ -10,7 +10,7 @@ type UserConfigArray = { playlists: Array<string>, saved_tracks: boolean }
 
 const MenuConfigPanel: React.FC<Props> = (props: Props) => {
   const [ activeTab, setActiveTab ] = useState("configPresetsTab");
-  const { setGamePageUpdate } = useContext(GamePageUpdateContext);
+  const { setGamePageState } = useContext(GamePageStateContext);
 
   const switchTab = (tabState: string) => {
     setActiveTab(tabState);
@@ -25,6 +25,7 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
     };
     
     try {
+      setGamePageState("loading");
       await fetch('http://127.0.0.1:5000/api/create_game', {
         credentials: "include",
         method: "POST",
@@ -35,7 +36,7 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
         mode: "cors",
         body: JSON.stringify(bodyJson)
       });
-      setGamePageUpdate(true);
+      setGamePageState("game");
     } catch {
       console.error("ERROR: Unable to create game in session.");
     }

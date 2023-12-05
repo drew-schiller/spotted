@@ -9,7 +9,7 @@ import styles from "./Game.module.sass";
 import GameTopSect from "./GameTopSect";
 import GameMidSect from "./GameMidSect";
 import GameBottomSect from "./GameBottomSect";
-import { GamePageUpdateContext } from "../GamePage";
+import { GamePageStateContext } from "../GamePage";
 
 type Props = {};
 export type Image = { url: string; height: number; width: number };
@@ -26,7 +26,7 @@ export const RoundContext = createContext({
 
 const Game: React.FC = (_props: Props) => {
   const [minimized, setMinimized] = useState(false);
-  const { setGamePageUpdate } = useContext(GamePageUpdateContext);
+  const { setGamePageState } = useContext(GamePageStateContext);
   const [round, setRound] = useState(0);
   const contextValue = { round, setRound };
   const [ players, setPlayers ] = useState([]);
@@ -75,13 +75,14 @@ const Game: React.FC = (_props: Props) => {
   }, []);
 
   const endGame = async () => {
+    setGamePageState("loading");
     try {
       await fetch("http://127.0.0.1:5000/api/end_game", {
         credentials: "include",
         method: "POST",
         mode: "cors",
       });
-      setGamePageUpdate(true);
+      setGamePageState("menu");
     } catch {
       console.error("ERROR: Unable to end game in session.");
     }

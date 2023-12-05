@@ -2,20 +2,24 @@ import Game from "./Game/Game";
 import { useState, useEffect, createContext } from "react";
 import styles from "./GamePage.module.sass";
 import Menu from "./Menu/Menu";
+import Loading from "./Loading";
 
 type Props = {};
-export const GamePageUpdateContext = createContext({
-  gamePageUpdate: true,
-  setGamePageUpdate: (update: boolean) => { update }
+export const GamePageStateContext = createContext({
+  gamePageState: "",
+  setGamePageState: (state: string) => { state }
 });
 
 const GamePage: React.FC = (props: Props) => {
   const [page, setPage] = useState(<></>);
-  const [gamePageUpdate, setGamePageUpdate] = useState(true);
-  const contextValue = { gamePageUpdate, setGamePageUpdate };
+  const [gamePageState, setGamePageState] = useState("");
+  const contextValue = { gamePageState, setGamePageState };
 
   useEffect(() => {
     const checkState = async () => {
+      setPage(<Loading />);
+      if (gamePageState == "loading") return;
+
       try {
         const response = await fetch("http://127.0.0.1:5000/api/game_exists", {
           credentials: "include",
@@ -24,23 +28,24 @@ const GamePage: React.FC = (props: Props) => {
         const responseJson = await response.json();
         if (responseJson["flag"] == true) {
           setPage(<Game />);
+          setGamePageState("game");
           return;
         }
       } catch {
         console.error("ERROR: Unable to determine session state.");
       }
       setPage(<Menu />);
+      setGamePageState("menu");
     };
 
     checkState();
-    setGamePageUpdate(false);
-  }, [gamePageUpdate]);
+  }, [gamePageState]);
 
   return (
     <div className={styles.page}>
-      <GamePageUpdateContext.Provider value={contextValue}>
+      <GamePageStateContext.Provider value={contextValue}>
         {page}
-      </GamePageUpdateContext.Provider>
+      </GamePageStateContext.Provider>
     </div>
   );
 };
