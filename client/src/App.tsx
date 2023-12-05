@@ -4,6 +4,7 @@ import LandingPage from "./components/LandingPage/LandingPage.tsx";
 import AppHeader from "./components/common/AppHeader.tsx";
 import AppFooter from "./components/common/AppFooter.tsx";
 import GamePage from "./components/GamePage/GamePage.tsx";
+import CallbackPage from "./components/CallbackPage/CallbackPage.tsx";
 import "../index.sass";
 
 type Props = {};
@@ -15,7 +16,8 @@ const App: React.FC = (props: Props) => {
         <AppHeader />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="menu" element={<GamePage />} />
+          <Route path="game" element={<GamePage />} />
+          <Route path="callback" element={<CallbackPage />} />
         </Routes>
         <AppFooter />
       </BrowserRouter>

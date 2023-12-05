@@ -16,7 +16,7 @@ const HeroSection: React.FC = (props: Props) => {
         <p className={styles.appDescription}>{description}</p>
         <p className={styles.appDescription}>{description2}</p>
         <div className={styles.playBtnContainer}>
-          <Link to="menu">
+          <Link to="game">
             <button className={[styles.playBtnContainer, styles.btn].join(" ")}>
               PLAY
             </button>
