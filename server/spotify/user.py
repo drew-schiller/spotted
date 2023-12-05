@@ -2,11 +2,11 @@ from spotify.spotify_unit import SpotifyUnit
 
 class User(SpotifyUnit):
 
-    def __init__(self, user_json, auth_token):
+    def __init__(self, user_json, token_info):
         super().__init__(str(user_json['id']), str(user_json['display_name']))
         self.profile_pictures = user_json['images']
         self.playlists = None
-        self.auth_token = auth_token
+        self.token_info = token_info
     
     # Returns this user's profile pictures as a JSON
     def get_profile_pictures(self):
@@ -20,13 +20,13 @@ class User(SpotifyUnit):
     def get_playlists(self):
         return self.playlists
     
-    # Returns this user's authentication token
-    def get_auth_token(self) -> str:
-        return self.auth_token
+    # Returns this user's authentication token info
+    def get_token_info(self) -> str:
+        return self.token_info
     
-    # Sets this user's authentication token
-    def set_auth_token(self, token_info):
-        self.auth_token = token_info
+    # Sets this user's authentication token info
+    def set_token_info(self, token_info):
+        self.token_info = token_info
     
     def serialize(self):
         return {

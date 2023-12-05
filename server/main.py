@@ -33,8 +33,6 @@ def index():
     else:
         s += "No game is in session."
     s += " Users: "
-    if "manager" not in session:
-        session["manager"] = SpotifyManager()
     for u in session["manager"].users.values():
         s += u.get_name() + " "
     return s

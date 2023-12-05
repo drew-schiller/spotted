@@ -19,16 +19,14 @@ class SpotifyManager(spotipy.CacheHandler):
 
     # Cache Handler implementation
     def get_cached_token(self):
-        user = self.get_user_by_id(self.current_user_id)
-        if not user is None:
-            return user.get_auth_token()
+        if self.current_user_id in self.users:
+            return self.get_user_by_id(self.current_user_id).get_token_info()
         return None
         
     # Cache Handler implementation
     def save_token_to_cache(self, token_info):
         if self.current_user_id in self.users:
-            self.get_user_by_id(self.current_user_id).set_auth_token(token_info)
-        return None
+            self.get_user_by_id(self.current_user_id).set_token_info(token_info)
     
     # Returns this manager's Spotify object
     def get_spotify(self) -> spotipy.Spotify:
@@ -48,8 +46,14 @@ class SpotifyManager(spotipy.CacheHandler):
     
     # Sets the current authenticated user
     def set_current_user(self, user_id):
-        self.current_user_id = user_id
-        self.spotify.set_auth(self.get_cached_token())
+        if user_id in self.users:
+            self.current_user_id = user_id
+            token_info = self.spotify.oauth_manager.validate_token(self.get_user_by_id(user_id).get_token_info())
+            if token_info is not None:
+                if self.spotify.oauth_manager.is_token_expired(token_info):
+                    token_info = self.spotify.oauth_manager.refresh_access_token(token_info["refresh_token"])
+                self.get_user_by_id(user_id).set_token_info(token_info)
+                self.spotify.set_auth(token_info["access_token"])
 
     # Configures the manager to add a new user, returning the Spotify authentication page
     def configure_spotify(self):
