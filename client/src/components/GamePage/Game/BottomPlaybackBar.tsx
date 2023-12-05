@@ -29,8 +29,8 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
     if (isPlaying) {
       intervalId = setInterval(() => {
-        setElapsedTime(elapsedTime => elapsedTime + 100);
-      }, 100);
+        setElapsedTime(elapsedTime => elapsedTime + 25);
+      }, 25);
     } else {
       clearInterval(intervalId);
     }

@@ -1,0 +1,14 @@
+@use "sass:math"
+@import "../../_globals"
+
+$pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
+$pageHeight: calc(100vh - 3.5em)
+
+.page
+  @include centerFlex
+  height: $pageHeight
+  background: $pageBackground
+  color: $globalTextColor
+  border-bottom: 1px solid $globalBorderColor
+  font-weight: 700
+  font-size: x-large

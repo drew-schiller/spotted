@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styles from "./Game.module.sass";
 import { GameData, RoundContext } from './Game';
 import { FaCaretLeft, FaCaretRight} from 'react-icons/fa';
@@ -37,6 +37,13 @@ const GameMidSect = (props: Props) => {
   const getAlbumArtists = () => {
     return props.gameData.current.round_tracks[round-1].artists.map(artist => artist.name).join(', ');
   };
+
+  useEffect(() => {
+    document.getAnimations().forEach(anim => {
+      anim.cancel();
+      anim.play();
+    });
+  }, [round]);
 
   return (
     <div className={styles.gameMidSect}>
