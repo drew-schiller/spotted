@@ -9,7 +9,10 @@ export type Config = { settings: Map<string, number | boolean>, users: Map<strin
 
 const Menu: React.FC = (props: Props) => {
   const config: React.MutableRefObject<Config> = useRef({
-    settings: new Map<string, number | boolean>(),
+    settings: new Map<string, number | boolean>([
+      ["rounds", 10],
+      ["allow_explicit", true]
+    ]),
     users: new Map<string, UserConfig>()
   });
   const [ minimized, setMinimized ] = useState(false);
