@@ -41,7 +41,7 @@ class SpotifyManager(spotipy.CacheHandler):
         return len(self.users)
     
     # Returns the current authenticated user's id
-    def get_current_user_id(self):
+    def get_current_user_id(self) -> str:
         return self.current_user_id
     
     # Sets the current authenticated user
@@ -49,11 +49,8 @@ class SpotifyManager(spotipy.CacheHandler):
         if user_id in self.users:
             self.current_user_id = user_id
             token_info = self.spotify.oauth_manager.validate_token(self.get_user_by_id(user_id).get_token_info())
-            if token_info is not None:
-                if self.spotify.oauth_manager.is_token_expired(token_info):
-                    token_info = self.spotify.oauth_manager.refresh_access_token(token_info["refresh_token"])
-                self.get_user_by_id(user_id).set_token_info(token_info)
-                self.spotify.set_auth(token_info["access_token"])
+            self.get_user_by_id(user_id).set_token_info(token_info)
+            self.spotify.set_auth(token_info["access_token"])
 
     # Configures the manager to add a new user, returning the Spotify authentication page
     def configure_spotify(self):
@@ -62,12 +59,12 @@ class SpotifyManager(spotipy.CacheHandler):
     
     # Adds the currently authenticated user to this manager, returning the added user
     def add_user(self, response_code):
-        auth_token = self.spotify.oauth_manager.get_access_token(response_code, False, False)
-        self.spotify.set_auth(auth_token)
+        token_info = self.spotify.oauth_manager.get_access_token(response_code, True, False)
+        self.spotify.set_auth(token_info["access_token"])
         user_json = self.spotify.current_user()
         self.current_user_id = user_id = str(user_json['id'])
         if not user_id in self.users:
-            self.users[user_id] = User(user_json, auth_token)
+            self.users[user_id] = User(user_json, token_info)
             self.users[user_id].set_playlists(self.get_playlists())
         return self.users[user_id]
 

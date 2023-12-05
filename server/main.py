@@ -184,7 +184,9 @@ def create_game():
             allow_explicit (bool): Whether to allow explicit tracks in the game.
             rounds (int): Number of rounds in the game.
         users:
-            sources (list): List of playlists IDs by user ID to include in the game.
+            user_id (string): ID of the user whose tracks will be added.
+                saved_tracks (bool): Whether or not the user's saved tracks will be included.
+                playlists (list): List of playlists IDs owned by this user to include.
 
     Returns:
         POST:

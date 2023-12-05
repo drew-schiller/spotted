@@ -21,7 +21,7 @@ class User(SpotifyUnit):
         return self.playlists
     
     # Returns this user's authentication token info
-    def get_token_info(self) -> str:
+    def get_token_info(self):
         return self.token_info
     
     # Sets this user's authentication token info
