@@ -85,6 +85,7 @@ const Game: React.FC = (_props: Props) => {
       setGamePageState("menu");
     } catch {
       console.error("ERROR: Unable to end game in session.");
+      setGamePageState("game");
     }
   };
 

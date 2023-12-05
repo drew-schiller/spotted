@@ -39,6 +39,7 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
       setGamePageState("game");
     } catch {
       console.error("ERROR: Unable to create game in session.");
+      setGamePageState("menu");
     }
   };
 
