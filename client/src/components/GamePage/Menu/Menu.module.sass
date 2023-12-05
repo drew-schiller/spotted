@@ -189,6 +189,8 @@ $headerTextFontSize: 15pt
         margin-top: -5%
         border-radius: 0 0 $commonBorderRadius $commonBorderRadius
         background-color: #e0d7d3
+        @include scrollbar
+        overflow: scroll
 
         .player-playlist-stack
           display: flex
@@ -219,6 +221,7 @@ $headerTextFontSize: 15pt
           padding-right: 1%
           margin-top: calc(-35px)
           margin-bottom: 0
+          
           .display-stack-btn
             transform: rotate(180deg)
             overflow: hidden

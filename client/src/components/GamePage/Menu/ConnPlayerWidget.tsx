@@ -12,31 +12,34 @@ type WidgetProps = { config: React.MutableRefObject<Config>, removePlayer: (id: 
 const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const [bottomHidden, setBottomHidden] = useState(false);
 
-  const handleSavedTracksCheck = (id: string, checked: boolean) => {
-    if (!props.config.current.users.has(props.id)) {
-      props.config.current.users.set(props.id, { playlists: new Set<string>(), saved_tracks: false });
-    }
-    props.config.current.users.get(props.id)!.saved_tracks = checked;
-  };
+  const [playlistItems] = useState<Array<JSX.Element>>(
+    props.playlists.map(playlist => <PlayerPlaylistItem key={playlist.id} config={props.config} playerId={props.id} playlistId={playlist.id} playlistName={playlist.name}/>)
+  );
 
-  const handlePlaylistCheck = (playlistId: string, checked: boolean) => {
-    if (!props.config.current.users.has(props.id)) {
-      props.config.current.users.set(props.id, { playlists: new Set<string>(), saved_tracks: false });
-    }
-    if (checked) {
-      props.config.current.users.get(props.id)!.playlists.add(playlistId);
-    } else {
-      props.config.current.users.get(props.id)!.playlists.delete(playlistId);
-    }
+  const getBottom = () => {
+    if (bottomHidden) return;
+    return (
+      <div className={styles.connPlayerWidgetBottom}>
+        <div className={styles.playerPlaylistStack}>
+          <PlayerPlaylistItem key="saved_tracks" config={props.config} playerId={props.id} playlistId="saved_tracks" playlistName="Saved Tracks"/>
+          {playlistItems}
+        </div>
+        <div className={styles.displayStackBtnContainer}>
+          <button className={styles.displayStackBtn} onClick={() => setBottomHidden(!bottomHidden)}>
+            <ExpandCircleDownIcon
+              fontSize="large"
+              color="inherit"
+              style={{ margin: 0 }}
+            />
+          </button>
+        </div>
+      </div>
+    );
   };
-
-  const [playlistItems] = useState<Array<JSX.Element>>(() => {
-    return props.playlists.map(playlist => <PlayerPlaylistItem key={playlist['id']} handleCheck={handlePlaylistCheck} playlistId={playlist['id']} playlistName={playlist['name']}/>);
-  });
 
   return (
     <div className={styles.connPlayerWidget}>
-      <div className={styles.connPlayerWidgetTop}>
+      <div className={styles.connPlayerWidgetTop} onClick={() => setBottomHidden(!bottomHidden)}>
         <div className={styles.profilePictureContainer}>
           <Link
             to={`https://open.spotify.com/user/${props.id}`}
@@ -65,21 +68,7 @@ const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className={styles.connPlayerWidgetBottom}>
-        <div className={styles.playerPlaylistStack}>
-          <PlayerPlaylistItem handleCheck={handleSavedTracksCheck} playlistId="saved_tracks" playlistName="Saved Tracks"/>
-          {playlistItems}
-        </div>
-        <div className={styles.displayStackBtnContainer}>
-          <button className={styles.displayStackBtn}>
-            <ExpandCircleDownIcon
-              fontSize="large"
-              color="inherit"
-              style={{ margin: 0 }}
-            />
-          </button>
-        </div>
-      </div>
+      {getBottom()}
     </div>
   );
 
