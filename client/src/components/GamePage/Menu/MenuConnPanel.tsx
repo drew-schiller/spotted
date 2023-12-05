@@ -90,6 +90,17 @@ const MenuConnPanel = (props: Props) => {
     }, 500);
   }, [externalPopup]);
 
+  const getAddPlayerButton = () => {
+    if (players.length >= props.maxPlayers) return;
+    return (
+      <div className={styles.addPlayerBtnContainer}>
+        <button className={`${styles.addPlayerBtn} ${styles.addPlayerBtnText}`} onClick={openAuth}>
+          <PersonAddIcon fontSize="large" />
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.menuConnPanel}>
       <div className={`${styles.connPanelHeader} ${styles.panelHeaderText}`}>
@@ -108,11 +119,7 @@ const MenuConnPanel = (props: Props) => {
           />
         )}
       </div>
-      <div className={styles.addPlayerBtnContainer}>
-        <button className={`${styles.addPlayerBtn} ${styles.addPlayerBtnText}`} onClick={openAuth}>
-          <PersonAddIcon fontSize="large" />
-        </button>
-      </div>
+      {getAddPlayerButton()}
     </div>
   );
 };
