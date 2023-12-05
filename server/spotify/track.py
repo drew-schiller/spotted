@@ -6,21 +6,19 @@ class Track(SpotifyUnit):
 
     def __init__(self, track_json):
         super().__init__(str(track_json['id']), str(track_json['name']))
-        self.artists = []
-        for a in track_json['artists']:
-            self.artists.append(a['id'])
+        self.artists = track_json['artists']
         self.album = track_json['album']
         self.duration = int(track_json['duration_ms']) / 1000
         self.user_listeners = set()
         self.preview_url = str(track_json['preview_url'])
     
-    # Returns this track's artists' ids
-    def get_artists(self) -> List[str]:
-        return self.artists
-    
     # Returns this track's album JSON
     def get_album(self):
         return self.album
+    
+    #Returns this track's artists JSON
+    def get_artists(self):
+        return self.artists
 
     # Returns this track's duration in seconds
     def get_duration(self) -> int:
@@ -42,14 +40,12 @@ class Track(SpotifyUnit):
         json = {
             "id": self.get_id(),
             "name": self.get_name(),
-            "artist_ids": [],
+            "artists": self.get_artists(),
             "album": self.get_album(),
             "duration": self.get_duration(),
             "listener_ids": [],
             "preview_url": self.get_preview_url()
         }
-        for a in self.get_artists():
-            json["artist_ids"].append(a)
         for l in self.get_user_listeners():
             json["listener_ids"].append(l)
         return json

@@ -14,8 +14,8 @@ const GameMidSect = (props: Props) => {
       <button className={styles.navBtn} onClick={() => setRound(Math.max(1, round-1))}>
         <FaCaretLeft/>
       </button>
-    )
-  }
+    );
+  };
 
   const getRightButton = () => {
     if (round >= props.gameData.current.rounds) return;
@@ -23,8 +23,20 @@ const GameMidSect = (props: Props) => {
       <button className={styles.navBtn} onClick={() => setRound(Math.min(props.gameData.current.rounds, round+1))}>
         <FaCaretRight/>
       </button>
-    )
-  }
+    );
+  };
+
+  const getAlbumCoverURL = () => {
+    return props.gameData.current.round_tracks[round-1].album.images[0].url;
+  };
+
+  const getSongName = () => {
+    return props.gameData.current.round_tracks[round-1].name;
+  };
+
+  const getAlbumArtists = () => {
+    return props.gameData.current.round_tracks[round-1].artists.map(artist => artist.name).join(', ');
+  };
 
   return (
     <div className={styles.gameMidSect}>
@@ -35,19 +47,19 @@ const GameMidSect = (props: Props) => {
         <div className={styles.albumCover}>
           <img
               className={styles.albumCoverImg}
-              src={props.gameData.current.round_tracks[round-1].album.images[0].url}
+              src={getAlbumCoverURL()}
               alt="album cover"
             />
         </div>
         <div className={styles.trackDetailsBox}>
           <div className={styles.songTitleArea}>
             <div className={styles.titleAreaText}>
-              {props.gameData.current.round_tracks[round-1].name}
+              {getSongName()}
             </div>
           </div>
           <div className={styles.artistTitleArea}>
             <div className={styles.titleAreaText}>
-              {props.gameData.current.round_tracks[round-1].album.artists[0].name}
+              {getAlbumArtists()}
             </div>
           </div>
         </div>
