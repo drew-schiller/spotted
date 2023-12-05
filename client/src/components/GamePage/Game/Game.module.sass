@@ -166,8 +166,8 @@ $playbackProgressPercentage: 0%
   background-color: #160553
 
   .game-bar-container
-    display: flex
-    justify-content: center
+    @include centerFlex
+    position: relative
     height: 27%
     margin: .5%
     border-radius: 15px
@@ -204,7 +204,6 @@ $playbackProgressPercentage: 0%
 
     .playback-actions-button
       @include centerFlex
-      align-self: center
       position: absolute
       z-index: 2
       aspect-ratio: 1 / 1
