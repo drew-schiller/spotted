@@ -21,8 +21,10 @@ const ConfigSettingInput = (props: Props) => {
 
   return (
     <button className={styles.configSetting}>
+      <div className={styles.configSettingTxt}>
+        {props.name}
+      </div>
       <input name={props.name} type="number" min={1} max={99} value={value} onChange={handleChange} />
-      {props.name}
     </button>
   );
 };

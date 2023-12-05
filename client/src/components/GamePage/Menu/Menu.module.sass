@@ -323,19 +323,22 @@ $headerTextFontSize: 15pt
       // GAME SETTING CARD (INPUT and SWITCH)
       .config-setting
         display: flex
-        padding-left: 2vh
+        align-items: center
+        justify-content: space-between
         margin-bottom: $interfaceCardBottomMargin
-        padding-top: 1vh
-        padding-bottom: 1vh
+        padding: 1vh 2vh
         border-radius: $commonBorderRadius
         border: 1.5px solid #ff000000
         background-color: darken($interfaceCardColor,10)
         background-color: #e3aaace6
         transition: filter 0.1s ease
-        color: $globalTextColor
-        font-weight: 600
         @include widget-active
         @include widget-hover
+
+        .config-setting-txt
+          color: $globalTextColor
+          font-weight: 600
+          padding: 2% 2%
 
         &:focus
           border: 3px solid $panelHeaderColor

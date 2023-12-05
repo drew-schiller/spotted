@@ -22,8 +22,10 @@ const ConfigSettingSwitch = (props: Props) => {
 
   return (
     <button className={styles.configSetting}>
+      <div className={styles.configSettingTxt}>
+        {props.name}
+      </div>
       <Switch name={props.name} checked={value} onChange={handleChange} />
-      {props.name}
     </button>
   );
 };
