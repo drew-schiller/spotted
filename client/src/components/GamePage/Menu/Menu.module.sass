@@ -146,17 +146,19 @@ $headerTextFontSize: 15pt
 
     .conn-player-widget
       margin: $interfaceMargin
-
+      border-radius: $commonBorderRadius
+      &:hover
+        border: $widgetBorderHover
+        margin: calc($interfaceMargin - 2px)
+        
       .conn-player-widget-top
         @include centerFlex
         overflow: hidden
         z-index: 2
         height: 75px
         display: flex
-        border-top-left-radius: 10px
-        border-top-right-radius: 10px
+        border-radius: $commonBorderRadius $commonBorderRadius 0 0
         transition: filter 0.1s ease
-        @include widget-hover
 
         .profile-picture-container
           float: left
