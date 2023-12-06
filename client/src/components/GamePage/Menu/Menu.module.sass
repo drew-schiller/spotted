@@ -48,6 +48,7 @@ $presetCardWidth: 30%
 
 $playlistStackMaxHeight: 30vh
 $playlistStackPadding: 2vh
+$collapseBtnHeight: 3vh
 // FONT VARIABLES
 $headerTextFontSize: 15pt
 
@@ -56,9 +57,6 @@ $headerTextFontSize: 15pt
   &::-webkit-scrollbar
     width: 10px
     margin-left: 10px
-
-  &::-webkit-scrollbar-button
-    display: none
 
   &::-webkit-scrollbar-thumb
     background-color: $panelHeaderColor
@@ -76,6 +74,7 @@ $headerTextFontSize: 15pt
   &:hover
     border: $widgetBorderHover
     filter: brightness(0.8)
+    cursor: pointer
 
 @mixin widget-active
   &:focus
@@ -254,7 +253,7 @@ $headerTextFontSize: 15pt
         .collapse-btn
           @include centerFlex
           z-index: 1
-          height: 3vh
+          height: $collapseBtnHeight
           overflow: hidden
           font-size: xx-large
           color: #8b8b8b
@@ -298,8 +297,10 @@ $headerTextFontSize: 15pt
       text-align: center
       &:hover
         background: $panelHeaderBtnHoverBackground
+        cursor: pointer
       &:focus
         background: $panelHeaderBtnFocusBackground
+        cursor: default
       &:active
         background: $panelHeaderBtnActiveBackground
 

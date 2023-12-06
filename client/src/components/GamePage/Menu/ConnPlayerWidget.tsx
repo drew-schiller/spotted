@@ -23,7 +23,7 @@ const ConnPlayerWidget: React.FC<WidgetProps> = (props) => {
   const getBottom = () => {
     return (
       <div className={styles.connPlayerWidgetBottom}>
-        <div className={styles.collapse} style={{maxHeight: bottomHidden ? "0vh" : "33vh" }}>
+        <div className={styles.collapse} style={{maxHeight: bottomHidden ? "0vh" : "33vh" /* set second value to $collapseBtnHeight + $playlistStackMaxHeight */}}>
           <div className={`${styles.playerPlaylistStack}`}>
             <PlayerPlaylistItem key="saved_tracks" config={props.config} playerId={props.id} playlistId="saved_tracks" playlistName="Saved Tracks"/>
             {playlistItems}
