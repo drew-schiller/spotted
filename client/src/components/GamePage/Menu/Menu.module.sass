@@ -150,6 +150,11 @@ $headerTextFontSize: 15pt
       &:hover
         border: $widgetBorderHover
         margin: calc($interfaceMargin - 2px)
+        .conn-player-widget-top
+          .username-container
+            .remove-player-btn-container
+              .remove-player-btn
+                visibility: visible
         
       .conn-player-widget-top
         @include centerFlex
@@ -194,6 +199,7 @@ $headerTextFontSize: 15pt
             justify-content: center
 
             .remove-player-btn
+              visibility: hidden
               overflow: hidden
               color: #656565
               padding: 0
