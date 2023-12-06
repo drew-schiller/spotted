@@ -46,7 +46,8 @@ $playBtnBorderRadius: 5px
 
 $presetCardWidth: 30%
 
-$playlistStackPaddingBottom: 1vh
+$playlistStackMaxHeight: 30vh
+$playlistStackPadding: 2vh
 // FONT VARIABLES
 $headerTextFontSize: 15pt
 
@@ -55,6 +56,9 @@ $headerTextFontSize: 15pt
   &::-webkit-scrollbar
     width: 10px
     margin-left: 10px
+
+  &::-webkit-scrollbar-button
+    display: none
 
   &::-webkit-scrollbar-thumb
     background-color: $panelHeaderColor
@@ -83,9 +87,20 @@ $headerTextFontSize: 15pt
     filter: hue-rotate(25deg)
     filter: brightness(1.2)
     transform: translateY(-2px)
+    cursor: pointer
 
     &:active
       transform: translateY(2px)
+
+@mixin collapse-btn-effects
+  &:hover
+    color: #4f4f4f
+    cursor: pointer
+
+@mixin remove-player-btn-effects
+  &:hover
+    color: #d45c5c
+    cursor: pointer
 
 //HELPER CLASSES
 .minimized
@@ -125,19 +140,21 @@ $headerTextFontSize: 15pt
     background-color: $panelHeaderColor
 
   .players-container
-    margin: $interfaceMargin
     overflow-y: auto
     @include scrollbar
+    margin-bottom: $interfaceCardBottomMargin
 
     .conn-player-widget
-      margin-bottom: $interfaceCardBottomMargin
+      margin: $interfaceMargin
 
       .conn-player-widget-top
         @include centerFlex
         overflow: hidden
+        z-index: 2
         height: 75px
         display: flex
-        border-radius: 10px
+        border-top-left-radius: 10px
+        border-top-right-radius: 10px
         transition: filter 0.1s ease
         @include widget-hover
 
@@ -152,33 +169,36 @@ $headerTextFontSize: 15pt
 
         .username-container
           @include centerFlex
+          justify-content: space-between
           float: right
           width: 100%
           height: 100%
           background-color: $interfaceCardColor
+
           .username
             width: 75%
             border-radius: $commonBorderRadius
             background-color: darken($interfaceCardColor,10)
-            padding: 3%
-            padding-left: 10%
+            margin-left: 5%
+            padding: 3% 10%
             color: $globalTextColor
             font-size: 12pt
             font-weight: 600
 
           .remove-player-btn-container
             display: flex
-            justify-content: flex-end
-            padding-right: 1%
-            margin-top: calc(4px)
-            margin-bottom: 0
+            height: 100%
+            align-items: flex-start
+            justify-content: center
 
-          .remove-player-btn
-            overflow: hidden
-            color: #656565
-            padding: 0
-            margin: 0
-
+            .remove-player-btn
+              overflow: hidden
+              color: #656565
+              padding: 0
+              margin: 0
+              height: 33%
+              @include remove-player-btn-effects
+              
       .conn-player-widget-bottom
         z-index: 0
         display: flex
@@ -186,48 +206,52 @@ $headerTextFontSize: 15pt
         justify-content: center
         align-content: center
         width: 100%
-        margin-top: -5%
         border-radius: 0 0 $commonBorderRadius $commonBorderRadius
         background-color: #e0d7d3
-        @include scrollbar
-        overflow: scroll
+        overflow: hidden
 
-        .player-playlist-stack
-          display: flex
-          flex-direction: column
-          justify-content: flex-start
-          margin: 7% 5% 0 0
-          padding-bottom: $playlistStackPaddingBottom
+        .collapse
           overflow: hidden
+          transition: 0.4s max-height
+          padding: 0
 
-          .player-playlist-item
+          .player-playlist-stack
             display: flex
-            justify-content: start
-            margin: 1%
+            flex-direction: column
+            justify-content: flex-start
+            height: auto
+            margin-bottom: calc(-0.75 * $playlistStackPadding)
+            padding-bottom: $playlistStackPadding
+            overflow: scroll
+            max-height: $playlistStackMaxHeight
 
-            .player-playlist-item-left
-              align-self: center
-              width: 75px
+            .player-playlist-item
+              display: flex
+              align-items: center
+              justify-content: start
+              overflow: visible
+              margin: 1%
 
-            .player-playlist-item-right
-              font-weight: 500
-              color: #0b132b
-              padding-left: 3%
-              margin: 0 0 .25vh
+              .player-playlist-item-left
+                align-self: center
+                width: 75px
 
-        .display-stack-btn-container
-          display: flex
-          justify-content: flex-end
-          padding-right: 1%
-          margin-top: calc(-35px)
-          margin-bottom: 0
-          
-          .display-stack-btn
-            transform: rotate(180deg)
-            overflow: hidden
-            color: #f08080
-            padding: 0
-            margin: 0
+              .player-playlist-item-right
+                font-weight: 500
+                height: max-content
+                color: #0b132b
+                padding-left: 3%
+                margin: 0
+
+        .collapse-btn
+          @include centerFlex
+          z-index: 1
+          height: 3vh
+          overflow: hidden
+          font-size: xx-large
+          color: #8b8b8b
+          background-color: #cecece
+          @include collapse-btn-effects
 
   .add-player-btn-container
     margin: $addPlayerBtnContainerMargin
