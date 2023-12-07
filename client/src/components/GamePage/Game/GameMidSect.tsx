@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import styles from "./Game.module.sass";
 import { GameData, RoundContext } from './Game';
 import { FaCaretLeft, FaCaretRight} from 'react-icons/fa';
+import { Track, Album, Artist } from './Game';
 
 type Props = { gameData: React.MutableRefObject<GameData> };
 
@@ -26,16 +27,34 @@ const GameMidSect = (props: Props) => {
     );
   };
 
-  const getAlbumCoverURL = () => {
-    return props.gameData.current.round_tracks[round-1].album.images[0].url;
+  const getImageURL = () => {
+    switch (props.gameData.current.item_type) {
+      case "track":
+        return (props.gameData.current.round_items[round-1] as Track).album.images[0].url;
+      case "album":
+        return (props.gameData.current.round_items[round-1] as Album).images[0].url;
+      case "artist":
+        return (props.gameData.current.round_items[round-1] as Artist).images[0].url;
+      default:
+        return ""
+    }
   };
 
-  const getSongName = () => {
-    return props.gameData.current.round_tracks[round-1].name;
+  const getTopText = () => {
+    return props.gameData.current.round_items[round-1].name;
   };
 
-  const getAlbumArtists = () => {
-    return props.gameData.current.round_tracks[round-1].artists.map(artist => artist.name).join(', ');
+  const getBottomText = () => {
+    switch (props.gameData.current.item_type) {
+      case "track":
+        return (props.gameData.current.round_items[round-1] as Track).artists.map(artist => artist.name).join(', ');
+      case "album":
+        return (props.gameData.current.round_items[round-1] as Album).artists.map(artist => artist.name).join(', ');
+      case "artist":
+        return (props.gameData.current.round_items[round-1] as Artist).genres.join(', ');
+      default:
+        return ""
+    }
   };
 
   useEffect(() => {
@@ -54,19 +73,19 @@ const GameMidSect = (props: Props) => {
         <div className={styles.albumCover}>
           <img
               className={styles.albumCoverImg}
-              src={getAlbumCoverURL()}
-              alt="album cover"
+              src={getImageURL()}
+              alt={props.gameData.current.item_type + " cover image"}
             />
         </div>
         <div className={styles.trackDetailsBox}>
           <div className={styles.songTitleArea}>
             <div className={styles.titleAreaText}>
-              {getSongName()}
+              {getTopText()}
             </div>
           </div>
           <div className={styles.artistTitleArea}>
             <div className={styles.titleAreaText}>
-              {getAlbumArtists()}
+              {getBottomText()}
             </div>
           </div>
         </div>

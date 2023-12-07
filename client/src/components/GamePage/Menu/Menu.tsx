@@ -5,7 +5,7 @@ import styles from "./Menu.module.sass";
 
 type Props = {};
 export type UserConfig = { playlists: Set<string>, saved_tracks: boolean }
-export type Config = { settings: Map<string, number | boolean>, users: Map<string, UserConfig> };
+export type Config = { settings: Map<string, number | boolean>, users: Map<string, UserConfig>, item_type: string, gamemode: string };
 
 const Menu: React.FC = (props: Props) => {
   const config: React.MutableRefObject<Config> = useRef({
@@ -13,7 +13,9 @@ const Menu: React.FC = (props: Props) => {
       ["rounds", 10],
       ["allow_explicit", true]
     ]),
-    users: new Map<string, UserConfig>()
+    users: new Map<string, UserConfig>(),
+    item_type: "track",
+    gamemode: "vote"
   });
   const [ minimized, setMinimized ] = useState(false);
 

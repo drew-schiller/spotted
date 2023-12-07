@@ -21,7 +21,9 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
     props.config.current.users.forEach((v, k) => users.set(k, { playlists: Array.from(v.playlists), saved_tracks: v.saved_tracks}));
     const bodyJson = {
       settings: Object.fromEntries(props.config.current.settings),
-      users: Object.fromEntries(users)
+      users: Object.fromEntries(users),
+      item_type: props.config.current.item_type,
+      gamemode: props.config.current.gamemode
     };
     
     try {
@@ -64,7 +66,7 @@ const MenuConfigPanel: React.FC<Props> = (props: Props) => {
         </button>
       </div>
       <div className={styles.configInterface}>
-        {activeTab === "configSettingsTab" ? <ConfigSettingsTab config={props.config} /> : <ConfigPresetsTab/> }
+        {activeTab === "configSettingsTab" ? <ConfigSettingsTab config={props.config} /> : <ConfigPresetsTab config={props.config} /> }
       </div>
       <div className={`${styles.playBtnContainer}`}>
         <button className={`${styles.playBtn} ${styles.playBtnText}`} onClick={createGame}>

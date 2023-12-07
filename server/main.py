@@ -147,11 +147,13 @@ def game_data():
         return "No game has been created yet"
     
     json = {
-        "round_tracks": [],
+        "item_type": session["game"].get_item_type(),
+        "gamemode": session["game"].get_gamemode(),
+        "round_items": [],
         "rounds": session["game"].get_rounds()
     }
-    for t in session["game"].round_tracks:
-        json["round_tracks"].append(session["game"].get_track_by_id(t).serialize())
+    for t in session["game"].round_items:
+        json["round_items"].append(session["game"].get_item_by_id(t).serialize())
     return jsonify(json)
 
 @app.route('/api/start_game', methods=['POST'])
@@ -194,27 +196,27 @@ def create_game():
     """
 
     body = request.json
-    session["game"] = Game(body['settings']['rounds'], body['settings']['allow_explicit'])
+    session["game"] = Game(body['item_type'], body['gamemode'], body['settings'])
     for user in body['users']:
         session["manager"].set_current_user(user)
         if (body['users'][user]['saved_tracks']):
-            session["game"].add_saved_tracks(session["manager"].get_spotify())
+            session["game"].add_saved_tracks(session["manager"])
         for p in body['users'][user]['playlists']:
-            session["game"].add_playlist_tracks(session["manager"].get_spotify(), p)
+            session["game"].add_playlist_tracks(session["manager"], p)
         
-    session["game"].reset_round_tracks() # temporary to preset the round tracks
+    session["game"].reset_round_items() # temporary to preset the round tracks
     return redirect(url_for('index'))
 
-@app.route('/api/current_track')
+@app.route('/api/current_item')
 @cross_origin(supports_credentials=True)
-def current_track():
+def current_item():
     """
-    Gets the session's game's current track for the round.
+    Gets the session's game's current item for the round.
 
     There must be an existing started game otherwise an error message is returned.
 
     Returns:
-        JSON: JSON representation of the track.
+        JSON: JSON representation of the item.
     """
 
     if "game" not in session:
@@ -222,7 +224,7 @@ def current_track():
     if not session["game"].game_started():
         return 'The game has not started yet'
 
-    return jsonify(session["game"].get_current_track().serialize())
+    return jsonify(session["game"].get_current_item().serialize())
 
 @app.route('/api/end_game', methods=['POST'])
 @cross_origin(supports_credentials=True)

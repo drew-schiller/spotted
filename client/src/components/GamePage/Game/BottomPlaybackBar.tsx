@@ -2,7 +2,7 @@ import { useRef, useState, createContext, useContext, useEffect } from "react";
 import PlaybackActionsButton from "./PlaybackActionsButton";
 import styles from "./Game.module.sass";
 import PlaybackSideButton from "./PlaybackSideButton";
-import { GameData, RoundContext } from "./Game";
+import { GameData, RoundContext, Track } from "./Game";
 
 interface PlaybackContextType {
   isPlaying: boolean;
@@ -95,7 +95,7 @@ type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData>};
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
   const { elapsedTime, setElapsedTime, isPlaying, togglePlayback } = usePlayback();
   const { round, setRound } = useContext(RoundContext);
-  const audioFileUrl = props.gameData.current.round_tracks[round - 1].preview_url;
+  const audioFileUrl = (props.gameData.current.round_items[round - 1] as Track).preview_url;
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);

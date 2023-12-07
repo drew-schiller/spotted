@@ -13,12 +13,12 @@ import { GamePageStateContext } from "../GamePage";
 
 type Props = {};
 export type Image = { url: string; height: number; width: number };
-export type Artist = { id: string; name: string };
+export type Artist = { id: string; name: string, images: Array<Image>, genres: Array<string> };
 export type Album = { name: string; id: string; images: Array<Image>; artists: Array<Artist>; };
 export type Track = { name: string; id: string; album: Album; artists: Array<Artist>; preview_url: string; };
 export type Playlist = { id: string, name: string };
 export type Player = { id: string, name: string, profile_pictures: Array<Image>, playlists: Array<Playlist> };
-export type GameData = { round_tracks: Array<Track>; rounds: number };
+export type GameData = { item_type: string, gamemode: string, round_items: Array<Track | Album | Artist>; rounds: number };
 export const RoundContext = createContext({
   round: 0,
   setRound: (r: number) => { r }
@@ -30,7 +30,7 @@ const Game: React.FC = (_props: Props) => {
   const [round, setRound] = useState(0);
   const contextValue = { round, setRound };
   const [ players, setPlayers ] = useState([]);
-  const gameData = useRef<GameData>({ round_tracks: [], rounds: 0 });
+  const gameData = useRef<GameData>({item_type: "", gamemode: "", round_items: [], rounds: 0 });
 
   useEffect(() => {
     const getGameData = async () => {
@@ -90,7 +90,7 @@ const Game: React.FC = (_props: Props) => {
   };
 
   const gameSections = () => {
-    if (gameData.current.round_tracks.length == 0) return;
+    if (gameData.current.round_items.length == 0) return;
     return (
       <RoundContext.Provider value={contextValue}>
         <GameTopSect gameData={gameData} endGame={endGame} />

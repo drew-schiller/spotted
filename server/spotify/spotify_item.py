@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class SpotifyUnit(ABC):
+class SpotifyItem(ABC):
 
     def __init__(self, id: str, name: str):
         self.id = id
@@ -8,20 +8,20 @@ class SpotifyUnit(ABC):
 
     def get_id(self) -> str:
         """
-        Gets the ID of this unit.
+        Gets the ID of this item.
 
         Returns:
-            str: ID of this unit.
+            str: ID of this item.
         """
 
         return self.id
 
     def get_name(self) -> str:
         """
-        Gets the name of this unit.
+        Gets the name of this item.
 
         Returns:
-            str: Name of this unit.
+            str: Name of this item.
         """
 
         return self.name
@@ -29,10 +29,10 @@ class SpotifyUnit(ABC):
     @abstractmethod
     def serialize(self):
         """
-        Returns this unit as a serialized JSON object.
+        Returns this item as a serialized JSON object.
 
         Returns:
-            JSON: Serialized JSON of this unit.
+            JSON: Serialized JSON of this item.
         """
         pass
 

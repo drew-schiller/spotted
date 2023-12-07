@@ -1,15 +1,15 @@
 from typing import List
 from typing import Set
-from spotify.spotify_unit import SpotifyUnit
+from spotify.spotify_item import SpotifyItem
 
-class Track(SpotifyUnit):
+class Track(SpotifyItem):
 
     def __init__(self, track_json):
         super().__init__(str(track_json['id']), str(track_json['name']))
         self.artists = track_json['artists']
         self.album = track_json['album']
         self.duration = int(track_json['duration_ms']) / 1000
-        self.user_listeners = set()
+        self.listener_ids = set()
         self.preview_url = str(track_json['preview_url'])
     
     # Returns this track's album JSON
@@ -25,12 +25,12 @@ class Track(SpotifyUnit):
         return self.duration
     
     # Returns the ids of users in the game that listen to this track
-    def get_user_listeners(self) -> Set[str]:
-        return self.user_listeners
+    def get_listener_ids(self) -> Set[str]:
+        return self.listener_ids
     
     # Adds a user that listens to this track, given their id
     def add_listener(self, user_id) -> None:
-        self.user_listeners.add(user_id)
+        self.listener_ids.add(user_id)
 
     # Returns the track's 30 second audio preview URL
     def get_preview_url(self) -> str:
@@ -46,6 +46,6 @@ class Track(SpotifyUnit):
             "listener_ids": [],
             "preview_url": self.get_preview_url()
         }
-        for l in self.get_user_listeners():
+        for l in self.get_listener_ids():
             json["listener_ids"].append(l)
         return json

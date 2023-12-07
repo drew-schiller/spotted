@@ -8,10 +8,10 @@ import { GameData, RoundContext, Player } from "./Game";
 type GameBottomSectProps = { gameData: React.MutableRefObject<GameData>, players: Array<Player> };
 
 const GameBottomSect = (props: GameBottomSectProps) => {
-  return (
-    <PlaybackProvider>
-      <div className={styles.gameBottomSect}>
-        <BottomPlaybackBar gameData={props.gameData} />
+
+  const getLowerContainer = () => {
+    if (props.gameData.current.gamemode == "vote") {
+      return (
         <div className={styles.votingContainer}>
           {props.players.map(player =>
             <BottomVoteBtn
@@ -22,6 +22,21 @@ const GameBottomSect = (props: GameBottomSectProps) => {
             />
           )}
         </div>
+      );
+    } else {
+      return (
+        <div className={styles.guessContainer}>
+          
+        </div>
+      );
+    }
+  };
+
+  return (
+    <PlaybackProvider>
+      <div className={styles.gameBottomSect}>
+        {props.gameData.current.item_type == "track" ? <BottomPlaybackBar gameData={props.gameData} /> : <></>}
+        {getLowerContainer()}
       </div>
     </PlaybackProvider>
   );
