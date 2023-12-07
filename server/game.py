@@ -18,7 +18,7 @@ class Game(object):
 
         # Core game values
         self.item_type: str = item_type if (item_type == "artist" or item_type == "album") else "track"
-        self.gamemode: str = gamemode if (gamemode == "guess") else "vote"
+        self.gamemode: str = gamemode
         
         # Game rules
         self.rounds: int = settings['rounds']
