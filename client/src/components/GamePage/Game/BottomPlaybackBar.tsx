@@ -6,7 +6,7 @@ import { GameData, RoundContext } from "./Game";
 
 interface PlaybackContextType {
   isPlaying: boolean;
-  togglePlayback: () => void;
+  setIsPlaying: (isPlaying: boolean) => void;
   elapsedTime: number;
   setElapsedTime: (milliseconds: number) => void;
 }
@@ -20,16 +20,12 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
 
-  const togglePlayback = () => {
-    setIsPlaying((isPlaying) => !isPlaying);
-  };
-
   useEffect(() => {
     let intervalId: number = 0;
 
     if (isPlaying) {
       intervalId = setInterval(() => {
-        setElapsedTime(elapsedTime => elapsedTime + 25);
+        setElapsedTime((elapsedTime) => elapsedTime + 25);
       }, 25);
     } else {
       clearInterval(intervalId);
@@ -42,7 +38,7 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
   const contextValue = {
     isPlaying,
-    togglePlayback,
+    setIsPlaying,
     elapsedTime,
     setElapsedTime,
   };
@@ -63,7 +59,10 @@ export const usePlayback = () => {
 };
 
 // Consumes the playback state using the usePlayback hook to control the audio playback based on the state.
-type AudioPlayerProps = { audioFileUrl: string, audioRef: React.RefObject<HTMLAudioElement> };
+type AudioPlayerProps = {
+  audioFileUrl: string;
+  audioRef: React.RefObject<HTMLAudioElement>;
+};
 
 const AudioPlayer = (props: AudioPlayerProps) => {
   const { isPlaying } = usePlayback();
@@ -90,22 +89,26 @@ const AudioPlayer = (props: AudioPlayerProps) => {
   );
 };
 
-type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData>};
+type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData> };
 
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
-  const { elapsedTime, setElapsedTime, isPlaying, togglePlayback } = usePlayback();
+  const { elapsedTime, setElapsedTime, isPlaying } = usePlayback();
   const { round, setRound } = useContext(RoundContext);
-  const audioFileUrl = props.gameData.current.round_tracks[round - 1].preview_url;
+  const audioFileUrl =
+    props.gameData.current.round_tracks[round - 1].preview_url;
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Show progress
   useEffect(() => {
-    const audio = audioRef.current
+    const audio = audioRef.current;
     const progressBar = progressBarRef.current;
     if (audio && progressBar) {
-      const percentage = Math.min((audio.currentTime / audio.duration * 100), 100);
+      const percentage = Math.min(
+        (audio.currentTime / audio.duration) * 100,
+        100
+      );
       progressBar.style.setProperty("--progress", `${percentage}%`);
       if (percentage == 100.0) togglePlayback();
     }
@@ -121,8 +124,8 @@ const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
     <div className={styles.gameBarContainer}>
       <PlaybackSideButton />
       <div className={styles.playbackProgressBar} ref={progressBarRef}>
-        <div className={styles.progress}/>
-        <AudioPlayer audioFileUrl={audioFileUrl} audioRef={audioRef}/>
+        <div className={styles.progress} />
+        <AudioPlayer audioFileUrl={audioFileUrl} audioRef={audioRef} />
       </div>
       <PlaybackActionsButton />
       <PlaybackSideButton />
