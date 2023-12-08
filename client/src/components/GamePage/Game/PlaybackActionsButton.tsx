@@ -7,7 +7,7 @@ import { usePlayback } from "./BottomPlaybackBar"; // change later
 type Props = {};
 
 const PlaybackActionsButton = (props: Props) => {
-  const { isPlaying, togglePlayback } = usePlayback();
+  const { isPlaying, setIsPlaying } = usePlayback();
 
   // Actions button will have multiple states, the default of which being playback
   // Within the "playback" state, the button can toggle between play and pause.
@@ -16,7 +16,7 @@ const PlaybackActionsButton = (props: Props) => {
   const handleClick = () => {
     switch (buttonState) {
       case "playback":
-        togglePlayback();
+        setIsPlaying(!isPlaying);
         break;
       case "voting":
         // Handle click in voting state
