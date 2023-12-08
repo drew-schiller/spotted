@@ -220,8 +220,7 @@ class Game(object):
 
         artist_id = str(artist_json['id'])
         if not artist_id in self.artist_pool:
-            artist = manager.get_spotify().artist(artist_id)
-            self.artist_pool[artist_id] = Artist(artist)
+            self.artist_pool[artist_id] = Artist(artist_json)
         self.artist_pool[artist_id].add_listener(user_id)
         manager.get_user_by_id(user_id).add_artist(artist_id)
 

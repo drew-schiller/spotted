@@ -7,8 +7,6 @@ class Artist(SpotifyItem):
         super().__init__(str(artist_json['id']), str(artist_json['name']))
         self.listener_ids = set()
         self.track_count = 0
-        self.images = artist_json['images']
-        self.genres = artist_json['genres']
 
     # Returns this artist's id
     def get_id(self) -> str:
@@ -34,22 +32,12 @@ class Artist(SpotifyItem):
     def increment_track_count(self) -> None:
         self.track_count += 1
 
-    # Returns this artist's cover images in different sizes
-    def get_images(self):
-        return self.images
-    
-    # Returns this artist's genres
-    def get_genres(self) -> List[str]:
-        return self.genres
-
     def serialize(self):
         json = {
             "id": self.get_id(),
             "name": self.get_name(),
             "listener_ids": [],
-            "track_count": self.get_track_count(),
-            "images": self.get_images(),
-            "genres": self.get_genres()
+            "track_count": self.get_track_count()
         }
         for l in self.get_listener_ids():
             json["listener_ids"].append(l)

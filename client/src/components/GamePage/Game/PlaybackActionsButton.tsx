@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import styles from "./Game.module.sass";
 import { usePlayback } from "./BottomPlaybackBar"; // change later
+import { RoundContext } from './Game';
+import { VotingContext } from "./GameBottomSect";
 
 type Props = {};
 
 const PlaybackActionsButton = (props: Props) => {
   const { isPlaying, setIsPlaying } = usePlayback();
-
-  // Actions button will have multiple states, the default of which being playback
-  // Within the "playback" state, the button can toggle between play and pause.
-  const [buttonState, setButtonState] = React.useState("playback");
+  const { round, state, setState, roundStateByRound } = useContext(RoundContext);
+  const { setSelected } = useContext(VotingContext);
+  // Actions button will have multiple states
 
   const handleClick = () => {
-    switch (buttonState) {
-      case "playback":
+    switch (state) {
+      case "voted":
+      case "unselected":
         setIsPlaying(!isPlaying);
         break;
-      case "voting":
+      case "selected":
         // Handle click in voting state
+        setState("voted");
+        roundStateByRound.set(round, "voted");
+        setSelected([]);
         break;
       default:
         break;
@@ -27,18 +32,19 @@ const PlaybackActionsButton = (props: Props) => {
   };
 
   const renderButtonIcon = () => {
-    switch (buttonState) {
-      case "playback":
+    switch (state) {
+      case "voted":
+      case "unselected":
         return isPlaying ? <FaPause /> : <FaPlay />;
-      case "voting":
-        return "Vote";
+      case "selected":
+        return "GUESS";
       default:
         return "";
     }
   };
 
   return (
-    <button onClick={handleClick} className={styles.playbackActionsButton}>
+    <button onClick={handleClick} className={styles.playbackActionsButton} style={(state == "selected") ? {backgroundColor:"#eb7434", borderColor:"#b34c15"} : {}}>
       {renderButtonIcon()}
     </button>
   );

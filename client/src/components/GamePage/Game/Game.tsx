@@ -21,14 +21,19 @@ export type Player = { id: string, name: string, profile_pictures: Array<Image>,
 export type GameData = { item_type: string, gamemode: string, round_items: Array<Track | Album | Artist>; rounds: number };
 export const RoundContext = createContext({
   round: 0,
-  setRound: (r: number) => { r }
+  setRound: (r: number) => { r },
+  state: "unselected",
+  setState: (s: string) => { s },
+  roundStateByRound: new Map<number, string>()
 });
 
 const Game: React.FC = (_props: Props) => {
   const [minimized, setMinimized] = useState(false);
   const { setGamePageState } = useContext(GamePageStateContext);
   const [round, setRound] = useState(0);
-  const contextValue = { round, setRound };
+  const [ state, setState ] = useState("unselected")
+  const [roundStateByRound ] = useState(new Map<number, string>());
+  const contextValue = { round, setRound, state, setState, roundStateByRound };
   const [ players, setPlayers ] = useState([]);
   const gameData = useRef<GameData>({item_type: "", gamemode: "", round_items: [], rounds: 0 });
 
@@ -43,6 +48,11 @@ const Game: React.FC = (_props: Props) => {
         const responseJson = await response.json();
         gameData.current = responseJson;
         setRound(1);
+        let i = 0;
+        while (i < gameData.current.rounds) {
+          roundStateByRound.set(i, "unselected");
+          ++i;
+        }
       } catch {
         console.error("ERROR: Unable to read game data from session.");
       }
@@ -73,6 +83,10 @@ const Game: React.FC = (_props: Props) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (roundStateByRound.has(round)) setState(roundStateByRound.get(round)!);
+  }, [round]);
 
   const endGame = async () => {
     setGamePageState("loading");
