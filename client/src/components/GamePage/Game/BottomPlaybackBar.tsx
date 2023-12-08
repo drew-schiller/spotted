@@ -6,7 +6,7 @@ import { GameData, RoundContext, Track } from "./Game";
 
 interface PlaybackContextType {
   isPlaying: boolean;
-  togglePlayback: () => void;
+  setIsPlaying: (p: boolean) => void;
   elapsedTime: number;
   setElapsedTime: (milliseconds: number) => void;
 }
@@ -19,10 +19,6 @@ const PlaybackContext = createContext<PlaybackContextType | undefined>(
 export const PlaybackProvider = (props: { children: React.ReactNode }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-
-  const togglePlayback = () => {
-    setIsPlaying((isPlaying) => !isPlaying);
-  };
 
   useEffect(() => {
     let intervalId: number = 0;
@@ -42,7 +38,7 @@ export const PlaybackProvider = (props: { children: React.ReactNode }) => {
 
   const contextValue = {
     isPlaying,
-    togglePlayback,
+    setIsPlaying,
     elapsedTime,
     setElapsedTime,
   };
@@ -93,8 +89,8 @@ const AudioPlayer = (props: AudioPlayerProps) => {
 type BottomPlaybackBarProps = { gameData: React.MutableRefObject<GameData>};
 
 const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
-  const { elapsedTime, setElapsedTime, isPlaying, togglePlayback } = usePlayback();
-  const { round, setRound } = useContext(RoundContext);
+  const { elapsedTime, setElapsedTime, setIsPlaying } = usePlayback();
+  const { round } = useContext(RoundContext);
   const audioFileUrl = (props.gameData.current.round_items[round - 1] as Track).preview_url;
 
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -107,13 +103,13 @@ const BottomPlaybackBar = (props: BottomPlaybackBarProps) => {
     if (audio && progressBar) {
       const percentage = Math.min((audio.currentTime / audio.duration * 100), 100);
       progressBar.style.setProperty("--progress", `${percentage}%`);
-      if (percentage == 100.0) togglePlayback();
+      if (percentage == 100.0) setIsPlaying(false);
     }
   }, [elapsedTime]);
 
   // Reset progress on round change
   useEffect(() => {
-    if (isPlaying) togglePlayback();
+    setIsPlaying(false);
     setElapsedTime(0);
   }, [round]);
 
