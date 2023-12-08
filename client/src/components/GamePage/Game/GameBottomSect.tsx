@@ -19,6 +19,7 @@ const GameBottomSect = (props: GameBottomSectProps) => {
           {props.players.map(player =>
             <BottomVoteBtn
               key={player.id}
+              gameData={props.gameData}
               id={player.id}
               name={player.name}
               profilePictureURL={player.profile_pictures[1].url}
