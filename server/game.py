@@ -233,7 +233,7 @@ class Game(object):
             string: The ID of the playlist.
         """
 
-        playlist = manager.get_spotify().playlist(playlist_id, fields='owner.display_name,owner.id,tracks.total')
+        playlist = manager.get_spotify().playlist(playlist_id, fields='owner,tracks.total')
         
         user_id = str(playlist['owner']['id'])
         track_count = int(playlist['tracks']['total'])

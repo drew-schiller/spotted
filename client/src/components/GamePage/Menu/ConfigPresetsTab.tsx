@@ -15,6 +15,7 @@ const ConfigPresetsTab: React.FC<Props> = (props: Props) => {
       <div className={styles.configPresetsTab}>
         <ConfigPresetCard config={props.config} id="classic" presetIcon={null} item_type="track" gamemode="vote" />
         <ConfigPresetCard config={props.config} id="album" presetIcon={null} item_type="album" gamemode="vote" />
+        <ConfigPresetCard config={props.config} id="artist" presetIcon={null} item_type="artist" gamemode="vote" />
       </div>
     </SelectedPresetContext.Provider>
   );
