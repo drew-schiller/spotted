@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./common.module.sass";
-import monkeyTextLogo2 from "../../assets/monkeyText2.png";
-import monkeyLogo2 from "../../assets/monkey2.png";
+import monkeySnorkel from "../../assets/monkeyheadsnorkel.png";
+import monkeyHead from "../../assets/monkeyHead.png";
 
 const AppHeader: React.FC = () => {
   return (
@@ -11,8 +11,15 @@ const AppHeader: React.FC = () => {
       <Link className={styles.headerLogoLink} to="./">
         <img
           className={styles.headerLogo}
-          src={monkeyLogo2}
+          src={monkeyHead}
           alt="Monkey Logo"
+        />
+      </Link>
+      <Link className={styles.headerLogoLink} to="dive">
+        <img
+          className={styles.headerLogo}
+          src={monkeySnorkel}
+          alt="Monkey Dive Logo"
         />
       </Link>
       {/* </div> */}

@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage/LandingPage.tsx";
 import GamePage from "./components/GamePage/GamePage.tsx";
 import CallbackPage from "./components/CallbackPage/CallbackPage.tsx"
 import App from "./App.tsx";
+import DivePage from "./components/DivePage/DivePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "callback",
     element: <CallbackPage />
+  },
+  {
+    path: "dive",
+    element: <DivePage />
   }
 ]);
 

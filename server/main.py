@@ -1,19 +1,20 @@
 from flask import Flask, session, request, jsonify, redirect, url_for
 from flask_session import Session
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from decouple import config
 from game import Game
 from spotify_manager import SpotifyManager
+from uuid import UUID
+from dive.dive import Dive
 
 app = Flask("Spotted")
 app.secret_key = config("FLASK_SECRET_KEY")
 app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 @app.route('/api/')
-@cross_origin(supports_credentials=True)
 def index():
     """
     The API index, which shows session status.
@@ -37,8 +38,101 @@ def index():
         s += u.get_name() + " "
     return s
 
+@app.route('/api/current_user', methods=['GET'])
+def current_user():
+    """
+    Gets the Spotify Manager's current user.
+
+    Returns:
+        GET:
+            JSON: Current user's id.
+    """
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+
+    json = {
+        "id": session["manager"].get_current_user_id()
+    }
+    return jsonify(json)
+
+@app.route('/api/set_current_user', methods=['POST'])
+def set_current_user():
+    """
+    Sets the Spotify Manager's current user.
+
+    JSON Body:
+        user_id (string): ID of user to set as current.
+    """
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+        return "No user is authenticated"
+
+    body = request.json
+    session["manager"].set_current_user(body["user_id"])
+    return redirect(url_for('index'))
+
+@app.route('/api/create_dive', methods=['POST'])
+def create_dive():
+    """
+    Creates a dive for a given user.
+
+    JSON Body:
+        user_id (string): The user ID who is creating this dive.
+        name (string): The name of this dive.
+        base_song_ids (list): List of IDs of the base songs for this dive.
+    """
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+        return "No users are in the session"
+    if "dives" not in session:
+        session["dives"] = dict()
+    
+    body = request.json
+    user_id = body["user_id"]
+    if session["manager"].get_user_by_id(user_id):
+        if user_id not in session["dives"]:
+            session["dives"][user_id] = dict()
+        uuid = UUID()
+        while uuid in session["dives"][user_id]:
+            uuid = UUID()
+        uuid = str(uuid)
+        session["dives"][user_id][uuid] = Dive(uuid, body["name"])
+
+    return redirect(url_for('index'))
+
+@app.route('/api/get_current_dives', methods=['GET'])
+def get_current_dives():
+    """
+    Gets a list of dives for the current authenticated user.
+
+    Returns:
+        GET:
+            dives (list): List of dives for the user if present.
+            dive_count (int): Number of dives the user has.
+            user_present (bool): Whether the user is in this session.
+
+    """
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+        return "No user is authenticated"
+    if "dives" not in session:
+        session["dives"] = dict()
+    
+    user_id = session["manager"].get_current_user_id()
+    user_present = user_id in session["dives"]
+    json = {
+        "dives": [],
+        "dive_count": 0,
+        "user_present": user_present
+    }
+    if user_present:
+        for uuid in session["dives"][user_id]:
+            json["dives"].append(session["dives"][user_id][uuid].serialize())
+            json["dive_count"] += 1
+
+    return jsonify(json)
+
 @app.route('/api/game_exists', methods=['GET'])
-@cross_origin(supports_credentials=True)
 def game_exists():
     """
     Gets whether there is a game in the session.
@@ -53,7 +147,6 @@ def game_exists():
     return jsonify(json)
 
 @app.route('/api/game_started', methods=['GET'])
-@cross_origin(supports_credentials=True)
 def game_started():
     """
     Gets whether the session's game is started.
@@ -72,7 +165,6 @@ def game_started():
     })
 
 @app.route('/api/add_user', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def add_user():
     """
     Adds a user to the session's Spotify manager, prompting the Spotify authentication page.
@@ -80,14 +172,11 @@ def add_user():
     if "manager" not in session:
         session["manager"] = SpotifyManager()
 
-    if "game" in session and session["game"].game_started():
-        return 'Cannot add user to a started game'
     return jsonify({
         "url": session["manager"].configure_spotify()
     })
 
 @app.route('/api/callback', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def callback():
     """
     Do NOT directly call this.
@@ -98,7 +187,6 @@ def callback():
     return jsonify(session["manager"].add_user(request.args["code"]).serialize())
 
 @app.route('/api/remove_user', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def remove_user():
     """
     Removes a user from the session's game.
@@ -109,7 +197,6 @@ def remove_user():
     return redirect(url_for('index'))
 
 @app.route('/api/users', methods=['GET'])
-@cross_origin(supports_credentials=True)
 def users():
     """
     Gets the users in the session's Spotify manager.
@@ -131,7 +218,6 @@ def users():
     return jsonify(json)
 
 @app.route('/api/game_data', methods=['GET'])
-@cross_origin(supports_credentials=True)
 def game_data():
     """
     Gets the data for the game in this session.
@@ -157,7 +243,6 @@ def game_data():
     return jsonify(json)
 
 @app.route('/api/start_game', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def start_game():
     """
     Starts the game in the session.
@@ -176,7 +261,6 @@ def start_game():
     session["game"].next_round()
 
 @app.route('/api/create_game', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def create_game():
     """
     Creates a new game in this session.
@@ -208,7 +292,6 @@ def create_game():
     return redirect(url_for('index'))
 
 @app.route('/api/current_item')
-@cross_origin(supports_credentials=True)
 def current_item():
     """
     Gets the session's game's current item for the round.
@@ -227,7 +310,6 @@ def current_item():
     return jsonify(session["game"].get_current_item().serialize())
 
 @app.route('/api/end_game', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def end_game():
     """
     Ends the session's game.
@@ -242,7 +324,6 @@ def end_game():
     return redirect(url_for('index'))
 
 @app.route('/api/next_round')
-@cross_origin(supports_credentials=True)
 def next_round():
     """
     Advances the session's game to the next round, or ends it it is the last round.
