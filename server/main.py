@@ -4,7 +4,7 @@ from flask_cors import CORS
 from decouple import config
 from game import Game
 from spotify_manager import SpotifyManager
-from uuid import UUID
+import uuid
 from dive.dive import Dive
 
 app = Flask("Spotted")
@@ -80,6 +80,9 @@ def create_dive():
         user_id (string): The user ID who is creating this dive.
         name (string): The name of this dive.
         base_song_ids (list): List of IDs of the base songs for this dive.
+
+    Returns:
+        dive (JSON): JSON representation of the created dive.
     """
     if "manager" not in session:
         session["manager"] = SpotifyManager()
@@ -89,16 +92,46 @@ def create_dive():
     
     body = request.json
     user_id = body["user_id"]
+    json = {
+        "dive": {}
+    }
     if session["manager"].get_user_by_id(user_id):
         if user_id not in session["dives"]:
             session["dives"][user_id] = dict()
-        uuid = UUID()
-        while uuid in session["dives"][user_id]:
-            uuid = UUID()
-        uuid = str(uuid)
-        session["dives"][user_id][uuid] = Dive(uuid, body["name"])
+        dive_id = uuid.uuid4()
+        while dive_id in session["dives"][user_id]:
+            dive_id = uuid.uuid4()
+        dive_id = str(dive_id)
+        session["dives"][user_id][dive_id] = Dive(dive_id, body["name"])
+        json["dive"] = session["dives"][user_id][dive_id].serialize()
 
-    return redirect(url_for('index'))
+    return jsonify(json)
+
+@app.route('/api/delete_dive', methods=['POST'])
+def delete_dive():
+    """
+    Deletes a dive from the given user.
+
+    JSON Body:
+        user_id (string): The user ID who owns the dive.
+        dive_id (string): The dive ID to delete.
+    """
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+        return "No users are in the session"
+    if "dives" not in session:
+        session["dives"] = dict()
+        return "There are no dives in the session"
+    
+    body = request.json
+    user_id = body["user_id"]
+    dive_id = body["dive_id"]
+    if user_id not in session["dives"]:
+        return "User has not made any dives"
+    if dive_id not in session["dives"][user_id]:
+        return "User does not have given dive"
+    session["dives"][user_id].pop(dive_id)
+    return "Dive successfully deleted"
 
 @app.route('/api/get_current_dives', methods=['GET'])
 def get_current_dives():

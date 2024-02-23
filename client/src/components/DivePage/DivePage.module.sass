@@ -4,8 +4,13 @@
 $pageBackground: linear-gradient(to bottom right, $darkPurple, lighten($darkPurple, 7%))
 $pageHeight: calc(100vh - 3.5em)
 
+@mixin button
+  &:hover
+    cursor: pointer
+
 .page
   @include centerFlex
+  position: relative
   height: $pageHeight
   background: $pageBackground
   color: $globalTextColor
@@ -22,12 +27,17 @@ $pageHeight: calc(100vh - 3.5em)
   
   .create-dive-container
     position: absolute
+    bottom: 3%
+    right: 2%
     width: 5%
     aspect-ratio: 1/1
 
     .create-dive-btn
+      position: relative
       width: 100%
       height: 100%
-      background-color: #53c80a
+      background-color: #16C172
       border-radius: 20%
+      color: #ffffff
       font-size: x-large
+      @include button

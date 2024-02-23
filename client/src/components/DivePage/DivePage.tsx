@@ -62,18 +62,57 @@ const DivePage: React.FC = (props: Props) => {
             }
         };
 
-        updateCurrentUser();
-        getDives();
+        if (currentUserId != "") {
+            updateCurrentUser();
+            getDives();
+        }
     }, [currentUserId]);
 
-    const createDive = () => {
+    const createDive = async () => {
+        const bodyJson = {
+            user_id: currentUserId,
+            name: "Test Dive",
+            base_song_ids: []
+        }
+        try {
+            const response = await fetch("http://127.0.0.1:5000/api/create_dive", {
+                credentials: "include",
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                mode: "cors",
+                body: JSON.stringify(bodyJson)
+            });
+            const dive = await response.json();
+            setDives(dives.concat(dive))
+        } catch {
+            console.error("ERROR: Unable to create dive in session.");
+        }
+    };
 
+    const deleteDive = async (id: string) => {
+        try {
+            await fetch("http://127.0.0.1:5000/api/delete_dive", {
+                credentials: "include",
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                mode: "cors",
+                body: JSON.stringify({ user_id: currentUserId, dive_id: id})
+            });
+        } catch {
+            console.error("ERROR: Unable to delete dive in session.");
+        }
     };
 
     return (
         <DiveContext.Provider value={contextValue}>
             <div className={styles.page}>
-                {dives.map(d => <DiveCard id={d.id} name={d.name} color={d.color}/>)}
+                {dives.map(d => <DiveCard deleteDive={deleteDive} id={d.id} name={d.name} color={d.color}/>)}
                 <div className={styles.createDiveContainer}>
                     <button className={styles.createDiveBtn} onClick={createDive}>
                         <FaPlus />
