@@ -86,7 +86,7 @@ const DivePage: React.FC = (props: Props) => {
                 body: JSON.stringify(bodyJson)
             });
             const dive = await response.json();
-            setDives(dives.concat(dive))
+            setDives(dives.concat(dive["dive"]));
         } catch {
             console.error("ERROR: Unable to create dive in session.");
         }
@@ -104,6 +104,14 @@ const DivePage: React.FC = (props: Props) => {
                 mode: "cors",
                 body: JSON.stringify({ user_id: currentUserId, dive_id: id})
             });
+            for (let i = 0; i < dives.length; ++i) {
+                if (dives[i].id == id) {
+                    const d = Array.from(dives);
+                    d.splice(i, 1);
+                    setDives(d);
+                    break;
+                }
+            }
         } catch {
             console.error("ERROR: Unable to delete dive in session.");
         }
