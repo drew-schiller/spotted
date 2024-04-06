@@ -6,6 +6,7 @@ from game import Game
 from spotify_manager import SpotifyManager
 import uuid
 from dive.dive import Dive
+import random
 
 app = Flask("Spotted")
 app.secret_key = config("FLASK_SECRET_KEY")
@@ -132,6 +133,36 @@ def delete_dive():
         return "User does not have given dive"
     session["dives"][user_id].pop(dive_id)
     return "Dive successfully deleted"
+
+@app.route('/api/generate_dive_queue', methods=['GET'])
+def generate_dive_queue():
+    """
+    Generates the next five tracks in the queue for a given dive.
+
+    JSON Body:
+        user_id (string): The user ID who owns the dive.
+        dive_id (string): The dive ID to generate tracks in.
+
+    Returns:
+        tracks (list): List of JSON representations.
+    """
+
+    if "manager" not in session:
+        session["manager"] = SpotifyManager()
+        return "No user is authenticated"
+    if "dives" not in session:
+        session["dives"] = dict()
+        return "There are no dives in the session"
+    
+    body = request.json
+    user_id = body["user_id"]
+    dive_id = body["dive_id"]
+    if user_id not in session["dives"]:
+        return "User has not made any dives"
+    if dive_id not in session["dives"][user_id]:
+        return "User does not have given dive"
+    
+    return session["manager"].get_recommendations_for(random.sample(session["dives"][user_id][dive_id].get_seed_tracks()))
 
 @app.route('/api/get_current_dives', methods=['GET'])
 def get_current_dives():

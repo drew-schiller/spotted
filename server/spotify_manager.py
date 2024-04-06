@@ -83,3 +83,7 @@ class SpotifyManager(spotipy.CacheHandler):
             if p['owner']['id'] == self.current_user_id and not p['collaborative']:
                 playlists.append(p)
         return playlists
+    
+    # Returns the recommended tracks given a list of seed tracks
+    def get_recommendations_for(self, seed_tracks: list[str]):
+        return self.spotify.recommendations(seed_tracks=seed_tracks)

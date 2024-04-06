@@ -4,7 +4,7 @@ import DiveCard from './DiveCard';
 import { FaPlus } from 'react-icons/fa';
 
 type Props = {};
-type Dive = { id: string, name: string, color: string, popularity: number }
+type Dive = { id: string, name: string, color: string, precision: number }
 export const DiveContext = createContext({
     currentUserId: "",
     setCurrentUserId: (id: string) => { id }
