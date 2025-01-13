@@ -1,1 +1,1 @@
-Spotted is a web-based game that involves your music taste and how well you know your friends. Players join by linking their Spotify Account. Each round, a new song is selected. The goal is to guess which one of your friends has the song in their playlist.
+Spotted is a web-based game that uses your music taste to test how well you know your friends! Players join by linking their Spotify Account. Every round, a different song is selected from the players' libraries. The goal is to guess who amongst your friends has the song in their playlist.
